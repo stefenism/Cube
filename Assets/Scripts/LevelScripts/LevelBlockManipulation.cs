@@ -58,8 +58,7 @@ public class LevelBlockManipulation : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(vec), 0.2f);//Do this but better
         }
 
-        Debug.Log("delta X : " + transform.rotation.x);
-        Debug.Log("delta Y : " + transform.rotation.y);
+
         lastPos = Input.mousePosition;
 
         CheckBlockClick();

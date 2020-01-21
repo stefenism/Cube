@@ -1,8 +1,18 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager : MonoBehaviour
+{
     private Rigidbody r;
     public float speed = 5f;
+    private bool touchingPickupableObject;
+    private Pickup itemToPickUp;
+    private bool holdingItem = false;
+    private bool onLadder= false;
+
+    void Start()
+    {
+        r = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
@@ -10,7 +20,7 @@ public class PlayerManager : MonoBehaviour {
         if (Input.GetKey(KeyCode.W))
         {
             r.AddForce(transform.forward * speed);
-            
+
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -24,10 +34,91 @@ public class PlayerManager : MonoBehaviour {
         {
             r.AddForce(transform.right * speed);
         }
+
+        //pickup code
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (touchingPickupableObject & !onLadder)
+            {
+                if (holdingItem)
+                {
+                    DropItem();
+                }
+                else
+                {
+                    GrabItem();
+                }
+
+            }
+        }
+
+        if (onLadder)
+            ManageLadder();
+
     }
-    
-    void Start()
+
+    void GrabItem()
     {
-        r = GetComponent<Rigidbody>();
+
+        holdingItem = true;
+        itemToPickUp.transform.SetParent(transform);
+        itemToPickUp.transform.localPosition = new Vector3(0, 1, 0);
+        itemToPickUp.GetComponent<Collider>().enabled = false;
+
+
     }
+
+    void DropItem()
+    {
+        if (holdingItem)
+        {
+            holdingItem = false;
+            itemToPickUp.transform.localPosition = Vector3.zero;
+            itemToPickUp.transform.SetParent(transform.parent);
+            itemToPickUp.GetComponent<Collider>().enabled = true;
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (other.GetComponent<Pickup>() != null)//checks if entered range of pickup
+        {
+            touchingPickupableObject = true;
+            itemToPickUp = other.GetComponent<Pickup>();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<Pickup>() == itemToPickUp)//Checks if out of range of pickup
+        {
+            touchingPickupableObject = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
+        {
+            DropItem();
+            onLadder = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
+        {
+            DropItem();
+            onLadder = false;
+            
+        }
+    }
+
+    void ManageLadder()//pushes the player up when on a ladder
+    {
+        r.AddForce(transform.up * speed *1.3f);
+    }
+
 }
