@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
-{
-    private Rigidbody r;
+public class PlayerControls : MonoBehaviour {
+    private Rigidbody rb;
     public float speed = 5f;
     private bool touchingPickupableObject;
     private Pickup itemToPickUp;
@@ -11,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        r = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -19,20 +18,20 @@ public class PlayerManager : MonoBehaviour
         //This probably shold be moved 
         if (Input.GetKey(KeyCode.W))
         {
-            r.AddForce(transform.forward * speed);
+            rb.AddForce(transform.forward * speed);
 
         }
         if (Input.GetKey(KeyCode.A))
         {
-            r.AddForce(-transform.right * speed);
+            rb.AddForce(-transform.right * speed);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            r.AddForce(-transform.forward * speed);
+            rb.AddForce(-transform.forward * speed);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            r.AddForce(transform.right * speed);
+            rb.AddForce(transform.right * speed);
         }
 
         //pickup code
@@ -118,7 +117,7 @@ public class PlayerManager : MonoBehaviour
 
     void ManageLadder()//pushes the player up when on a ladder
     {
-        r.AddForce(transform.up * speed *1.3f);
+        rb.AddForce(transform.up * speed *1.3f);
     }
 
 }
