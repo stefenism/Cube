@@ -14,10 +14,21 @@ public class Actor : MonoBehaviour {
         initialize();
     }
 
+    void Update() {
+        checkForParent();
+    }
+
     void initialize(){
         //figure out which dimension you're in...on...?
         rb = GetComponent<Rigidbody>();
         actorCollider = GetComponent<BoxCollider>();
+    }
+
+    void checkForParent(){
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 10)) {
+            transform.SetParent(hit.collider.transform);
+        }
     }
 
     public Rigidbody getRigidbody(){
