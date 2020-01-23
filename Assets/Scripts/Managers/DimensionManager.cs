@@ -6,6 +6,9 @@ public class DimensionManager : MonoBehaviour {
     
     public static DimensionManager dimensionDaddy = null;
 
+    [SerializeField]
+    private List<Dimension> dimensionList = new List<Dimension>();
+
     void Awake() {
         if(dimensionDaddy == null){
             dimensionDaddy = this;
@@ -15,4 +18,6 @@ public class DimensionManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
     }
+
+    public void addDimension(Dimension newDimension){dimensionList.Add(newDimension);}
 }
