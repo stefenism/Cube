@@ -8,31 +8,35 @@ public class PlayerControls : MonoBehaviour {
     private bool holdingItem = false;
     private bool onLadder= false;
 
+    private PlayerActor player;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        player = GetComponent<PlayerActor>();
     }
 
     void Update()
     {
         //This probably shold be moved 
-        if (Input.GetKey(KeyCode.W))
-        {
-            rb.AddForce(transform.forward * speed);
+        // if (Input.GetKey(KeyCode.W))
+        // {
+        //     rb.velocity = player.getDimension().up * speed;
+        //     // rb.AddForce(transform.forward * speed);
 
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(-transform.right * speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb.AddForce(-transform.forward * speed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(transform.right * speed);
-        }
+        // }
+        // if (Input.GetKey(KeyCode.A))
+        // {
+        //     rb.AddForce(-transform.right * speed);
+        // }
+        // if (Input.GetKey(KeyCode.S))
+        // {
+        //     rb.AddForce(-transform.forward * speed);
+        // }
+        // if (Input.GetKey(KeyCode.D))
+        // {
+        //     rb.AddForce(transform.right * speed);
+        // }
 
         //pickup code
         if (Input.GetKeyDown(KeyCode.E))
@@ -54,6 +58,25 @@ public class PlayerControls : MonoBehaviour {
         if (onLadder)
             ManageLadder();
 
+    }
+
+    void FixedUpdate() {
+        checkMovement();
+    }
+
+    void checkMovement() {
+        float vertMov = Input.GetAxis("Vertical");
+        float horMov = Input.GetAxis("Horizontal");
+
+        if(player.getDimension() != null){
+            Vector3 verticalSpeed = vertMov * player.getDimension().up * speed;
+            Vector3 horizontalSpeed = horMov * player.getDimension().right * speed;
+            Vector3 gravitySpeed = player.getDimension().gravity;
+
+            Debug.Log("inside setting velocity: " + verticalSpeed);
+
+            rb.velocity = verticalSpeed + horizontalSpeed + gravitySpeed;
+        }
     }
 
     void GrabItem()
