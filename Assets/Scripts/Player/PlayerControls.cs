@@ -85,7 +85,7 @@ public class PlayerControls : MonoBehaviour {
         holdingItem = true;
         itemToPickUp.transform.SetParent(transform);
         itemToPickUp.transform.localPosition = new Vector3(0, 1, 0);
-        itemToPickUp.GetComponent<Collider>().enabled = false;
+        //itemToPickUp.GetComponent<Collider>().enabled = false;
 
 
     }
@@ -97,7 +97,7 @@ public class PlayerControls : MonoBehaviour {
             holdingItem = false;
             itemToPickUp.transform.localPosition = Vector3.zero;
             itemToPickUp.transform.SetParent(transform.parent);
-            itemToPickUp.GetComponent<Collider>().enabled = true;
+            //itemToPickUp.GetComponent<Collider>().enabled = true;
         }
     }
     void OnTriggerEnter(Collider other)
