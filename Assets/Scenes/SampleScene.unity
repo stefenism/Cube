@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7120,7 +7120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf71c3740d6edf4b819de10f13b927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 10
 --- !u!136 &201523367
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9677,6 +9677,7 @@ GameObject:
   - component: {fileID: 263124062}
   - component: {fileID: 263124061}
   - component: {fileID: 263124066}
+  - component: {fileID: 263124067}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -9780,7 +9781,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263124060}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95e45290783e54a44bc91aee9cb72816, type: 3}
   m_Name: 
@@ -9788,6 +9789,19 @@ MonoBehaviour:
   currentGravity: {x: 0, y: -1, z: 0}
   gravityMod: 0.5
   enableGravity: 1
+--- !u!114 &263124067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263124060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15daf0f82c42af46848e81bf83a639f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dimension: {fileID: 0}
 --- !u!1 &264204903
 GameObject:
   m_ObjectHideFlags: 0
@@ -55071,7 +55085,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618213361}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 931cd77f024b5394eabf405ff3f7b204, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -60943,7 +60957,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804715762}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 931cd77f024b5394eabf405ff3f7b204, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -61127,7 +61141,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810346627}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 931cd77f024b5394eabf405ff3f7b204, type: 2}
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
