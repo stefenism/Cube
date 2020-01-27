@@ -55,13 +55,15 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
-        if (onLadder)
-            ManageLadder();
+
 
     }
 
     void FixedUpdate() {
+
         checkMovement();
+        if (onLadder)
+            ManageLadder();
     }
 
     void checkMovement() {
@@ -72,6 +74,9 @@ public class PlayerControls : MonoBehaviour {
             Vector3 verticalSpeed = vertMov * player.getDimension().up * speed;
             Vector3 horizontalSpeed = horMov * player.getDimension().right * speed;
             Vector3 gravitySpeed = player.getDimension().gravity;
+            if (onLadder)
+                gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
+
 
             Debug.Log("inside setting velocity: " + verticalSpeed);
 
@@ -140,7 +145,7 @@ public class PlayerControls : MonoBehaviour {
 
     void ManageLadder()//pushes the player up when on a ladder
     {
-        rb.AddForce(transform.up * speed *1.3f);
+        rb.AddForce(transform.up *2000.3f);
     }
 
 }
