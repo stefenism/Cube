@@ -37,8 +37,10 @@ public class Actor : MonoBehaviour {
 
     void checkSetDimension(Dimension newDimension){
         if(dimension != newDimension){
+            if(dimension != null){
+                dimension.tryRemoveActor(this);
+            }
             setDimension(newDimension);
-            dimension.tryRemoveActor(this);
             newDimension.tryAddActor(this);
         }
     }
