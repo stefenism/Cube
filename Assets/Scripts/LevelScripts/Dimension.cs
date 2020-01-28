@@ -31,10 +31,6 @@ public class Dimension : MonoBehaviour {
         findLocalDirections();
         findLocalGravity();
         // drawDebugDirections();
-
-        if(containedActors.Count > 0){
-            Debug.Log("current gravity applied: " + gravity);
-        }
     }
 
     void FixedUpdate() {

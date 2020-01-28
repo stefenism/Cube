@@ -8,6 +8,12 @@ public class PlayerControls : MonoBehaviour {
     private bool holdingItem = false;
     private bool onLadder= false;
 
+    [Range(0,1)]
+    public float accelerationFactor;
+    [Range(0,1)]
+    public float decelFactor;
+    public float maxSpeed = 10;
+
     private PlayerActor player;
 
     void Start()
@@ -71,16 +77,27 @@ public class PlayerControls : MonoBehaviour {
         float horMov = Input.GetAxis("Horizontal");
 
         if(player.getDimension() != null){
-            Vector3 verticalSpeed = vertMov * player.getDimension().up * speed;
-            Vector3 horizontalSpeed = horMov * player.getDimension().right * speed;
+
+            Vector3 runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
+            print("modifier: " + modifier);
+
+            Vector3 verticalSpeed = vertMov * player.getDimension().up * speed * modifier;
+            Vector3 horizontalSpeed = horMov * player.getDimension().right * speed * modifier;
             Vector3 gravitySpeed = player.getDimension().gravity;
-            if (onLadder)
+            print("hormov: " + (horMov %1));
+
+            runForce += verticalSpeed + horizontalSpeed;
+            
+            if (onLadder){
                 gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
+                runForce = Vector3.zero;
+            }
 
 
             // Debug.Log("inside setting velocity: " + verticalSpeed);
 
-            rb.velocity = verticalSpeed + horizontalSpeed + gravitySpeed;
+            rb.velocity += Vector3.ClampMagnitude(runForce + gravitySpeed, maxSpeed);
         }
     }
 
@@ -123,29 +140,10 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Collider other = collision.collider;
-        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
-        {
-            DropItem();
-            onLadder = true;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        Collider other = collision.collider;
-        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
-        {
-            DropItem();
-            onLadder = false;
-            
-        }
-    }
-
     void ManageLadder()//pushes the player up when on a ladder
     {
         rb.AddForce(transform.up *2000.3f);
+        rb.velocity = ((rb.velocity + transform.up) * speed);
     }
 
 }
