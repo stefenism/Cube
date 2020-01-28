@@ -27,7 +27,19 @@ public class Actor : MonoBehaviour {
     void checkForParent(){
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit, 10)) {
-            transform.SetParent(hit.collider.transform);
+            Transform hitTransform = hit.collider.transform;
+            transform.SetParent(hitTransform);
+            if(hitTransform.parent.TryGetComponent(out Dimension parentDimension)){
+                checkSetDimension(parentDimension);
+            }
+        }
+    }
+
+    void checkSetDimension(Dimension newDimension){
+        if(dimension != newDimension){
+            setDimension(newDimension);
+            dimension.tryRemoveActor(this);
+            newDimension.tryAddActor(this);
         }
     }
 
@@ -36,7 +48,6 @@ public class Actor : MonoBehaviour {
     }
 
     public void setDimension(Dimension newDimension) {
-        Debug.Log("setting dimension now boss: " + newDimension.gameObject.name);
         dimension = newDimension;
     }
 

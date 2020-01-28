@@ -78,7 +78,7 @@ public class PlayerControls : MonoBehaviour {
                 gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
 
 
-            Debug.Log("inside setting velocity: " + verticalSpeed);
+            // Debug.Log("inside setting velocity: " + verticalSpeed);
 
             rb.velocity = verticalSpeed + horizontalSpeed + gravitySpeed;
         }
