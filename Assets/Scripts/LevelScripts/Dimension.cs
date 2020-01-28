@@ -72,15 +72,17 @@ public class Dimension : MonoBehaviour {
         }
     }
 
-    void tryAddActor(Actor newActor){
+    public void tryAddActor(Actor newActor){
         Debug.Log("trying to add actor: " + newActor.gameObject.name);
+        print("and I am: " + this.gameObject.name + " of " + this.transform.parent.name);
+        print("my contained actors: " + containedActors.Count);
         if(!containedActors.Contains(newActor)){
             containedActors.Add(newActor);
             newActor.setDimension(this);
         }
     }
 
-    void tryRemoveActor(Actor newActor){
+    public void tryRemoveActor(Actor newActor){
         if(containedActors.Contains(newActor)){
             containedActors.Remove(newActor);
         }
@@ -92,12 +94,12 @@ public class Dimension : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider){
-        Debug.Log("new trigger happened with: " + collider.gameObject.name);
-        checkIfActor(collider, TriggerAction.ENTER);
+        // Debug.Log("new trigger happened with: " + collider.gameObject.name);
+        // checkIfActor(collider, TriggerAction.ENTER);
     }
 
     void OnTriggerExit(Collider collider)
     {
-        checkIfActor(collider, TriggerAction.EXIT);
+        // checkIfActor(collider, TriggerAction.EXIT);
     }
 }

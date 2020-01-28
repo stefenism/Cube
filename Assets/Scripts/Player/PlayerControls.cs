@@ -73,7 +73,7 @@ public class PlayerControls : MonoBehaviour {
             Vector3 horizontalSpeed = horMov * player.getDimension().right * speed;
             Vector3 gravitySpeed = player.getDimension().gravity;
 
-            Debug.Log("inside setting velocity: " + verticalSpeed);
+            // Debug.Log("inside setting velocity: " + verticalSpeed);
 
             rb.velocity = verticalSpeed + horizontalSpeed + gravitySpeed;
         }
