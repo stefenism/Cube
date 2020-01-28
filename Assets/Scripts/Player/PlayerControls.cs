@@ -91,7 +91,7 @@ public class PlayerControls : MonoBehaviour {
             
             if (onLadder){
                 gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
-                runForce = Vector3.zero;
+                runForce = runForce*0.1f;
             }
 
 
@@ -140,10 +140,31 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
+        {
+            DropItem();
+            onLadder = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        Collider other = collision.collider;
+        if (other.GetComponent<Ladder>() != null)//If Hit Ladder
+        {
+            DropItem();
+            onLadder = false;
+
+        }
+    }
+
+
     void ManageLadder()//pushes the player up when on a ladder
     {
-        rb.AddForce(transform.up *2000.3f);
-        rb.velocity = ((rb.velocity + transform.up) * speed);
+        rb.AddForce(transform.up *40.3f);
+        //rb.velocity = ((rb.velocity + transform.up) * speed);
     }
 
 }
