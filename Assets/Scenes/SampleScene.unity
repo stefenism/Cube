@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2246,6 +2246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 68296136}
   - component: {fileID: 68296137}
+  - component: {fileID: 68296138}
   m_Layer: 8
   m_Name: Side_Forward
   m_TagString: Untagged
@@ -2316,6 +2317,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 4
+--- !u!114 &68296138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68296135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &68352031
 GameObject:
   m_ObjectHideFlags: 0
@@ -6214,7 +6232,6 @@ GameObject:
   m_Component:
   - component: {fileID: 181465451}
   - component: {fileID: 181465452}
-  - component: {fileID: 181465454}
   - component: {fileID: 181465453}
   m_Layer: 8
   m_Name: Side_Left
@@ -6303,19 +6320,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &181465454
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181465450}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &181717132
 GameObject:
   m_ObjectHideFlags: 0
@@ -10287,7 +10291,6 @@ GameObject:
   m_Component:
   - component: {fileID: 281143393}
   - component: {fileID: 281143394}
-  - component: {fileID: 281143396}
   - component: {fileID: 281143395}
   m_Layer: 8
   m_Name: Side_Back
@@ -10395,19 +10398,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &281143396
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281143392}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &281929004
 GameObject:
   m_ObjectHideFlags: 0
@@ -11890,7 +11880,6 @@ GameObject:
   m_Component:
   - component: {fileID: 319204768}
   - component: {fileID: 319204769}
-  - component: {fileID: 319204771}
   - component: {fileID: 319204770}
   m_Layer: 8
   m_Name: Side_Top
@@ -11988,19 +11977,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &319204771
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319204767}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &320457656
 GameObject:
   m_ObjectHideFlags: 0
@@ -13221,7 +13197,6 @@ GameObject:
   - component: {fileID: 349168559}
   - component: {fileID: 349168560}
   - component: {fileID: 349168561}
-  - component: {fileID: 349168562}
   m_Layer: 8
   m_Name: Side_Top
   m_TagString: Untagged
@@ -13316,19 +13291,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &349168562
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349168558}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &349271475
 GameObject:
   m_ObjectHideFlags: 0
@@ -13983,7 +13945,6 @@ GameObject:
   m_Component:
   - component: {fileID: 365500323}
   - component: {fileID: 365500324}
-  - component: {fileID: 365500326}
   - component: {fileID: 365500325}
   m_Layer: 8
   m_Name: Side_Bot
@@ -14072,19 +14033,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &365500326
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365500322}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &367945218
 GameObject:
   m_ObjectHideFlags: 0
@@ -17499,7 +17447,6 @@ GameObject:
   m_Component:
   - component: {fileID: 464848015}
   - component: {fileID: 464848016}
-  - component: {fileID: 464848018}
   - component: {fileID: 464848017}
   m_Layer: 8
   m_Name: Side_Right
@@ -17588,19 +17535,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &464848018
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464848014}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &465999412
 GameObject:
   m_ObjectHideFlags: 0
@@ -17795,6 +17729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486581988}
   - component: {fileID: 486581989}
+  - component: {fileID: 486581990}
   m_Layer: 8
   m_Name: Side_Top
   m_TagString: Untagged
@@ -17865,6 +17800,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 0
+--- !u!114 &486581990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486581987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &487367408
 GameObject:
   m_ObjectHideFlags: 0
@@ -21739,6 +21691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622314525}
   - component: {fileID: 622314526}
+  - component: {fileID: 622314527}
   m_Layer: 8
   m_Name: Side_Bot
   m_TagString: Untagged
@@ -21809,6 +21762,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 1
+--- !u!114 &622314527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622314524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &622642065
 GameObject:
   m_ObjectHideFlags: 0
@@ -27983,6 +27953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825227453}
   - component: {fileID: 825227454}
+  - component: {fileID: 825227455}
   m_Layer: 8
   m_Name: Side_Back
   m_TagString: Untagged
@@ -28053,6 +28024,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 5
+--- !u!114 &825227455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825227452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &825353933
 GameObject:
   m_ObjectHideFlags: 0
@@ -35380,7 +35368,6 @@ GameObject:
   - component: {fileID: 1013551392}
   - component: {fileID: 1013551393}
   - component: {fileID: 1013551394}
-  - component: {fileID: 1013551395}
   m_Layer: 8
   m_Name: Side_Left
   m_TagString: Untagged
@@ -35468,19 +35455,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &1013551395
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013551391}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &1014061862
 GameObject:
   m_ObjectHideFlags: 0
@@ -47660,6 +47634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1384336982}
   - component: {fileID: 1384336983}
+  - component: {fileID: 1384336984}
   m_Layer: 8
   m_Name: Side_Left
   m_TagString: Untagged
@@ -47730,6 +47705,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 3
+--- !u!114 &1384336984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384336981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &1408244727
 GameObject:
   m_ObjectHideFlags: 0
@@ -51463,7 +51455,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1518887275}
   - component: {fileID: 1518887276}
-  - component: {fileID: 1518887278}
   - component: {fileID: 1518887277}
   m_Layer: 8
   m_Name: Side_Forward
@@ -51588,19 +51579,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &1518887278
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518887274}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &1519952692
 GameObject:
   m_ObjectHideFlags: 0
@@ -54924,7 +54902,6 @@ GameObject:
   - component: {fileID: 1614064399}
   - component: {fileID: 1614064400}
   - component: {fileID: 1614064401}
-  - component: {fileID: 1614064402}
   m_Layer: 8
   m_Name: Side_Back
   m_TagString: Untagged
@@ -55031,19 +55008,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &1614064402
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614064398}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &1614589704
 GameObject:
   m_ObjectHideFlags: 0
@@ -55302,7 +55266,6 @@ GameObject:
   - component: {fileID: 1619590407}
   - component: {fileID: 1619590408}
   - component: {fileID: 1619590409}
-  - component: {fileID: 1619590410}
   m_Layer: 8
   m_Name: Side_Forward
   m_TagString: Untagged
@@ -55399,19 +55362,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &1619590410
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1619590406}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &1630321135
 GameObject:
   m_ObjectHideFlags: 0
@@ -64163,6 +64113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1911487310}
   - component: {fileID: 1911487311}
+  - component: {fileID: 1911487312}
   m_Layer: 8
   m_Name: Side_Right
   m_TagString: Untagged
@@ -64233,6 +64184,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localUp: 2
+--- !u!114 &1911487312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911487309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d19a38fc8c84845b6530e1bcb2b114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containedActors: []
+  gravityDown: {x: 0, y: 0, z: 0}
+  up: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
 --- !u!1 &1912311734
 GameObject:
   m_ObjectHideFlags: 0
@@ -68016,7 +67984,6 @@ GameObject:
   - component: {fileID: 2025852619}
   - component: {fileID: 2025852620}
   - component: {fileID: 2025852621}
-  - component: {fileID: 2025852622}
   m_Layer: 8
   m_Name: Side_Right
   m_TagString: Untagged
@@ -68104,19 +68071,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &2025852622
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025852618}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &2027711508
 GameObject:
   m_ObjectHideFlags: 0
@@ -71623,7 +71577,6 @@ GameObject:
   - component: {fileID: 2133817182}
   - component: {fileID: 2133817183}
   - component: {fileID: 2133817184}
-  - component: {fileID: 2133817185}
   m_Layer: 8
   m_Name: Side_Bot
   m_TagString: Untagged
@@ -71711,19 +71664,6 @@ MonoBehaviour:
   up: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   gravity: {x: 0, y: 0, z: 0}
---- !u!65 &2133817185
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133817181}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 0.1, z: 1.15}
-  m_Center: {x: 0.15, y: 0.79, z: 0}
 --- !u!1 &2135098123
 GameObject:
   m_ObjectHideFlags: 0
