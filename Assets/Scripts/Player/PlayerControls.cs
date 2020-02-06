@@ -8,6 +8,9 @@ public class PlayerControls : MonoBehaviour {
     private bool holdingItem = false;
     private bool onLadder= false;
 
+    private float horMov;
+    private float vertMov;
+
     [Range(0,1)]
     public float accelerationFactor;
     [Range(0,1)]
@@ -61,8 +64,12 @@ public class PlayerControls : MonoBehaviour {
             }
         }
 
+        checkInput();
+    }
 
-
+    void checkInput(){
+        horMov = Input.GetAxisRaw("Horizontal");
+        vertMov = Input.GetAxisRaw("Vertical");
     }
 
     void FixedUpdate() {
@@ -73,21 +80,22 @@ public class PlayerControls : MonoBehaviour {
     }
 
     void checkMovement() {
-        float vertMov = Input.GetAxis("Vertical");
-        float horMov = Input.GetAxis("Horizontal");
 
         if(player.getDimension() != null){
 
             Vector3 runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
             float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
-            print("modifier: " + modifier);
 
             Vector3 verticalSpeed = vertMov * player.getDimension().up * speed * modifier;
             Vector3 horizontalSpeed = horMov * player.getDimension().right * speed * modifier;
             Vector3 gravitySpeed = player.getDimension().gravity;
-            print("hormov: " + (horMov %1));
 
-            runForce += verticalSpeed + horizontalSpeed;
+            if(vertMov != 0 || horMov != 0){
+                runForce += verticalSpeed + horizontalSpeed;
+            }
+            else{
+                runForce -= rb.velocity * modifier;
+            }
             
             if (onLadder){
                 gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
@@ -166,5 +174,4 @@ public class PlayerControls : MonoBehaviour {
         rb.AddForce(transform.up *40.3f);
         //rb.velocity = ((rb.velocity + transform.up) * speed);
     }
-
 }
