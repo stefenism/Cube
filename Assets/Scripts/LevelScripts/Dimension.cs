@@ -11,13 +11,17 @@ public class Dimension : MonoBehaviour {
 
     private BoxCollider box;
     
-    public Vector3 gravityDown = Vector3.zero;
+    public Vector3 gravityDown = Vector3.down;
     public Vector3 up = Vector3.zero;
     public Vector3 right = Vector3.zero;
     public Vector3 gravity = Vector3.zero;
+    float lastDiff = 100;
+    MeshRenderer[] childMeshes;
+    float lagUpdateChance = 0.5f;
 
     void Start() {
         initialize();
+        
     }
 
     void initialize() {
@@ -25,11 +29,17 @@ public class Dimension : MonoBehaviour {
         box = GetComponent<BoxCollider>();
 
         findAllActorsInBox();
+
+        UpdateChildRenders();
+        SetDimentionDither();
+        InvokeRepeating("SetDimentionDither", 0.05f, 0.05f);
+        
     }
 
     void Update() {
         findLocalDirections();
         findLocalGravity();
+        
         // drawDebugDirections();
     }
 
@@ -97,5 +107,39 @@ public class Dimension : MonoBehaviour {
     void OnTriggerExit(Collider collider)
     {
         // checkIfActor(collider, TriggerAction.EXIT);
+    }
+
+    void SetDimentionDither()
+    {
+        float gravityDiff = Vector3.Distance(gravityDown, DimensionManager.dimensionDaddy.visableDimensionVector);
+        if (Mathf.Abs(lastDiff - gravityDiff) > 0.01 & !(gravityDiff > 1 & lastDiff > 1))//Dont run if it did not change much or it would still be completly invisable 
+        {
+
+            UpdateChildRenders();
+
+            foreach (MeshRenderer mesh in childMeshes)
+            {
+                if(0.9f> gravityDiff & gravityDiff > 0.1f)//If within this range have a random chance to not change for effect
+                {
+                    if (Random.Range(0f, 1f) > lagUpdateChance)
+                    {
+                        mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
+                    }
+                    
+                }
+                else
+                {
+                    mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
+                }
+                
+            }
+            lastDiff = gravityDiff;
+        }
+
+    }
+
+    void UpdateChildRenders()
+    {
+        childMeshes = transform.GetComponentsInChildren<MeshRenderer>();
     }
 }

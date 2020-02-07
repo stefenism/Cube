@@ -66,6 +66,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_E932D1FC: 0
+    - _AlphaClip: 0
+    - _AlphaClip2: 0
+    - _AlphaClipValue: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
