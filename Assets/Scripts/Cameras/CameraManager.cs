@@ -8,7 +8,8 @@ public class CameraManager : MonoBehaviour
     public Camera superCamera;
     public bool playerMode = true;
     float cameraState = 1;
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +21,25 @@ public class CameraManager : MonoBehaviour
     {
 
         HandlePlayerCameraPosition();
+        if (Input.GetButtonDown("Shift View"))
+            ChangeView();
 
-        
+    }
+
+       
+
+
+    public void ChangeView()//changes between camera views
+    {
+        if (playerMode)
+        {
+            playerCamera.clearFlags = CameraClearFlags.Nothing;
+        }
+        else
+        {
+            playerCamera.clearFlags = CameraClearFlags.Nothing;
+        }
+        playerMode = !playerMode;
     }
 
     void HandlePlayerCameraPosition()//eventually needs to be invoked 
@@ -45,7 +63,7 @@ public class CameraManager : MonoBehaviour
         {
             if (cameraState > 0)
             {
-                playerCamera.rect = new Rect((1-cameraState)*0.03f, (1-cameraState)*0.76f, 0.2f + 0.8f * cameraState, 0.2f + 0.8f * cameraState);
+                playerCamera.rect = new Rect((1 - cameraState) * 0.03f, (1 - cameraState) * 0.76f, 0.2f + 0.8f * cameraState, 0.2f + 0.8f * cameraState);
 
                 cameraState -= 0.1f;
             }

@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour {
     public static PlayerManager playerDaddy = null;
     public PlayerControls player;
 
+
+
     private enum PlayerState{
         LIVING,
         DEAD,
@@ -30,6 +32,8 @@ public class PlayerManager : MonoBehaviour {
     public void setPlayer(PlayerControls player){
         playerDaddy.player = player;
     }
+
+  
 
     public void setPlayerLiving(){playerState = PlayerState.LIVING;}
     public void setPlayerDead(){playerState = PlayerState.DEAD;}

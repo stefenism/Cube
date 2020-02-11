@@ -6556,7 +6556,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5660378, g: 0.32840872, b: 0.32840872, a: 0}
+  m_BackGroundColor: {r: 0.5660378, g: 0.32840872, b: 0.32840872, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -34633,6 +34633,7 @@ GameObject:
   - component: {fileID: 951301689}
   - component: {fileID: 951301688}
   - component: {fileID: 951301691}
+  - component: {fileID: 951301692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34696,6 +34697,19 @@ MonoBehaviour:
   playerCamera: {fileID: 184707240}
   superCamera: {fileID: 963194227}
   playerMode: 1
+--- !u!114 &951301692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951301687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e4463f54703a147afcd2762a7726fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 201523366}
 --- !u!1 &951781071
 GameObject:
   m_ObjectHideFlags: 0
@@ -35352,8 +35366,9 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
-  m_Name: Level Camera
+  m_Name: Super Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35444,6 +35459,26 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9f527743155ab47a8d259140d2ecb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 201523363}
+  distance: 20
+  xSpeed: 25
+  ySpeed: 250
+  yMinLimit: -20
+  yMaxLimit: 80
+  distanceMin: 10
+  distanceMax: 30
 --- !u!1 &964233361
 GameObject:
   m_ObjectHideFlags: 0
