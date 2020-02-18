@@ -17,11 +17,12 @@ public class Dimension : MonoBehaviour {
     public Vector3 gravity = Vector3.zero;
     float lastDiff = 100;
     MeshRenderer[] childMeshes;
-    float lagUpdateChance = 0.5f;
+    float lagUpdateChance = 0f;
+
+    CameraController cameraController;
 
     void Start() {
         initialize();
-        
     }
 
     void initialize() {
@@ -33,6 +34,7 @@ public class Dimension : MonoBehaviour {
         UpdateChildRenders();
         SetDimentionDither();
         InvokeRepeating("SetDimentionDither", 0.05f, 0.05f);
+
         
     }
 
@@ -111,7 +113,9 @@ public class Dimension : MonoBehaviour {
 
     void SetDimentionDither()
     {
+        float cameraState = Camera.main.GetComponent<CameraController>().cameraState;
         float gravityDiff = Vector3.Distance(gravityDown, DimensionManager.dimensionDaddy.visableDimensionVector);
+        gravityDiff = Mathf.Clamp(gravityDiff, 0, cameraState);
         if (Mathf.Abs(lastDiff - gravityDiff) > 0.01 & !(gravityDiff > 1 & lastDiff > 1))//Dont run if it did not change much or it would still be completly invisable 
         {
 

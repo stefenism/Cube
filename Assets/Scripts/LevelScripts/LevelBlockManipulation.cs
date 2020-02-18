@@ -78,12 +78,6 @@ public class LevelBlockManipulation : MonoBehaviour
                 if (hit.transform == transform)
                     Selected();
             }
-             ray = Camera.allCameras[1].ScreenPointToRay(Input.mousePosition);//does the same thing for the second camera
-            if (Physics.Raycast(ray, out hit, 100, layerMask))
-            {
-                if (hit.transform == transform)
-                    Selected();
-            }
 
         }
         if (Input.GetMouseButtonUp(0))
