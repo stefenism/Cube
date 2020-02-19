@@ -12,7 +12,8 @@ public class LevelBlockManipulation : MonoBehaviour
     private float addedXRotation;
     private float addedYRotation;
     public Vector3 rotationChange = Vector3.zero;
-
+    Vector3 hitLocation;
+    Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -28,27 +29,27 @@ public class LevelBlockManipulation : MonoBehaviour
     {
         if (isSelected)
         {
+            
+            delta = Input.mousePosition - lastPos;//Get change in mouse Location. 
+            
+            rotationChange += delta;//Rotate Block
 
-            //Get change in mouse Location. THIS NEEDS TO GET MOVED
-            delta = Input.mousePosition - lastPos;
-
-
-            //Rotate Block
-            rotationChange += delta;
-            //startingTransform.rotation.eulerAngles +rotationChange
             addedXRotation = 0;
             addedYRotation = 0;
+
             if (rotateXAxis)
                 addedXRotation = -rotationChange.x;
             if (rotateYAxis)
                 addedYRotation = rotationChange.y;
+
+            //rotationChange = (Quaternion.Euler(rotationChange)*mainCamera.transform.rotation).eulerAngles;
+
             transform.rotation = startingRotation * Quaternion.Euler(new Vector3 (addedYRotation, addedXRotation, 0));
 
 
-
         }
-        else
-        {
+        else//Move into  place
+        {//TODO: Change to Invoke for performance
             var vec = transform.eulerAngles;
             vec.x = Mathf.Round(vec.x / 90) * 90;
             vec.y = Mathf.Round(vec.y / 90) * 90;
@@ -61,40 +62,27 @@ public class LevelBlockManipulation : MonoBehaviour
 
         lastPos = Input.mousePosition;
 
-        CheckBlockClick();
+
     }
 
     
-    //super bad to do this here. Reallly gotta move this
-    void CheckBlockClick()
+
+
+    public void Selected(bool selected,Vector3 hitPosition = new Vector3())
     {
-        if (Input.GetMouseButtonDown(0))
+        if (selected)
         {
-            int layerMask =  LayerMask.GetMask("BlockHandle");
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit,100,layerMask))
-            {
-                if (hit.transform == transform)
-                    Selected();
-            }
-
+            startingRotation = transform.rotation;
+            Vector3 hitLocation = hitPosition;
+            mainCamera = Camera.main;
         }
-        if (Input.GetMouseButtonUp(0))
+        else
         {
-            Unselected();
+            rotationChange = Vector3.zero;
         }
+        
+        isSelected = selected;
     }
 
-    void Selected()
-    {
-        startingRotation = transform.rotation;
-        isSelected = true;
-    }
 
-    void Unselected()
-    {
-        isSelected = false;
-        rotationChange = Vector3.zero;
-    }
 }

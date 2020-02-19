@@ -49,12 +49,50 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        //HandlePlayerCameraPosition();
         if (Input.GetButtonDown("Shift View"))
             ChangeView();
 
         HandleCameraPositionEase();
+        CheckBlockClick();
+    }
 
+    LevelBlockManipulation selectedManipulationScript;
+
+    /// <summary>
+    /// Uses raycasts to select movable blocks
+    /// </summary>
+    void CheckBlockClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            int layerMask = LayerMask.GetMask("BlockHandle");
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100, layerMask))
+            {
+                if (selectedManipulationScript != null) //make sure nothing is selected
+                {
+                    selectedManipulationScript.Selected(false);
+                    selectedManipulationScript = null;
+                }
+
+                if (hit.transform.TryGetComponent(out selectedManipulationScript))//select a movable block if it can
+                {
+                    selectedManipulationScript.Selected(true,hit.point);
+                }
+                
+            }
+
+        }
+        if (Input.GetMouseButtonUp(0))//release movable block
+        {
+            if(selectedManipulationScript != null)
+            {
+                selectedManipulationScript.Selected(false);
+                selectedManipulationScript = null;
+            }
+                
+        }
     }
 
 
@@ -62,14 +100,14 @@ public class CameraController : MonoBehaviour
 
     public void ChangeView()//changes between camera views
     {
-        if (playerMode)
-        {
+        //if (playerMode)
+        //{
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
+        //}
         playerMode = !playerMode;
     }
 
@@ -83,13 +121,18 @@ public class CameraController : MonoBehaviour
         MoveCamera();
     }
 
-
+    /// <summary>
+    /// Gets mouse input for super camera movement
+    /// </summary>
     void getMouseInput()
     {
         xAdded += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
         yAdded -= Input.GetAxis("Mouse Y") * ySpeed * distance * 0.02f;
     }
 
+    /// <summary>
+    /// Calculates where the camera should be and moves it there
+    /// </summary>
     void MoveCamera()
     {
 

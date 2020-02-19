@@ -6631,8 +6631,8 @@ MonoBehaviour:
   player: {fileID: 201523359}
   playerCameraLocation: {fileID: 875595767}
   distance: 20
-  xSpeed: 150
-  ySpeed: 150
+  xSpeed: 75
+  ySpeed: 75
   yMinLimit: -80
   yMaxLimit: 80
   distanceMin: 10
