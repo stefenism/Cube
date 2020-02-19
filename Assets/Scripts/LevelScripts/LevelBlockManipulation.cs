@@ -13,6 +13,7 @@ public class LevelBlockManipulation : MonoBehaviour
     private float addedYRotation;
     public Vector3 rotationChange = Vector3.zero;
     Vector3 hitLocation;
+    Vector3 movedLocation;
     Camera mainCamera;
 
     // Start is called before the first frame update
@@ -36,13 +37,22 @@ public class LevelBlockManipulation : MonoBehaviour
 
             addedXRotation = 0;
             addedYRotation = 0;
+            Vector3 newV = (delta.y * mainCamera.transform.right);
+
+
+            newV += delta.x * mainCamera.transform.up;
+            movedLocation += new Vector3(newV.y, newV.x, 0);
+            //transform.LookAt(movedLocation);
+            //transform.position = movedLocation;
+
+            //transform.position = movedLocation;
 
             if (rotateXAxis)
-                addedXRotation = -rotationChange.x;
+                addedXRotation = -movedLocation.x;
             if (rotateYAxis)
-                addedYRotation = rotationChange.y;
+                addedYRotation = movedLocation.y;
 
-            //rotationChange = (Quaternion.Euler(rotationChange)*mainCamera.transform.rotation).eulerAngles;
+            
 
             transform.rotation = startingRotation * Quaternion.Euler(new Vector3 (addedYRotation, addedXRotation, 0));
 
@@ -73,7 +83,8 @@ public class LevelBlockManipulation : MonoBehaviour
         if (selected)
         {
             startingRotation = transform.rotation;
-            Vector3 hitLocation = hitPosition;
+            hitLocation = hitPosition;
+            movedLocation = hitPosition;
             mainCamera = Camera.main;
         }
         else

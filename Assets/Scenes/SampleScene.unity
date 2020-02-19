@@ -4285,8 +4285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce499f8179c6f547819436ed5abdd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateXAxis: 0
-  rotateYAxis: 1
+  rotateXAxis: 1
+  rotateYAxis: 0
   isSelected: 0
   rotationChange: {x: 0, y: 0, z: 0}
   delta: {x: 0, y: 0, z: 0}
