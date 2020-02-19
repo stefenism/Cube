@@ -6,11 +6,13 @@ public class LevelBlockManipulation : MonoBehaviour
 {
     public bool rotateXAxis = true;
     public bool rotateYAxis = false;
+    public bool rotateZAxis = false;
 
     public bool isSelected = false;
     private Quaternion startingRotation;
     private float addedXRotation;
     private float addedYRotation;
+    private float addedZRotation;
     public Vector3 rotationChange = Vector3.zero;
     Vector3 hitLocation;
     Vector3 movedLocation;
@@ -37,6 +39,7 @@ public class LevelBlockManipulation : MonoBehaviour
 
             addedXRotation = 0;
             addedYRotation = 0;
+            addedZRotation = 0;
             Vector3 newV = (delta.y * mainCamera.transform.right);
 
 
@@ -48,15 +51,19 @@ public class LevelBlockManipulation : MonoBehaviour
             //transform.position = movedLocation;
 
             if (rotateXAxis)
+            {
                 addedXRotation = -movedLocation.x;
-            if (rotateYAxis)
+            }
+            else if (rotateYAxis)
+            {
                 addedYRotation = movedLocation.y;
+            }
+            else if (rotateZAxis)
+            {
+                addedZRotation = -movedLocation.x;
+            }
 
-            
-
-            transform.rotation = startingRotation * Quaternion.Euler(new Vector3 (addedYRotation, addedXRotation, 0));
-
-
+            transform.rotation = startingRotation * Quaternion.Euler(new Vector3(addedYRotation, addedXRotation, addedZRotation));
         }
         else//Move into  place
         {//TODO: Change to Invoke for performance
@@ -64,15 +71,11 @@ public class LevelBlockManipulation : MonoBehaviour
             vec.x = Mathf.Round(vec.x / 90) * 90;
             vec.y = Mathf.Round(vec.y / 90) * 90;
             vec.z = Mathf.Round(vec.z / 90) * 90;
-            
 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(vec), 0.2f);//Do this but better
         }
 
-
         lastPos = Input.mousePosition;
-
-
     }
 
     

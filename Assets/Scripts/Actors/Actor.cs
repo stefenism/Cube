@@ -24,14 +24,22 @@ public class Actor : MonoBehaviour {
         actorCollider = GetComponent<BoxCollider>();
     }
 
-    void checkForParent(){
+    void checkForParent()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 10)) {
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+        {
             Transform hitTransform = hit.collider.transform;
             transform.SetParent(hitTransform);
-            if(hitTransform.parent.TryGetComponent(out Dimension parentDimension)){
+            if (hitTransform.parent != null && hitTransform.parent.TryGetComponent(out Dimension parentDimension))
+            {
                 checkSetDimension(parentDimension);
             }
+            // why doesn't this work?
+            //else if (hitTransform.TryGetComponent(out Dimension otherDimension))
+            //{
+            //	checkSetDimension(otherDimension);
+            //}
         }
     }
 
