@@ -22,8 +22,7 @@ public class DimensionManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
-    {
+    void Update(){
         visableDimensionVector = player.transform.up;
     }
 
