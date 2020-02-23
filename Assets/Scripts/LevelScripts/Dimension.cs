@@ -34,8 +34,6 @@ public class Dimension : MonoBehaviour {
         UpdateChildRenders();
         SetDimentionDither();
         InvokeRepeating("SetDimentionDither", 0.05f, 0.05f);
-
-        
     }
 
     void Update() {

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour {
     private Rigidbody rb;
     public float speed = 5f;
+    public float climbSpeed = 2f;
     private bool touchingPickupableObject;
     private Pickup itemToPickUp;
     private bool holdingItem = false;
@@ -27,56 +28,37 @@ public class PlayerControls : MonoBehaviour {
 
     void Update()
     {
-        //This probably shold be moved 
-        // if (Input.GetKey(KeyCode.W))
-        // {
-        //     rb.velocity = player.getDimension().up * speed;
-        //     // rb.AddForce(transform.forward * speed);
-
-        // }
-        // if (Input.GetKey(KeyCode.A))
-        // {
-        //     rb.AddForce(-transform.right * speed);
-        // }
-        // if (Input.GetKey(KeyCode.S))
-        // {
-        //     rb.AddForce(-transform.forward * speed);
-        // }
-        // if (Input.GetKey(KeyCode.D))
-        // {
-        //     rb.AddForce(transform.right * speed);
-        // }
-
-        //pickup code
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (touchingPickupableObject & !onLadder)
-            {
-                if (holdingItem)
-                {
-                    DropItem();
-                }
-                else
-                {
-                    GrabItem();
-                }
-
-            }
-        }
-
         checkInput();
     }
 
     void checkInput(){
         horMov = Input.GetAxisRaw("Horizontal");
         vertMov = Input.GetAxisRaw("Vertical");
+
+        checkPickup();
     }
 
     void FixedUpdate() {
 
-        checkMovement();
-        if (onLadder)
-            ManageLadder();
+        if(onLadder){
+            climbLadder();
+        }
+        else{
+            checkMovement();
+        }
+    }
+
+    void checkPickup(){
+        if(Input.GetKeyDown(KeyCode.E)){
+            if(touchingPickupableObject && !onLadder){
+                if(holdingItem){
+                    DropItem();
+                }
+                else{
+                    GrabItem();
+                }
+            }
+        }
     }
 
     void checkMovement() {
@@ -98,36 +80,30 @@ public class PlayerControls : MonoBehaviour {
             }
             
             if (onLadder){
-                gravitySpeed = Vector3.zero; // temporary ladder code. To be changed when we make ladders less garbage
-                runForce = runForce*0.1f;
+                gravitySpeed = Vector3.zero;
             }
-
-
-            // Debug.Log("inside setting velocity: " + verticalSpeed);
 
             rb.velocity += Vector3.ClampMagnitude(runForce + gravitySpeed, maxSpeed);
         }
     }
 
+    void climbLadder(){
+        rb.velocity = (vertMov * transform.up * climbSpeed);
+    }
+
     void GrabItem()
     {
-
         holdingItem = true;
         itemToPickUp.transform.SetParent(transform);
         itemToPickUp.transform.localPosition = new Vector3(0, 1, 0);
-        //itemToPickUp.GetComponent<Collider>().enabled = false;
-
-
     }
 
     void DropItem()
     {
-        if (holdingItem)
-        {
+        if (holdingItem){
             holdingItem = false;
             itemToPickUp.transform.localPosition = Vector3.zero;
             itemToPickUp.transform.SetParent(transform.parent);
-            //itemToPickUp.GetComponent<Collider>().enabled = true;
         }
     }
     void OnTriggerEnter(Collider other)
@@ -166,12 +142,5 @@ public class PlayerControls : MonoBehaviour {
             onLadder = false;
 
         }
-    }
-
-
-    void ManageLadder()//pushes the player up when on a ladder
-    {
-        rb.AddForce(transform.up *40.3f);
-        //rb.velocity = ((rb.velocity + transform.up) * speed);
     }
 }
