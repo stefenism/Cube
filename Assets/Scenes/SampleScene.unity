@@ -6639,6 +6639,7 @@ MonoBehaviour:
   distanceMin: 10
   distanceMax: 30
   cameraState: 0
+  sParticles: {fileID: 839578651}
 --- !u!1 &185559462
 GameObject:
   m_ObjectHideFlags: 0
@@ -30127,7 +30128,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e71a9fb8059016245af73b0cb28d085e, type: 2}
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -30188,7 +30189,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -32158,7 +32159,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.001
+      scalar: 0.0025
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -34842,6 +34843,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b5928a54b436046a0640739b9f1bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeInSpeed: 0.15
+  fadeOutSpeed: 0.15
 --- !u!1 &840963347
 GameObject:
   m_ObjectHideFlags: 0

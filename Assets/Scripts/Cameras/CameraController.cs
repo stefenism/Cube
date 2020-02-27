@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour
    
     public float cameraState;
 
+    public StarParticles sParticles;
+
     // Use this for initialization
     void Start()
     {
@@ -100,14 +102,14 @@ public class CameraController : MonoBehaviour
 
     public void ChangeView()//changes between camera views
     {
-        //if (playerMode)
-        //{
-
-        //}
-        //else
-        //{
-
-        //}
+        if (playerMode)
+        {
+            sParticles.Fade(true);
+        }
+        else
+        {
+            sParticles.Fade(false);
+        }
         playerMode = !playerMode;
     }
 

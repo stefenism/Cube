@@ -5,15 +5,22 @@ using UnityEngine;
 public class StarParticles : MonoBehaviour
 {
 
-    
+
     ParticleSystem ps;
-    Gradient grad = new Gradient();
+    ParticleSystemRenderer psR;
+
+    float opac = 0;
+    bool fadeDirection;
+
+    public float fadeInSpeed = 0.15f;
+    public float fadeOutSpeed = 0.15f;
     // Start is called before the first frame update
     void Start()
     {
 
-        ParticleSystem ps = GetComponent<ParticleSystem>();
-        
+        ps = GetComponent<ParticleSystem>();
+        psR = GetComponent<ParticleSystemRenderer>();
+
     }
 
     // Update is called once per frame
@@ -21,10 +28,49 @@ public class StarParticles : MonoBehaviour
     {
 
 
-        //var col = ps.colorOverLifetime;
-        
-        //grad.SetKeys(new GradientColorKey[] { new GradientColorKey(col.color.color, 0.0f), new GradientColorKey(col.color.color, 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(0.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
+    }
 
-        //col.color = grad;
+    public void Fade(bool fadeIn)
+    {
+        if (fadeIn)
+            ps.Play();
+        opac = psR.material.GetFloat("_Opacity");
+        fadeDirection = fadeIn;
+        InvokeRepeating("HandleFade", 0.05f, 0.05f);
+    }
+
+
+
+    void HandleFade()
+    {
+        if (fadeDirection)//add or subtract opac
+        {
+            opac += fadeInSpeed;
+        }
+        else
+        {
+            opac -= fadeOutSpeed;
+        }
+
+        psR.material.SetFloat("_Opacity", opac);//Change the Opacity
+
+        if (fadeDirection)
+        {
+            if (opac >= 1)
+            {
+                //Finish Fade in
+                CancelInvoke("HandleFade");
+            }
+        }
+        else
+        {
+            if (opac <= 0)
+            {
+                //Finish Fade Out
+                ps.Clear();
+                CancelInvoke("HandleFade");
+
+            }
+        }
     }
 }

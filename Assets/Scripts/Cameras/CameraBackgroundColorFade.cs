@@ -15,10 +15,10 @@ public class CameraBackgroundColorFade : MonoBehaviour
     }
 
 
-    float amplitudeX = 10.0f;
-    float amplitudeY = 5.0f;
-    float omegaX = 1.0f;
-    float omegaY = 5.0f;
+    float amplitudeX = 7.0f;
+    float amplitudeY = 3.0f;
+    float omegaX = 0.25f;
+    float omegaY = 0.5f;
     float index;
     // Update is called once per frame
     void Update()
