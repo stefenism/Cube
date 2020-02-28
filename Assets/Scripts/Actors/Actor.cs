@@ -31,10 +31,9 @@ public class Actor : MonoBehaviour {
         {
             Transform hitTransform = hit.collider.transform;
             transform.SetParent(hitTransform.parent);
-            if (hitTransform.parent.TryGetComponent(out Dimension parentDimension)){
-                if(hitTransform.parent != null ){
-                    checkSetDimension(parentDimension);
-                }
+            Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
+            if(currentDimension != null){
+                checkSetDimension(currentDimension);
             }
             // why doesn't this work?
             //else if (hitTransform.TryGetComponent(out Dimension otherDimension))
