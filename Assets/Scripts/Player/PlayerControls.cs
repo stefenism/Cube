@@ -1,85 +1,111 @@
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : MonoBehaviour
+{
     private Rigidbody rb;
     public float speed = 5f;
     public float climbSpeed = 2f;
     private bool touchingPickupableObject;
     private Pickup itemToPickUp;
     private bool holdingItem = false;
-    private bool onLadder= false;
+    private bool onLadder = false;
 
     private float horMov;
     private float vertMov;
 
-    [Range(0,1)]
+    public GameObject playerModel;
+    Animator playerAnimator;
+
+    [Range(0, 1)]
     public float accelerationFactor;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float decelFactor;
     public float maxSpeed = 10;
 
     private PlayerActor player;
 
+    Vector3 runForce;
+
+    float oldEulerRotation = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerActor>();
+        playerAnimator = playerModel.GetComponent<Animator>();
     }
 
     void Update()
     {
-        checkInput();
+        CheckInput();
+        AnimatePlayerModel();
+
+
     }
 
-    void checkInput(){
+    void CheckInput()
+    {
         horMov = Input.GetAxisRaw("Horizontal");
         vertMov = Input.GetAxisRaw("Vertical");
 
         checkPickup();
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
 
-        if(onLadder){
+        if (onLadder)
+        {
             climbLadder();
         }
-        else{
+        else
+        {
             checkMovement();
         }
     }
 
-    void checkPickup(){
-        if(Input.GetKeyDown(KeyCode.E)){
-            if(touchingPickupableObject && !onLadder){
-                if(holdingItem){
-                    DropItem();
-                }
-                else{
-                    GrabItem();
-                }
+    void checkPickup()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+            if (holdingItem)
+            {
+                DropItem();
             }
+            else
+            {
+                if (touchingPickupableObject && !onLadder)
+                    GrabItem();
+            }
+
         }
     }
 
-    void checkMovement() {
+    void checkMovement()
+    {
 
-        if(player.getDimension() != null){
+        if (player.getDimension() != null)
+        {
 
-            Vector3 runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
             float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
 
             Vector3 verticalSpeed = vertMov * player.getDimension().up * speed * modifier;
             Vector3 horizontalSpeed = horMov * player.getDimension().right * speed * modifier;
             Vector3 gravitySpeed = player.getDimension().gravity;
 
-            if(vertMov != 0 || horMov != 0){
+            if (vertMov != 0 || horMov != 0)
+            {
                 runForce += verticalSpeed + horizontalSpeed;
             }
-            else{
+            else
+            {
                 runForce -= rb.velocity * modifier;
             }
-            
-            if (onLadder){
+
+            if (onLadder)
+            {
                 gravitySpeed = Vector3.zero;
             }
 
@@ -87,7 +113,8 @@ public class PlayerControls : MonoBehaviour {
         }
     }
 
-    void climbLadder(){
+    void climbLadder()
+    {
         rb.velocity = (vertMov * transform.up * climbSpeed);
     }
 
@@ -95,12 +122,14 @@ public class PlayerControls : MonoBehaviour {
     {
         holdingItem = true;
         itemToPickUp.transform.SetParent(transform);
-        itemToPickUp.transform.localPosition = new Vector3(0, 1, 0);
+        itemToPickUp.transform.localPosition = new Vector3(0, 0.65f, 0);
     }
 
     void DropItem()
     {
-        if (holdingItem){
+
+        if (holdingItem)
+        {
             holdingItem = false;
             itemToPickUp.transform.localPosition = Vector3.zero;
             itemToPickUp.transform.SetParent(transform.parent);
@@ -142,5 +171,52 @@ public class PlayerControls : MonoBehaviour {
             onLadder = false;
 
         }
+    }
+
+    void AnimatePlayerModel()
+    {
+        if (horMov + vertMov != 0)//set run speed for animation
+        {
+            playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 7);
+        }
+        else
+        {
+            playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 10);
+        }
+
+        if (runForce.magnitude > 0.1)//rotate player model
+        {
+            //Determins how it should be rotated based on the player rotation and force direction
+            Quaternion target = Quaternion.Euler(playerModel.transform.localRotation.eulerAngles.x, Quaternion.LookRotation(transform.rotation * new Vector3(runForce.x, -runForce.y, runForce.z)).eulerAngles.y, playerModel.transform.localRotation.eulerAngles.z);
+            playerModel.transform.localRotation = Quaternion.Lerp(playerModel.transform.localRotation, target, 0.2f);
+
+            float turnForce = Quaternion.Angle(playerModel.transform.localRotation, target) / 40;
+
+
+            if (oldEulerRotation - playerModel.transform.eulerAngles.y > 2)
+            {
+                playerAnimator.SetFloat("Rotation", -turnForce);
+            }
+            else if (oldEulerRotation - playerModel.transform.eulerAngles.y < -2)
+            {
+                playerAnimator.SetFloat("Rotation", turnForce);
+            }
+            else
+            {
+                playerAnimator.SetFloat("Rotation", 0);
+            }
+
+
+
+            oldEulerRotation = playerModel.transform.eulerAngles.y;
+
+        }
+        else
+        {
+            playerAnimator.SetFloat("Rotation", 0);
+        }
+
+
+
     }
 }
