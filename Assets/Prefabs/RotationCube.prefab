@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 237428791473906690}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5436547619812565952}
   - component: {fileID: 4720590557691699507}
   - component: {fileID: 2420123143903642812}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 8298903290069310357}
   - component: {fileID: 5517885427254303954}
   - component: {fileID: 886390169205497670}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1055,7 +1055,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6374134017214285545}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1124,7 +1124,7 @@ GameObject:
   - component: {fileID: 3002440159774648688}
   - component: {fileID: 5708854737684203919}
   - component: {fileID: 7374437979758990934}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1581,7 +1581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3953457993494682286}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1890,7 +1890,7 @@ GameObject:
   - component: {fileID: 6924006986060850271}
   - component: {fileID: 6708435461645563566}
   - component: {fileID: 3050671009769416727}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,7 +1982,7 @@ GameObject:
   - component: {fileID: 2164616236398296688}
   - component: {fileID: 1027389412088690976}
   - component: {fileID: 6150401228471622193}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2347,7 +2347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7416205763073366299}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2473,7 +2473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400186219065691215}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2595,7 +2595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7584539381344109015}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2845,7 +2845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7730908378489501916}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3374,7 +3374,7 @@ GameObject:
   - component: {fileID: 4362415249599420389}
   - component: {fileID: 5784056924590768278}
   - component: {fileID: 4753209497689955582}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3558,7 +3558,7 @@ GameObject:
   - component: {fileID: 144732776851478585}
   - component: {fileID: 8363993127219525386}
   - component: {fileID: 4658493834266825736}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3831,7 +3831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7602011663011165445}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6532,7 +6532,7 @@ GameObject:
   - component: {fileID: 2489807274670856072}
   - component: {fileID: 2489807274670856075}
   - component: {fileID: 8301381799429400206}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6597,8 +6597,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &2489807274733151397
 GameObject:
   m_ObjectHideFlags: 0
@@ -7632,6 +7632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateXAxis: 0
   rotateYAxis: 1
+  rotateZAxis: 0
   isSelected: 0
   rotationChange: {x: 0, y: 0, z: 0}
   delta: {x: 0, y: 0, z: 0}
@@ -7920,7 +7921,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8427999372394397304}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7989,7 +7990,7 @@ GameObject:
   - component: {fileID: 4275466409524748286}
   - component: {fileID: 5162323502361160827}
   - component: {fileID: 6535165240762830638}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8054,8 +8055,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &2541298927994546876
 GameObject:
   m_ObjectHideFlags: 0
@@ -9169,7 +9170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6946008650595208277}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9479,7 +9480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5715606406822794576}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10156,7 +10157,7 @@ GameObject:
   - component: {fileID: 1211552546103231065}
   - component: {fileID: 6440165567939294401}
   - component: {fileID: 8763786748375910973}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10248,7 +10249,7 @@ GameObject:
   - component: {fileID: 920406661047773064}
   - component: {fileID: 6947826178076777221}
   - component: {fileID: 3029920873826503061}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10313,8 +10314,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &3578832091070378805
 GameObject:
   m_ObjectHideFlags: 0
@@ -10787,7 +10788,7 @@ GameObject:
   - component: {fileID: 6824919317718207773}
   - component: {fileID: 4017719602940719045}
   - component: {fileID: 5001125270488997435}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10971,7 +10972,7 @@ GameObject:
   - component: {fileID: 6119811471699464553}
   - component: {fileID: 8678552453384496428}
   - component: {fileID: 1136515199813989509}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11523,7 +11524,7 @@ GameObject:
   - component: {fileID: 6422474264803961346}
   - component: {fileID: 1968093160656783617}
   - component: {fileID: 977816983724910231}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11588,8 +11589,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &4191047684019043400
 GameObject:
   m_ObjectHideFlags: 0
@@ -11786,7 +11787,7 @@ GameObject:
   - component: {fileID: 8431423837620590966}
   - component: {fileID: 7017918285147173403}
   - component: {fileID: 1617939462871024015}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11878,7 +11879,7 @@ GameObject:
   - component: {fileID: 5205817147884292340}
   - component: {fileID: 3185167224721703381}
   - component: {fileID: 3276697069935286188}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12062,7 +12063,7 @@ GameObject:
   - component: {fileID: 4699871596658857373}
   - component: {fileID: 835486401138134120}
   - component: {fileID: 131319776481281918}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12611,7 +12612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4830165514259725441}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12924,7 +12925,7 @@ GameObject:
   - component: {fileID: 1346203836759857640}
   - component: {fileID: 637178127669013127}
   - component: {fileID: 8178354026595571702}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12989,8 +12990,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &4735503365936880884
 GameObject:
   m_ObjectHideFlags: 0
@@ -14475,7 +14476,7 @@ GameObject:
   - component: {fileID: 8687828872467760474}
   - component: {fileID: 1851507826379218135}
   - component: {fileID: 9534119836590704}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14932,7 +14933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3309636182171410572}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15146,7 +15147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 962190533750175763}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15948,7 +15949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5527830065653345573}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15985,7 +15986,7 @@ GameObject:
   - component: {fileID: 867510635202389336}
   - component: {fileID: 1766699913845122118}
   - component: {fileID: 5298223448538372138}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16261,7 +16262,7 @@ GameObject:
   - component: {fileID: 4990105521909062154}
   - component: {fileID: 8128027921991716400}
   - component: {fileID: 8077177663147124936}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16353,7 +16354,7 @@ GameObject:
   - component: {fileID: 2670199021850143243}
   - component: {fileID: 2107052951717560271}
   - component: {fileID: 2330087524506467633}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16997,7 +16998,7 @@ GameObject:
   - component: {fileID: 5729756957309286355}
   - component: {fileID: 146462061298432086}
   - component: {fileID: 7950453379878948239}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17457,7 +17458,7 @@ GameObject:
   - component: {fileID: 3226417744729454423}
   - component: {fileID: 6994078279324916958}
   - component: {fileID: 1332797220885767701}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Side_Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17522,8 +17523,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.8, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &6483794820093833710
 GameObject:
   m_ObjectHideFlags: 0
@@ -17812,7 +17813,7 @@ GameObject:
   - component: {fileID: 290414652061499382}
   - component: {fileID: 310356044071984068}
   - component: {fileID: 4208378805044735116}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18180,7 +18181,7 @@ GameObject:
   - component: {fileID: 1526997057323685023}
   - component: {fileID: 1264382685353487537}
   - component: {fileID: 7375186161596182597}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18364,7 +18365,7 @@ GameObject:
   - component: {fileID: 3286258689554176307}
   - component: {fileID: 2365480794593866375}
   - component: {fileID: 54020143099709805}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: West
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19744,7 +19745,7 @@ GameObject:
   - component: {fileID: 5107355446108630633}
   - component: {fileID: 7894982618724417421}
   - component: {fileID: 114774053801242969}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: East
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20204,7 +20205,7 @@ GameObject:
   - component: {fileID: 6998695233749985083}
   - component: {fileID: 8497261294370457899}
   - component: {fileID: 1550076647523470603}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20388,7 +20389,7 @@ GameObject:
   - component: {fileID: 703090396340402631}
   - component: {fileID: 2498109822734838306}
   - component: {fileID: 8378659684005470297}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: South
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20569,7 +20570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 923000762543268752}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22475,7 +22476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5773878636605325175}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Boundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22969,7 +22970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2442162146683002878}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}

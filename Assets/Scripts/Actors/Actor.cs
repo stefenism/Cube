@@ -29,17 +29,22 @@ public class Actor : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
         {
-            Transform hitTransform = hit.collider.transform;
-            transform.SetParent(hitTransform.parent);
-            Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
-            if(currentDimension != null){
-                checkSetDimension(currentDimension);
+            Dimension possibleDimension = hit.collider.gameObject.GetComponent<Dimension>();
+            if (possibleDimension != null)
+            {
+                transform.SetParent(possibleDimension.transform);
+                checkSetDimension(possibleDimension);
             }
-            // why doesn't this work?
-            //else if (hitTransform.TryGetComponent(out Dimension otherDimension))
-            //{
-            //	checkSetDimension(otherDimension);
-            //}
+            else
+            {
+                Transform hitTransform = hit.collider.transform;
+                transform.SetParent(hitTransform.parent);
+                Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
+                if (currentDimension != null)
+                {
+                    checkSetDimension(currentDimension);
+                }
+            }
         }
     }
 
