@@ -22,8 +22,28 @@ public class DimensionManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        SetPineconeLayers();
+    }
+
     void Update(){
         visableDimensionVector = player.transform.up;
+    }
+
+    void SetPineconeLayers()
+    {
+
+        for (int i = 6; i < 32; i++)
+        {
+            for (int f = i+1; f < 32; f++)
+            {
+                Physics.IgnoreLayerCollision(i, f,true);
+            }
+            Physics.IgnoreLayerCollision(i, 5, true);
+
+        }
+
     }
 
     public void addDimension(Dimension newDimension){dimensionList.Add(newDimension);}

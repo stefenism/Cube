@@ -27,24 +27,46 @@ public class Actor : MonoBehaviour {
     void checkForParent()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+        LayerMask mask = 1 << gameObject.layer;
+        
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 10,mask))
         {
-            Dimension possibleDimension = hit.collider.gameObject.GetComponent<Dimension>();
-            if (possibleDimension != null)
+            print("hit");
+            Transform currentObject = hit.transform;
+            bool notFound = true;
+            while(currentObject!=null && notFound)
             {
-                transform.SetParent(possibleDimension.transform);
-                checkSetDimension(possibleDimension);
-            }
-            else
-            {
-                Transform hitTransform = hit.collider.transform;
-                transform.SetParent(hitTransform.parent);
-                Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
-                if (currentDimension != null)
+                if(currentObject.TryGetComponent<Dimension>(out Dimension dim))
                 {
-                    checkSetDimension(currentDimension);
+                    transform.SetParent(dim.transform);
+                    checkSetDimension(dim);
+                    notFound = false;
                 }
+                else
+                {
+                    currentObject = currentObject.parent;
+                }
+                
             }
+           
+
+            //Dimension possibleDimension = hit.collider.gameObject.GetComponent<Dimension>();
+            //if (possibleDimension != null)
+            //{
+            //    transform.SetParent(possibleDimension.transform);
+            //    checkSetDimension(possibleDimension);
+
+            //}
+            //else
+            //{
+            //    Transform hitTransform = hit.collider.transform;
+            //    transform.SetParent(hitTransform.parent);
+            //    Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
+            //    if (currentDimension != null)
+            //    {
+            //        checkSetDimension(currentDimension);
+            //    }
+            //}
         }
     }
 

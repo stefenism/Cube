@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            int layerMask = LayerMask.GetMask("BlockHandle");
+            int layerMask = LayerMask.GetMask("UI");
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100, layerMask))
