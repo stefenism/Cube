@@ -11765,8 +11765,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMode: 1
-  player: {fileID: 201523359}
-  playerCameraLocation: {fileID: 875595767}
+  player: {fileID: 347036176}
+  playerCameraLocation: {fileID: 2010870534}
   distance: 20
   xSpeed: 75
   ySpeed: 75
@@ -11775,7 +11775,7 @@ MonoBehaviour:
   distanceMin: 10
   distanceMax: 30
   cameraState: 0
-  sParticles: {fileID: 0}
+  sParticles: {fileID: 58436185}
 --- !u!1 &185559462
 GameObject:
   m_ObjectHideFlags: 0
