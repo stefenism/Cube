@@ -13,7 +13,6 @@ TagManager:
   - UI
   - 
   - 
-  - BlockHandle
   - 
   - 
   - 
@@ -37,6 +36,7 @@ TagManager:
   - 
   - 
   - 
+  - Up
   m_SortingLayers:
   - name: Default
     uniqueID: 0

@@ -54,11 +54,11 @@ public class LevelBlockManipulation : MonoBehaviour
             {
                 addedXRotation = -movedLocation.x;
             }
-            else if (rotateYAxis)
+            if (rotateYAxis)
             {
                 addedYRotation = movedLocation.y;
             }
-            else if (rotateZAxis)
+            if (rotateZAxis)
             {
                 addedZRotation = -movedLocation.x;
             }

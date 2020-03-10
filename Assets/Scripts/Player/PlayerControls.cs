@@ -91,8 +91,8 @@ public class PlayerControls : MonoBehaviour
             runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
             float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
 
-            Vector3 verticalSpeed = vertMov * player.getDimension().up * speed * modifier;
-            Vector3 horizontalSpeed = horMov * player.getDimension().right * speed * modifier;
+            Vector3 verticalSpeed = vertMov * transform.forward * speed * modifier;
+            Vector3 horizontalSpeed = horMov * transform.right * speed * modifier;
             Vector3 gravitySpeed = player.getDimension().gravity;
 
             if (vertMov != 0 || horMov != 0)
@@ -186,7 +186,7 @@ public class PlayerControls : MonoBehaviour
 
         if (runForce.magnitude > 0.1)//rotate player model
         {
-            //Determins how it should be rotated based on the player rotation and force direction
+            //Determins how it should be rotated based on the player rotation and force direction -- does not work with x rotation. must fix
             Quaternion target = Quaternion.Euler(playerModel.transform.localRotation.eulerAngles.x, Quaternion.LookRotation(transform.rotation * new Vector3(runForce.x, -runForce.y, runForce.z)).eulerAngles.y, playerModel.transform.localRotation.eulerAngles.z);
             playerModel.transform.localRotation = Quaternion.Lerp(playerModel.transform.localRotation, target, 0.2f);
 
