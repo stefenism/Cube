@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
+
     public PlayerControls player;
+    public GameObject playerCameraLocation;
 
     private enum PlayerState{
         LIVING,

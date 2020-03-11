@@ -20,6 +20,7 @@ public class DimensionManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        player = FindObjectOfType<PlayerManager>().gameObject;
     }
 
     void Start()

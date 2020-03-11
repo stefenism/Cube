@@ -44,8 +44,6 @@ public class PlayerControls : MonoBehaviour
     {
         CheckInput();
         AnimatePlayerModel();
-
-
     }
 
     void CheckInput()

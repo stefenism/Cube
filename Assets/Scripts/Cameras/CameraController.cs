@@ -29,7 +29,13 @@ public class CameraController : MonoBehaviour
 
     public StarParticles sParticles;
 
-    // Use this for initialization
+    private void Awake()
+    {
+        PlayerManager pm = FindObjectOfType<PlayerManager>();
+        player = pm.gameObject;
+        playerCameraLocation = pm.playerCameraLocation.transform;
+    }
+
     void Start()
     {
         Vector3 angles = transform.eulerAngles;
@@ -52,7 +58,9 @@ public class CameraController : MonoBehaviour
     {
 
         if (Input.GetButtonDown("Shift View"))
+        {
             ChangeView();
+        }
 
         HandleCameraPositionEase();
         CheckBlockClick();
@@ -137,8 +145,6 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void MoveCamera()
     {
-
-
         if (player.transform)
         {
             //for smoothing mouse input
@@ -147,14 +153,9 @@ public class CameraController : MonoBehaviour
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);
 
-
-
             Quaternion rotation = player.transform.rotation * Quaternion.Euler(y, x, 0);
 
-
-
             distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
-
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + player.transform.position;
@@ -171,8 +172,6 @@ public class CameraController : MonoBehaviour
         {
             if (cameraState <= 1)
             {
-                
-
                 cameraState += 0.1f;
             }
             else
@@ -207,9 +206,13 @@ public class CameraController : MonoBehaviour
     public static float ClampAngle(float angle, float min, float max)
     {
         if (angle < -360F)
+        {
             angle += 360F;
-        if (angle > 360F)
+        }
+        else if (angle > 360F)
+        {
             angle -= 360F;
+        }
         return Mathf.Clamp(angle, min, max);
     }
 }
