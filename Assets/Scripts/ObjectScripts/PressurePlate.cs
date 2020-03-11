@@ -7,42 +7,52 @@ public class PressurePlate : MonoBehaviour
     List<Collider> onPlate = new List<Collider>();
     public GameObject plateButton;
     public GameObject[] gateObjects;
+    public PressurePlatable[] platableObjects;
     bool platePressed  = false;
-    float gatePosition = 1;
+    float positionNormal = 1.0f;
     public float animationSpeed = 0.05f;
-
 
     void Start()
     {
 
     }
 
-
     void Update()
     {
         //animates gates and plate
         if (platePressed)
         {
-            if (gatePosition>0)//move gate dwon
+            if (positionNormal>0.0f)//move gate dwon
             {
-                gatePosition -= animationSpeed;
+                positionNormal -= animationSpeed;
                 plateButton.transform.localPosition = plateButton.transform.localPosition - new Vector3(0, 0.04f * animationSpeed, 0);
+                // old way (doesn't work at different scales, for example)
                 foreach (GameObject g in gateObjects)
                 {
                     g.transform.localPosition = g.transform.localPosition - new Vector3(0, 0.24f * animationSpeed, 0);
                 }
-
+                // new way
+                foreach (PressurePlatable p in platableObjects)
+                {
+                    p.UpdateWithNormalizedPosition(positionNormal);
+                }
             }
         }
         else
         {
-            if (gatePosition < 1)//move gate up
+            if (positionNormal < 1.0f)//move gate up
             {
-                gatePosition += animationSpeed;
-                plateButton.transform.localPosition = plateButton.transform.localPosition + new Vector3(0, 0.04f*animationSpeed, 0);
+                positionNormal += animationSpeed;
+                plateButton.transform.localPosition = plateButton.transform.localPosition + new Vector3(0, 0.04f * animationSpeed, 0);
+                // old hard-coded way
                 foreach (GameObject g in gateObjects)
                 {
                     g.transform.localPosition = g.transform.localPosition + new Vector3(0, 0.24f * animationSpeed, 0);
+                }
+                // new way
+                foreach (PressurePlatable p in platableObjects)
+                {
+                    p.UpdateWithNormalizedPosition(positionNormal);
                 }
             }
         }
