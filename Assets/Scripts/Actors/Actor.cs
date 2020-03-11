@@ -28,15 +28,15 @@ public class Actor : MonoBehaviour {
     {
         RaycastHit hit;
         LayerMask mask = 1 << gameObject.layer;
-        
+
+        // the player needs to be on the "Up" layer for this to work
         if (Physics.Raycast(transform.position, -transform.up, out hit, 10,mask))
         {
-            print("hit");
             Transform currentObject = hit.transform;
             bool notFound = true;
             while(currentObject!=null && notFound)
             {
-                if(currentObject.TryGetComponent<Dimension>(out Dimension dim))
+                if (currentObject.TryGetComponent<Dimension>(out Dimension dim))
                 {
                     transform.SetParent(dim.transform);
                     checkSetDimension(dim);
@@ -46,27 +46,7 @@ public class Actor : MonoBehaviour {
                 {
                     currentObject = currentObject.parent;
                 }
-                
             }
-           
-
-            //Dimension possibleDimension = hit.collider.gameObject.GetComponent<Dimension>();
-            //if (possibleDimension != null)
-            //{
-            //    transform.SetParent(possibleDimension.transform);
-            //    checkSetDimension(possibleDimension);
-
-            //}
-            //else
-            //{
-            //    Transform hitTransform = hit.collider.transform;
-            //    transform.SetParent(hitTransform.parent);
-            //    Dimension currentDimension = hitTransform.gameObject.GetComponentInParent(typeof(Dimension)) as Dimension;
-            //    if (currentDimension != null)
-            //    {
-            //        checkSetDimension(currentDimension);
-            //    }
-            //}
         }
     }
 
