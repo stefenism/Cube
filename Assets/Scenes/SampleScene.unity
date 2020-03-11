@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8092,6 +8092,49 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160930682}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &161547871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 161547872}
+  - component: {fileID: 161547873}
+  m_Layer: 0
+  m_Name: edgeDetect
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &161547872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161547871}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17400002, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 1452343551}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &161547873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161547871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c73fe9e245fa14d9dd3ce81964e490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &163804786
 GameObject:
   m_ObjectHideFlags: 0
@@ -9816,6 +9859,7 @@ GameObject:
   - component: {fileID: 201523360}
   - component: {fileID: 201523367}
   - component: {fileID: 201523368}
+  - component: {fileID: 201523365}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -9830,7 +9874,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201523359}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 931cd77f024b5394eabf405ff3f7b204, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.26565903
@@ -9917,6 +9961,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &201523365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201523359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e4463f54703a147afcd2762a7726fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &201523366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9929,12 +9986,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf71c3740d6edf4b819de10f13b927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  playerManager: {fileID: 0}
+  speed: 25
   climbSpeed: 2
   playerModel: {fileID: 1452343549}
-  accelerationFactor: 0.912
-  decelFactor: 0.469
-  maxSpeed: 0.3
+  accelerationFactor: 0.69
+  decelFactor: 0.42
+  maxSpeed: 6
 --- !u!136 &201523367
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -24668,7 +24726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490680245}
   m_LocalRotation: {x: 0.61908025, y: 0.0041060057, z: -0.0052084443, w: 0.7852998}
-  m_LocalPosition: {x: 0.372, y: 0.682, z: 0.369}
+  m_LocalPosition: {x: 0.372, y: 0.6815, z: 0.3484}
   m_LocalScale: {x: 0.25, y: 0.4, z: 0.25}
   m_Children: []
   m_Father: {fileID: 349168559}
