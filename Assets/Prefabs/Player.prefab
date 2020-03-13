@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 868043583781789491}
   playerCameraLocation: {fileID: 868043584185391203}
+  playerStarParticles: {fileID: 868043584150383502}
 --- !u!1 &868043584150383490
 GameObject:
   m_ObjectHideFlags: 0

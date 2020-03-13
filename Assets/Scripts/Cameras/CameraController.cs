@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
         PlayerManager pm = FindObjectOfType<PlayerManager>();
         player = pm.gameObject;
         playerCameraLocation = pm.playerCameraLocation.transform;
+        sParticles = pm.playerStarParticles;
     }
 
     void Start()

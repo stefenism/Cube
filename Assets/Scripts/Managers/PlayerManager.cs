@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour {
 
     public PlayerControls player;
     public GameObject playerCameraLocation;
+    public StarParticles playerStarParticles;
 
     private enum PlayerState{
         LIVING,
