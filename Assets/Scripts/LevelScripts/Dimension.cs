@@ -192,12 +192,20 @@ public class Dimension : MonoBehaviour
         // checkIfActor(collider, TriggerAction.EXIT);
     }
 
+    /// <summary>
+    /// Calculates how visable objects in this dimension sould be
+    /// </summary>
     void SetDimentionDither()
     {
         float cameraState = Camera.main.GetComponent<CameraController>().cameraState;
-        float gravityDiff = Vector3.Distance(gravityDown, DimensionManager.dimensionDaddy.visableDimensionVector);
-        gravityDiff = Mathf.Clamp(gravityDiff, 0, cameraState);
+        Vector3 visableDimensionVector = DimensionManager.dimensionDaddy.visableDimensionVector;
+        float gravityDiff = Vector3.Distance(gravityDown, visableDimensionVector);
+        float distanceDiff = Vector3.SignedAngle(transform.position, DimensionManager.dimensionDaddy.currentDimesionPosition, visableDimensionVector);
 
+        Vector3 difference = DimensionManager.dimensionDaddy.currentDimesionPosition - transform.position;
+        float distance = Mathf.Abs(difference.x * visableDimensionVector.x) + Mathf.Abs(difference.y * visableDimensionVector.y) + Mathf.Abs(difference.z * visableDimensionVector.z);
+        gravityDiff += distance / 6;
+        gravityDiff = Mathf.Clamp(gravityDiff, 0, cameraState);
 
         if (Mathf.Abs(lastDiff - gravityDiff) > 0.01 & !(gravityDiff > 1 & lastDiff > 1))//Dont run if it did not change much or it would still be completly invisable 
         {
@@ -224,6 +232,8 @@ public class Dimension : MonoBehaviour
         }
 
     }
+
+   
 
     void UpdateChildRenders()
     {

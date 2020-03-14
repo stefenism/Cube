@@ -10,7 +10,8 @@ public class EdgeDetect : MonoBehaviour {
     }
 
     private void Update() {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
+        LayerMask mask = 1 << gameObject.layer;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius,mask);
         if(hitColliders.Length == 0){
             player.fullStop();
         }

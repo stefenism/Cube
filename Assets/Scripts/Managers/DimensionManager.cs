@@ -8,6 +8,7 @@ public class DimensionManager : MonoBehaviour {
 
     public GameObject player;
     public Vector3 visableDimensionVector  = Vector3.zero;//The direction that is visable in the planer view
+    public Vector3 currentDimesionPosition = Vector3.zero;
 
     [SerializeField]
     private List<Dimension> dimensionList = new List<Dimension>();
@@ -29,8 +30,15 @@ public class DimensionManager : MonoBehaviour {
     }
 
     void Update(){
-        visableDimensionVector = player.transform.up;
+        
+        if(player.transform.parent != null)
+        {
+            visableDimensionVector = player.transform.parent.transform.up.normalized;
+            currentDimesionPosition = player.transform.parent.transform.position;
+        }
+            
     }
+
 
     void SetPineconeLayers()
     {

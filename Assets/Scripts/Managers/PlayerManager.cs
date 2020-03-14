@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour {
     public PlayerControls player;
     public GameObject playerCameraLocation;
     public StarParticles playerStarParticles;
+    public int keyCountCurrent = 0;
+    public int keyCountTotal = 0;
 
     private enum PlayerState{
         LIVING,
@@ -24,6 +26,22 @@ public class PlayerManager : MonoBehaviour {
     // public void setPlayer(PlayerControls player){
     //     playerDaddy.player = player;
     // }
+
+    public bool PayKeys(int cost)
+    {
+        if (keyCountCurrent >= cost)
+        {
+            keyCountCurrent -= cost;
+            return true;
+        }
+        return false;
+    }
+
+    public void GainKey()
+    {
+        keyCountCurrent++;
+        keyCountTotal++;
+    }
 
   
 
