@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class DimensionEditor : EditorWindow
 {
@@ -7,6 +8,9 @@ public class DimensionEditor : EditorWindow
     bool dimSelected = false;
     Dimension[] allDimensions;
     Dimension currentDim;
+    List<GameObject> allGameObjects;
+    List<GameObject> newGameObjects = new List<GameObject>();
+     
     string toggleButtonText = "Start Dimension Editor";
     [MenuItem("Custom Tools/Dimension Editor")]
     public static void ShowWindow()
@@ -27,9 +31,13 @@ public class DimensionEditor : EditorWindow
             if (dimEditorOn)
             {
                 //start
+
+                //enable updates 
                 if (EditorApplication.update != OnEditorUpdate)
                     EditorApplication.update += OnEditorUpdate;
+                EditorApplication.hierarchyChanged += HierarchyChanged;
 
+                allGameObjects.AddRange(UnityEngine.Object.FindObjectsOfType<GameObject>());//get all objects in scene
                 toggleButtonText = "Stop Dimension Editor";
             }
             else
@@ -54,6 +62,7 @@ public class DimensionEditor : EditorWindow
     void StopCleanup()
     {
         EditorApplication.update -= OnEditorUpdate;
+        EditorApplication.hierarchyChanged -= HierarchyChanged;
         toggleButtonText = "Start Dimension Editor";
         ResetEnabled();
         dimSelected = false;
@@ -105,10 +114,7 @@ public class DimensionEditor : EditorWindow
         Repaint();
     }
 
-    private void OnHierarchyChange()
-    {
-       
-    }
+
 
     void ResetEnabled()
     {
@@ -119,8 +125,46 @@ public class DimensionEditor : EditorWindow
             d.gameObject.SetActive(true);
         }
     }
+    void HierarchyChanged()
+    {
+        foreach(GameObject g in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        {
+            if (!allGameObjects.Contains(g))
+            {
+                newGameObjects.Add(g);
 
+                if (dimSelected)
+                    ParentToDim(g);
 
+            }
+        }
+
+        allGameObjects.AddRange(newGameObjects);
+        newGameObjects.Clear();
+    }
+
+    void ParentToDim(GameObject g)
+    {
+        Transform currentObject =g.transform;
+        bool notFound = true;
+
+        while (currentObject != null && notFound)
+        {
+            if (currentObject.TryGetComponent<Dimension>(out Dimension dim))
+            {
+                notFound = false;
+            }
+            else
+            {
+                currentObject = currentObject.parent;
+            }
+
+        }
+        if (notFound)
+        {
+            g.transform.SetParent(currentDim.transform);
+        }
+    }
 
 
     bool dragging = false;
@@ -128,28 +172,23 @@ public class DimensionEditor : EditorWindow
 
     protected virtual void OnEditorUpdate()
     {
-        //Debug.Log(DragAndDrop.visualMode);
-        
-        //if (dimSelected)
-        //{
-        //    if(DragAndDrop.visualMode.ToString() == "Copy")
-        //    {
-        //        dragging = true;
-        //        draggedObjects = DragAndDrop.objectReferences;
-        //    }
-        //    else
-        //    {
-        //        if(dragging == true)
-        //        {
-        //            foreach(GameObject g in draggedObjects)
-        //            {
-                        
-        //                g.transform.SetParent(currentDim.transform);
-        //            }
-        //            dragging = false;
-        //        }
-        //    }
-        //}
-        
+
+        if (dimSelected)
+        {
+            Debug.Log("asdfasdf");
+            Event e = Event.current;
+            switch (e.type)
+            {
+                case EventType.KeyDown:
+                    {
+                        if (Event.current.keyCode == (KeyCode.Escape))
+                        {
+                            ResetEnabled();
+                        }
+                        break;
+                    }
+            }
+        }
+
     }
 }

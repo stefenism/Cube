@@ -57,14 +57,15 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (onLadder)
-        {
-            climbLadder();
-        }
-        else
-        {
-            checkMovement();
-        }
+        //if (onLadder)
+        //{
+        //    climbLadder();
+        //}
+        //else
+        //{
+        //    checkMovement();
+        //}
+        checkMovement();
     }
 
     void checkPickup()
@@ -104,7 +105,8 @@ public class PlayerControls : MonoBehaviour
             }
 
             if (onLadder){
-                gravitySpeed = Vector3.zero;
+                //gravitySpeed = Vector3.zero;
+                gravitySpeed = -player.getDimension().gravity;
             }
 
             if(!playerManager.isPlayerEdging()){

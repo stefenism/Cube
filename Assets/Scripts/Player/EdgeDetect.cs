@@ -10,14 +10,14 @@ public class EdgeDetect : MonoBehaviour {
     }
 
     private void Update() {
-        LayerMask mask = 1 << gameObject.layer;
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius,mask);
-        if(hitColliders.Length == 0){
-            player.fullStop();
-        }
-        else{
-            player.notOnEdge();
-        }
+        //LayerMask mask = 1 << gameObject.layer;
+        //Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius,mask);
+        //if(hitColliders.Length == 0){
+        //    player.fullStop();
+        //}
+        //else{
+        //    player.notOnEdge();
+        //}
     }
 
     private void OnDrawGizmos() {
