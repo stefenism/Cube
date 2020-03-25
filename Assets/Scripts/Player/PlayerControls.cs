@@ -134,17 +134,19 @@ public class PlayerControls : MonoBehaviour
         rb.velocity = (vertMov * transform.up * climbSpeed);
     }
 
+    Pickup grabbedItem;
     void GrabItem(){
         holdingItem = true;
         itemToPickUp.transform.SetParent(transform);
         itemToPickUp.transform.localPosition = new Vector3(0, 0.65f, 0);
+        grabbedItem = itemToPickUp;
     }
 
     void DropItem(){
         if (holdingItem){
             holdingItem = false;
-            itemToPickUp.transform.localPosition = Vector3.zero;
-            itemToPickUp.transform.SetParent(transform.parent);
+            grabbedItem.transform.localPosition = Vector3.zero;
+            grabbedItem.transform.SetParent(transform.parent);
         }
     }
 
