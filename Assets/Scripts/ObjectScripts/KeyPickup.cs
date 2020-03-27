@@ -17,8 +17,8 @@ public class KeyPickup : MonoBehaviour
     {
         if (pickedUp)
         {
-            transform.localPosition += new Vector3(0, 0.01f, 0);
-            transform.localScale -= new Vector3( 0.0005f, 0.001f, 0.0001f);
+            transform.localPosition += new Vector3(0, 0.02f, 0);
+            transform.localScale -= new Vector3( 0.005f, 0.002f, 0.0003f);
             transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, 10), Mathf.Clamp(transform.localScale.y, 0, 10), Mathf.Clamp(transform.localScale.z, 0, 10));
         }
     }
