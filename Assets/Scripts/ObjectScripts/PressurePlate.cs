@@ -10,6 +10,7 @@ public class PressurePlate : MonoBehaviour
     public PressurePlatable[] platableObjects;
     bool platePressed  = false;
     float positionNormal = 1.0f;
+    public bool ButtonLowersGate = true;
     public float animationSpeed = 0.05f;
 
     void Start()
@@ -22,41 +23,69 @@ public class PressurePlate : MonoBehaviour
         //animates gates and plate
         if (platePressed)
         {
-            if (positionNormal>0.0f)//move gate dwon
+            if (ButtonLowersGate)
             {
-                positionNormal -= animationSpeed;
-                plateButton.transform.localPosition = plateButton.transform.localPosition - new Vector3(0, 0.04f * animationSpeed, 0);
-                // old way (doesn't work at different scales, for example)
-                foreach (GameObject g in gateObjects)
-                {
-                    g.transform.localPosition = g.transform.localPosition - new Vector3(0, 0.24f * animationSpeed, 0);
-                }
-                // new way
-                foreach (PressurePlatable p in platableObjects)
-                {
-                    p.UpdateWithNormalizedPosition(positionNormal);
-                }
+                MoveGateDown(); 
             }
+            else
+            {
+                MoveGateUp();
+            }
+            plateButton.SetActive(false);
         }
         else
         {
-            if (positionNormal < 1.0f)//move gate up
+            if (ButtonLowersGate)
             {
-                positionNormal += animationSpeed;
-                plateButton.transform.localPosition = plateButton.transform.localPosition + new Vector3(0, 0.04f * animationSpeed, 0);
-                // old hard-coded way
-                foreach (GameObject g in gateObjects)
-                {
-                    g.transform.localPosition = g.transform.localPosition + new Vector3(0, 0.24f * animationSpeed, 0);
-                }
-                // new way
-                foreach (PressurePlatable p in platableObjects)
-                {
-                    p.UpdateWithNormalizedPosition(positionNormal);
-                }
+                MoveGateUp();
+            }
+            else
+            {
+                MoveGateDown();
+            }
+            plateButton.SetActive(true);
+        }
+    }
+
+    void MoveGateDown()
+    {
+        if (positionNormal > 0.0f)//move gate dwon
+        {
+            positionNormal -= animationSpeed;
+            //plateButton.transform.localPosition = plateButton.transform.localPosition - new Vector3(0, 0.04f * animationSpeed, 0);
+            // old way (doesn't work at different scales, for example)
+            foreach (GameObject g in gateObjects)
+            {
+                g.transform.localPosition = g.transform.localPosition - new Vector3(0, 0.24f * animationSpeed, 0);
+            }
+            // new way
+            foreach (PressurePlatable p in platableObjects)
+            {
+                p.UpdateWithNormalizedPosition(positionNormal);
             }
         }
     }
+    void MoveGateUp()
+    {
+        if (positionNormal < 1.0f)//move gate up
+        {
+            positionNormal += animationSpeed;
+            //plateButton.transform.localPosition = plateButton.transform.localPosition + new Vector3(0, 0.04f * animationSpeed, 0);
+            // old hard-coded way
+            foreach (GameObject g in gateObjects)
+            {
+                g.transform.localPosition = g.transform.localPosition + new Vector3(0, 0.24f * animationSpeed, 0);
+            }
+            // new way
+            foreach (PressurePlatable p in platableObjects)
+            {
+                p.UpdateWithNormalizedPosition(positionNormal);
+            }
+        }
+    }
+
+
+
 
     void OnTriggerEnter(Collider other)
     {

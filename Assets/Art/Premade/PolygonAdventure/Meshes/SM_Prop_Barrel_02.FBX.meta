@@ -3,7 +3,12 @@ guid: 23c715eea0b1fcd4fa1d4e35eec69ee4
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_PolygonAdventure_01
+    second: {fileID: 2100000, guid: 352817ec6bce93240bf55cd16df1ecac, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
