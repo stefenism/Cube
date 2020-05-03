@@ -43,7 +43,7 @@ public class DimensionManager : MonoBehaviour {
     void SetPineconeLayers()
     {
 
-        for (int i = 6; i < 32; i++)
+        for (int i = 4; i < 32; i++)
         {
             for (int f = i+1; f < 32; f++)
             {

@@ -30,7 +30,7 @@ public class Actor : MonoBehaviour {
         LayerMask mask = 1 << gameObject.layer;
 
         // the player needs to be on the "Up" layer for this to work
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 10,mask))
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 10,mask, QueryTriggerInteraction.Ignore))
         {
             Transform currentObject = hit.transform;
             bool notFound = true;

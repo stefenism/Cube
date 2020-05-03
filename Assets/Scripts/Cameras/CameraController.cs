@@ -76,10 +76,10 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            int layerMask = LayerMask.GetMask("UI");
+            int layerMask = LayerMask.GetMask("Water");
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100, layerMask))
+            if (Physics.Raycast(ray, out hit, 100, layerMask, QueryTriggerInteraction.Collide))
             {
                 if (selectedManipulationScript != null) //make sure nothing is selected
                 {

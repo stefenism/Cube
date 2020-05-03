@@ -7448,7 +7448,7 @@ GameObject:
   - component: {fileID: 2489807275203628235}
   - component: {fileID: 2489807275203628232}
   - component: {fileID: 2383958781317276143}
-  m_Layer: 5
+  m_Layer: 4
   m_Name: RotationCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7549,6 +7549,14 @@ MonoBehaviour:
   rotateXAxis: 0
   rotateYAxis: 1
   rotateZAxis: 0
+  slideXAxis: 0
+  slideYAxis: 0
+  slideZAxis: 0
+  maxSlideDistance: 0
+  startingSlidePosition: 0
+  locked: 0
+  unlockCost: 1
+  locks: []
   isSelected: 0
   rotationChange: {x: 0, y: 0, z: 0}
   delta: {x: 0, y: 0, z: 0}
