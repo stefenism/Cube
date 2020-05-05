@@ -31,6 +31,8 @@ public class PlayerControls : MonoBehaviour
 
     float oldEulerRotation = 0;
 
+    CameraController cameraController;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -38,6 +40,7 @@ public class PlayerControls : MonoBehaviour
         playerAnimator = playerModel.GetComponent<Animator>();
         playerManager = GetComponent<PlayerManager>();
         edgeDetect = GetComponentInChildren(typeof(EdgeDetect)) as EdgeDetect;
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     void Update()
@@ -48,10 +51,19 @@ public class PlayerControls : MonoBehaviour
 
     void CheckInput()
     {
-        horMov = Input.GetAxisRaw("Horizontal");
-        vertMov = Input.GetAxisRaw("Vertical");
+        if (cameraController.playerMode)
+        {
+            horMov = Input.GetAxisRaw("Horizontal");
+            vertMov = Input.GetAxisRaw("Vertical");
 
-        checkPickup();
+            checkPickup();
+        }
+        else
+        {
+            horMov = 0;
+            vertMov = 0;
+        }
+
     }
 
     void FixedUpdate()

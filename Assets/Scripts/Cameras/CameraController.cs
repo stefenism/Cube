@@ -64,7 +64,8 @@ public class CameraController : MonoBehaviour
         }
 
         HandleCameraPositionEase();
-        CheckBlockClick();
+        //if(!playerMode)
+            CheckBlockClick();
     }
 
     LevelBlockManipulation selectedManipulationScript;
@@ -118,6 +119,11 @@ public class CameraController : MonoBehaviour
         else
         {
             sParticles.Fade(false);
+            //if (selectedManipulationScript != null)
+            //{
+            //    selectedManipulationScript.Selected(false);
+            //    selectedManipulationScript = null;
+            //}
         }
         playerMode = !playerMode;
     }
