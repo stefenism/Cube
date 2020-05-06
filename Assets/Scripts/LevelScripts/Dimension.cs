@@ -175,6 +175,10 @@ public class Dimension : MonoBehaviour
         }
     }
 
+    public int getCurrentLayer(){
+        return currentLayer;
+    }
+
     void drawDebugDirections()
     {
         Debug.DrawRay(transform.position, up, Color.red, 100);
