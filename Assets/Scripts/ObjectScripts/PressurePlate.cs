@@ -89,15 +89,14 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print(other);
         if (!other.isTrigger)
         {
-            print("Added " + other);
+
             onPlate.Add(other);
             UpdatePlate();
         }else if (other.TryGetComponent(out Pickup pickup))
         {
-            print("Added " + other);
+
             onPlate.Add(other);
             UpdatePlate();
         }
@@ -107,7 +106,7 @@ public class PressurePlate : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
 
-            print("Removed " + other);
+
             onPlate.Remove(other);
             UpdatePlate();
 

@@ -157,9 +157,9 @@ public class Dimension : MonoBehaviour
 
     public void tryAddActor(Actor newActor)
     {
-        Debug.Log("trying to add actor: " + newActor.gameObject.name);
-        print("and I am: " + this.gameObject.name + " of " + this.transform.parent.name);
-        print("my contained actors: " + containedActors.Count);
+        //Debug.Log("trying to add actor: " + newActor.gameObject.name);
+        //print("and I am: " + this.gameObject.name + " of " + this.transform.parent.name);
+        //print("my contained actors: " + containedActors.Count);
         if (!containedActors.Contains(newActor))
         {
             containedActors.Add(newActor);

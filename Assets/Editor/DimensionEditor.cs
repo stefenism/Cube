@@ -140,8 +140,8 @@ public class DimensionEditor : EditorWindow
         {
             foreach (Dimension d in allDimensions)
             {
-
-                d.gameObject.SetActive(true);
+                if(d!=null) 
+                    d.gameObject.SetActive(true);
 
             }
         }
