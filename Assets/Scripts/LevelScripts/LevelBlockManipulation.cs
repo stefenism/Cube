@@ -91,6 +91,7 @@ public class LevelBlockManipulation : MonoBehaviour
             addedZLocation = 0;
 
             //Converts mouse movement into movement rotation based on camera orientation
+            
             Vector3 newV = (delta.y * mainCamera.transform.right);
             newV += delta.x * mainCamera.transform.up;
             

@@ -28,6 +28,7 @@ public class PlayerControls : MonoBehaviour
     private PlayerActor player;
 
     Vector3 runForce;
+    float characterRotation;
 
     float oldEulerRotation = 0;
 
@@ -108,7 +109,7 @@ public class PlayerControls : MonoBehaviour
             Vector3 verticalSpeed = vertMov * transform.forward * speed * modifier;
             Vector3 horizontalSpeed = horMov * transform.right * speed * modifier;
             Vector3 gravitySpeed = player.getDimension().gravity;
-
+            
             if (vertMov != 0 || horMov != 0){
                 runForce += (verticalSpeed + horizontalSpeed) * modifier;
             }
@@ -130,10 +131,13 @@ public class PlayerControls : MonoBehaviour
     }
 
     public void fullStop(){
-        playerManager.setPlayerEdging();
-        Vector3 newVelocity = Vector3.zero;
-        newVelocity += player.getDimension().gravity;
-        rb.velocity = newVelocity;
+        if (player.getDimension() != null)
+        {
+            playerManager.setPlayerEdging();
+            Vector3 newVelocity = Vector3.zero;
+            newVelocity += player.getDimension().gravity;
+            rb.velocity = newVelocity;
+        }
     }
 
     public void notOnEdge(){
@@ -173,9 +177,13 @@ public class PlayerControls : MonoBehaviour
         if (runForce.magnitude > 0.1){ //rotate player model
 
             //Determins how it should be rotated based on the player rotation and force direction -- does not work with x rotation. must fix
-            Quaternion target = Quaternion.Euler(playerModel.transform.localRotation.eulerAngles.x, Quaternion.LookRotation(transform.rotation * new Vector3(runForce.x, -runForce.y, runForce.z)).eulerAngles.y, playerModel.transform.localRotation.eulerAngles.z);
+            if(vertMov != 0 || horMov != 0)
+                characterRotation = Mathf.Atan2( horMov,vertMov) * Mathf.Rad2Deg;
+            Quaternion target =  Quaternion.Euler(0,characterRotation,0);
+
             playerModel.transform.localRotation = Quaternion.Lerp(playerModel.transform.localRotation, target, 0.2f);
 
+            //sets leaning
             float turnForce = Quaternion.Angle(playerModel.transform.localRotation, target) / 40;
 
             if (oldEulerRotation - playerModel.transform.eulerAngles.y > 2){
