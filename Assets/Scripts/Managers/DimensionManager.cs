@@ -7,6 +7,8 @@ public class DimensionManager : MonoBehaviour {
     
     public static DimensionManager dimensionDaddy = null;
 
+    public LayerMask boundaryCheckLayer;
+
     public GameObject player;
     public Vector3 visableDimensionVector  = Vector3.zero;//The direction that is visable in the planer view
     public Vector3 currentDimesionPosition = Vector3.zero;
@@ -42,7 +44,7 @@ public class DimensionManager : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Z)){
             setBoundaries();
 
-            print("#######BLASH:" + Vector3.Distance(new Vector3(0,18,-30), new Vector3(0,24,-36)));
+            print("layermask name to layer " + LayerMask.NameToLayer("Water"));
         }
     }
 
@@ -69,21 +71,22 @@ public class DimensionManager : MonoBehaviour {
         foreach(Dimension dimension in dimensionList){
             List<Dimension> samePlaneList = dimensionList.Where(loopDimension => loopDimension.getCurrentLayer() == dimension.getCurrentLayer() && loopDimension != dimension).ToList();
             List<Dimension> touchingList = samePlaneList.Where(samePlaneDimension => isAdjacentDimension(samePlaneDimension, dimension)).ToList();
-            print("***********************before looping touchinglist");
-            if(touchingList.Count > 1){
+            if(touchingList.Count > 0){
+                print("***********************before looping touchinglist");
+                print("dimension that's being tested is:" + dimension.gameObject.name);
+                print("dimension rotated position:" + dimension.transform.rotation * dimension.transform.position);
+                print("dimension daddy is:" + dimension.transform.parent.gameObject.name);
                 foreach(Dimension printDimension in touchingList){
                     print("prinet demension is:" + printDimension.gameObject.name);
                     print("print dimension parent:" + printDimension.transform.parent.gameObject.name);
                     print("print dimension layer:" + printDimension.getCurrentLayer());
                     print("touching list length:" + touchingList.Count);
                     print("transform.position of dimension:" + printDimension.transform.rotation * printDimension.transform.position);
-                    if(touchingList.Count == 2){
-                        print("distance between two touching doodles:" + Vector3.Distance(touchingList[0].transform.rotation * touchingList[0].transform.position, touchingList[1].transform.rotation * touchingList[1].transform.position));
-                    }
+                    print("distance between this and testing dimension: " + Vector3.Distance(dimension.transform.rotation * dimension.transform.position, printDimension.transform.rotation * printDimension.transform.position));
                     print("-----------------------");
                 }
+                print("*********************after looping touchinglist");
             }
-            print("*********************after looping touchinglist");
         }
     }
 
@@ -93,6 +96,19 @@ public class DimensionManager : MonoBehaviour {
         Vector3 samePlaneDimensionRotatedPosition = samePlaneDimension.transform.rotation * samePlaneDimension.transform.position;
         Vector3 dimensionRotatedPosition = dimension.transform.rotation * dimension.transform.position;
 
+        // if(dimension.gameObject.name == "Side_Left"){
+        //     print("##########################");
+        //     print("loop dimension name:" + samePlaneDimension.gameObject.name);
+        //     print("loop dimension parent name:" + samePlaneDimension.transform.parent.gameObject.name);
+        //     print("loop dimension rotated position:" + samePlaneDimensionRotatedPosition);
+        //     print("loop dimension parent position:" + samePlaneDimension.transform.parent.transform.position);
+        //     print("test dimension name:" + dimension.gameObject.name);
+        //     print("test dimension parent name:" + dimension.transform.parent.gameObject.name + " HERE");
+        //     print("testDimension rotated position:" + dimensionRotatedPosition);
+        //     print("test dimension parent position: " + dimension.transform.parent.transform.position);
+        //     print("distance between the two:" + Vector3.Distance(samePlaneDimensionRotatedPosition, dimensionRotatedPosition));
+        //     print("#############################");
+        // }
         // print("##########################");
         // print("loop dimension name:" + loopDimension.gameObject.name);
         // print("loop dimension parent name:" + loopDimension.transform.parent.gameObject.name);
@@ -111,9 +127,12 @@ public class DimensionManager : MonoBehaviour {
         // print("loop dimension dad:" + loopDimension.transform.parent.gameObject.name);
         // print("loop dimension dad rotated position:" + parentRotatedPosition);
 
-        // float dimensionDistance = Vector3.Distance(loopDimensionRotatedPosition, testDimensionRotatedPosition);
+        float dimensionDistance = Vector3.Distance(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
+        bool anythingInBetween = Physics.Raycast(samePlaneDimension.transform.position, samePlaneDimension.transform.position - dimension.transform.position, dimensionDistance, boundaryCheckLayer);
+        bool shareTwoPositionValues = checkSharingPositionValues(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
 
-        return Vector3.Distance(samePlaneDimensionRotatedPosition, dimensionRotatedPosition) < 6.5f;
+
+        return (dimensionDistance < 6.5f && !anythingInBetween);
 
         // if(dimensionDistance < 7){
         //     print("##########################");
@@ -133,7 +152,11 @@ public class DimensionManager : MonoBehaviour {
         // return dimensionDistance < 6.5f;
     }
 
-    public Vector3 rotateAroundPivot(Vector3 point, Vector3 pivot, Quaternion rotation){
-        return rotation * (point - pivot) + pivot;
+    bool checkSharingPositionValues(Vector3 samePlaneDimensionPosition, Vector3 dimensionPosition){
+        bool exes = (Mathf.Abs(samePlaneDimensionPosition.x) - Mathf.Abs(dimensionPosition.x) < 1);
+        bool whys = (Mathf.Abs(samePlaneDimensionPosition.y) - Mathf.Abs(dimensionPosition.y) < 1);
+        bool zees = (Mathf.Abs(samePlaneDimensionPosition.z) - Mathf.Abs(dimensionPosition.z) < 1);
+
+        return ((exes && whys) || (exes && zees) || (whys && zees) );
     }
 }
