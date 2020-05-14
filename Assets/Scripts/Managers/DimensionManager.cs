@@ -44,7 +44,11 @@ public class DimensionManager : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Z)){
             setBoundaries();
 
-            print("layermask name to layer " + LayerMask.NameToLayer("Water"));
+            RaycastHit hit; 
+            if(Physics.Linecast(new Vector3(18.0f, 0, -30), new Vector3(18.0f, 0, -36), out hit, boundaryCheckLayer )){
+                print("hit is:" + hit.collider.gameObject.name);
+        
+            }
         }
     }
 
@@ -96,6 +100,9 @@ public class DimensionManager : MonoBehaviour {
         Vector3 samePlaneDimensionRotatedPosition = samePlaneDimension.transform.rotation * samePlaneDimension.transform.position;
         Vector3 dimensionRotatedPosition = dimension.transform.rotation * dimension.transform.position;
 
+        Vector3 samePlaneAnchorPosition = samePlaneDimension.transform.GetChild(samePlaneDimension.transform.childCount - 1).transform.position;
+        Vector3 dimensionAnchoPosition = dimension.transform.GetChild(dimension.transform.childCount - 1).transform.position;
+
         // if(dimension.gameObject.name == "Side_Left"){
         //     print("##########################");
         //     print("loop dimension name:" + samePlaneDimension.gameObject.name);
@@ -127,12 +134,20 @@ public class DimensionManager : MonoBehaviour {
         // print("loop dimension dad:" + loopDimension.transform.parent.gameObject.name);
         // print("loop dimension dad rotated position:" + parentRotatedPosition);
 
-        float dimensionDistance = Vector3.Distance(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
-        bool anythingInBetween = Physics.Raycast(samePlaneDimension.transform.position, samePlaneDimension.transform.position - dimension.transform.position, dimensionDistance, boundaryCheckLayer);
+        RaycastHit hit;
+
+        float dimensionDistance = Vector3.Distance(samePlaneAnchorPosition, dimensionAnchoPosition);
+        bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
+        // bool anythingInBetween = Physics.Raycast(dimensionAnchoPosition, dimensionAnchoPosition - samePlaneAnchorPosition, dimensionDistance, boundaryCheckLayer);
+        Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
+        bool insideCollider = linecastOriginColliders.Length > 0;
+        // if(hit.collider.gameObject.GetComponent<Dimension>() != null){
+        //     anythingInBetween = true;
+        // }
         bool shareTwoPositionValues = checkSharingPositionValues(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
 
 
-        return (dimensionDistance < 6.5f && !anythingInBetween);
+        return (dimensionDistance < 6.5f && !anythingInBetween && !insideCollider);
 
         // if(dimensionDistance < 7){
         //     print("##########################");
