@@ -43,12 +43,6 @@ public class DimensionManager : MonoBehaviour {
         
         if(Input.GetKeyDown(KeyCode.Z)){
             setBoundaries();
-
-            RaycastHit hit; 
-            if(Physics.Linecast(new Vector3(18.0f, 0, -30), new Vector3(18.0f, 0, -36), out hit, boundaryCheckLayer )){
-                print("hit is:" + hit.collider.gameObject.name);
-        
-            }
         }
     }
 
@@ -96,82 +90,18 @@ public class DimensionManager : MonoBehaviour {
 
     private bool isAdjacentDimension(Dimension samePlaneDimension, Dimension dimension){
 
-        // multiplying a quaternion by a vector finds the position of a point rotated about tha tquaternion
-        Vector3 samePlaneDimensionRotatedPosition = samePlaneDimension.transform.rotation * samePlaneDimension.transform.position;
-        Vector3 dimensionRotatedPosition = dimension.transform.rotation * dimension.transform.position;
-
         Vector3 samePlaneAnchorPosition = samePlaneDimension.transform.GetChild(samePlaneDimension.transform.childCount - 1).transform.position;
         Vector3 dimensionAnchoPosition = dimension.transform.GetChild(dimension.transform.childCount - 1).transform.position;
-
-        // if(dimension.gameObject.name == "Side_Left"){
-        //     print("##########################");
-        //     print("loop dimension name:" + samePlaneDimension.gameObject.name);
-        //     print("loop dimension parent name:" + samePlaneDimension.transform.parent.gameObject.name);
-        //     print("loop dimension rotated position:" + samePlaneDimensionRotatedPosition);
-        //     print("loop dimension parent position:" + samePlaneDimension.transform.parent.transform.position);
-        //     print("test dimension name:" + dimension.gameObject.name);
-        //     print("test dimension parent name:" + dimension.transform.parent.gameObject.name + " HERE");
-        //     print("testDimension rotated position:" + dimensionRotatedPosition);
-        //     print("test dimension parent position: " + dimension.transform.parent.transform.position);
-        //     print("distance between the two:" + Vector3.Distance(samePlaneDimensionRotatedPosition, dimensionRotatedPosition));
-        //     print("#############################");
-        // }
-        // print("##########################");
-        // print("loop dimension name:" + loopDimension.gameObject.name);
-        // print("loop dimension parent name:" + loopDimension.transform.parent.gameObject.name);
-        // print("loop dimension rotated position:" + loopDimensionRotatedPosition);
-        // print("loop dimension parent position:" + loopDimension.transform.parent.transform.position);
-        // print("test dimension name:" + testDimension.gameObject.name);
-        // print("test dimension parent name:" + testDimension.transform.parent.gameObject.name + " HERE");
-        // print("testDimension rotated position:" + testDimensionRotatedPosition);
-        // print("test dimension parent position: " + testDimension.transform.parent.transform.position);
-        // print("distance between the two:" + Vector3.Distance(loopDimensionRotatedPosition, testDimensionRotatedPosition));
-        // print("#############################");
-
-        // Vector3 parentRotatedPosition = loopDimension.transform.parent.transform.rotation * loopDimension.transform.parent.transform.position;
-        // print("loop dimension rotated position:" + loopDimensionRotatedPosition);
-        // print("loop dimension:" + loopDimension.gameObject.name);
-        // print("loop dimension dad:" + loopDimension.transform.parent.gameObject.name);
-        // print("loop dimension dad rotated position:" + parentRotatedPosition);
 
         RaycastHit hit;
 
         float dimensionDistance = Vector3.Distance(samePlaneAnchorPosition, dimensionAnchoPosition);
         bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
-        // bool anythingInBetween = Physics.Raycast(dimensionAnchoPosition, dimensionAnchoPosition - samePlaneAnchorPosition, dimensionDistance, boundaryCheckLayer);
         Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
         bool insideCollider = linecastOriginColliders.Length > 0;
-        // if(hit.collider.gameObject.GetComponent<Dimension>() != null){
-        //     anythingInBetween = true;
-        // }
         bool shareTwoPositionValues = checkSharingPositionValues(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
 
 
         return (dimensionDistance < 6.5f && !anythingInBetween && !insideCollider);
-
-        // if(dimensionDistance < 7){
-        //     print("##########################");
-        //     print("loop dimension name:" + loopDimension.gameObject.name);
-        //     print("loop dimension parent name:" + loopDimension.transform.parent.gameObject.name);
-        //     print("loop dimension rotated position:" + loopDimensionRotatedPosition);
-        //     print("loop dimension parent position:" + loopDimension.transform.parent.transform.position);
-        //     print("------------------------");
-        //     print("test dimension name:" + testDimension.gameObject.name);
-        //     print("test dimension parent name:" + testDimension.transform.parent.gameObject.name);
-        //     print("testDimension rotated position:" + testDimensionRotatedPosition);
-        //     print("test dimension parent position: " + testDimension.transform.parent.transform.position);
-        //     print("distance between the two:" + Vector3.Distance(loopDimensionRotatedPosition, testDimensionRotatedPosition));
-        //     print("#############################");
-        // }
-
-        // return dimensionDistance < 6.5f;
-    }
-
-    bool checkSharingPositionValues(Vector3 samePlaneDimensionPosition, Vector3 dimensionPosition){
-        bool exes = (Mathf.Abs(samePlaneDimensionPosition.x) - Mathf.Abs(dimensionPosition.x) < 1);
-        bool whys = (Mathf.Abs(samePlaneDimensionPosition.y) - Mathf.Abs(dimensionPosition.y) < 1);
-        bool zees = (Mathf.Abs(samePlaneDimensionPosition.z) - Mathf.Abs(dimensionPosition.z) < 1);
-
-        return ((exes && whys) || (exes && zees) || (whys && zees) );
     }
 }
