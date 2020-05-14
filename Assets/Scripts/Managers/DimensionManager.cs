@@ -99,8 +99,6 @@ public class DimensionManager : MonoBehaviour {
         bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
         Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
         bool insideCollider = linecastOriginColliders.Length > 0;
-        bool shareTwoPositionValues = checkSharingPositionValues(samePlaneDimensionRotatedPosition, dimensionRotatedPosition);
-
 
         return (dimensionDistance < 6.5f && !anythingInBetween && !insideCollider);
     }
