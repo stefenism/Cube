@@ -26,6 +26,8 @@ public class Dimension : MonoBehaviour
     int pineconeLastForward = -1;
     public int currentLayer;
 
+    public Collider[] colliders;
+
     CameraController cameraController;
 
     public enum BoundaryDirection
@@ -56,6 +58,9 @@ public class Dimension : MonoBehaviour
         SetDimentionDither();
         InvokeRepeating("SetDimentionDither", 0.05f, 0.05f);
         //pinecone physics
+
+        //get all colliders attached
+        colliders = GetComponents<Collider>();
 
     }
 

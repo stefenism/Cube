@@ -72,16 +72,18 @@ public class DimensionManager : MonoBehaviour {
             if(touchingList.Count > 0){
                 print("***********************before looping touchinglist");
                 print("dimension that's being tested is:" + dimension.gameObject.name);
-                print("dimension rotated position:" + dimension.transform.rotation * dimension.transform.position);
+                print("dimension position:" + dimension.transform.GetChild(dimension.transform.childCount -1).transform.position);
                 print("dimension daddy is:" + dimension.transform.parent.gameObject.name);
                 foreach(Dimension printDimension in touchingList){
                     print("prinet demension is:" + printDimension.gameObject.name);
                     print("print dimension parent:" + printDimension.transform.parent.gameObject.name);
                     print("print dimension layer:" + printDimension.getCurrentLayer());
                     print("touching list length:" + touchingList.Count);
-                    print("transform.position of dimension:" + printDimension.transform.rotation * printDimension.transform.position);
+                    print("transform.position of adjacent dimension:" + printDimension.transform.GetChild(printDimension.transform.childCount -1).transform.position);
                     print("distance between this and testing dimension: " + Vector3.Distance(dimension.transform.rotation * dimension.transform.position, printDimension.transform.rotation * printDimension.transform.position));
                     print("-----------------------");
+                    print("starting disabling");
+                    disableCollidersBetween(dimension, printDimension);
                 }
                 print("*********************after looping touchinglist");
             }
@@ -101,5 +103,21 @@ public class DimensionManager : MonoBehaviour {
         bool insideCollider = linecastOriginColliders.Length > 0;
 
         return (dimensionDistance < 6.5f && !anythingInBetween && !insideCollider);
+    }
+
+    private void disableCollidersBetween(Dimension dimension, Dimension adjacentDimension){
+        Vector3 startPoint = dimension.transform.GetChild(dimension.transform.childCount - 1).transform.position;
+        Vector3 endPoint = adjacentDimension.transform.GetChild(adjacentDimension.transform.childCount - 1).transform.position;
+
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(startPoint, (endPoint - startPoint).normalized, Vector3.Distance(startPoint, endPoint) );
+
+        foreach(RaycastHit hitted in hits){
+            print("hitted in hits loop: " + hitted.collider.gameObject.name);
+            Dimension hitDimension = hitted.collider.gameObject.GetComponent<Dimension>();
+            if(hitDimension != null){
+                hitted.collider.enabled = false;
+            }
+        }
     }
 }
