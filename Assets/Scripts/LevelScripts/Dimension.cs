@@ -26,6 +26,8 @@ public class Dimension : MonoBehaviour
     int pineconeLastForward = -1;
     public int currentLayer;
 
+    public Collider[] colliders;
+
     CameraController cameraController;
 
     public enum BoundaryDirection
@@ -56,6 +58,9 @@ public class Dimension : MonoBehaviour
         SetDimentionDither();
         InvokeRepeating("SetDimentionDither", 0.05f, 0.05f);
         //pinecone physics
+
+        //get all colliders attached
+        colliders = GetComponents<Collider>();
 
     }
 
@@ -155,6 +160,18 @@ public class Dimension : MonoBehaviour
         }
     }
 
+    public void enableAllColliders(){
+        foreach(Collider collider in colliders){
+            collider.enabled = true;
+        }
+    }
+
+    public void disableAllColliders(){
+        foreach(Collider collider in colliders){
+            collider.enabled = false;
+        }
+    }
+
     public void tryAddActor(Actor newActor)
     {
         //Debug.Log("trying to add actor: " + newActor.gameObject.name);
@@ -173,6 +190,10 @@ public class Dimension : MonoBehaviour
         {
             containedActors.Remove(newActor);
         }
+    }
+
+    public int getCurrentLayer(){
+        return currentLayer;
     }
 
     void drawDebugDirections()

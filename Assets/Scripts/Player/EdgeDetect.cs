@@ -21,9 +21,8 @@ public class EdgeDetect : MonoBehaviour {
         }
         else
         {
-            
             player.notOnEdge();
-           Debug.DrawRay(transform.position, -transform.up * raycastHit.distance, Color.yellow);
+            Debug.DrawRay(transform.position, -transform.up * raycastHit.distance, Color.yellow);
         }
     }
 

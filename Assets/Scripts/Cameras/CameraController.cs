@@ -102,9 +102,15 @@ public class CameraController : MonoBehaviour
             {
                 selectedManipulationScript.Selected(false);
                 selectedManipulationScript = null;
+
+
+                Invoke("doSetBoundaries", 1f);
             }
-                
         }
+    }
+
+    public void doSetBoundaries(){
+        DimensionManager.dimensionDaddy.setNewBoundaries();
     }
 
 
@@ -119,6 +125,7 @@ public class CameraController : MonoBehaviour
         else
         {
             sParticles.Fade(false);
+            Invoke("doSetBoundaries", 1f);
             //if (selectedManipulationScript != null)
             //{
             //    selectedManipulationScript.Selected(false);
