@@ -83,7 +83,7 @@ public class PlayerControls : MonoBehaviour
 
     void checkPickup()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("PickupDrop"))
         {
 
             if (holdingItem)

@@ -1,155 +1,57 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class LevelBlockManipulation : MonoBehaviour
 {
-    //settings
-    public bool rotateXAxis = true;
-    public bool rotateYAxis = false;
-    public bool rotateZAxis = false;
-    public bool slideXAxis = false;
-    public bool slideYAxis = false;
-    public bool slideZAxis = false;
-    public float maxSlideDistance;
-    public float startingSlidePosition;
-    public bool locked;
-    public int unlockCost = 1;
-    public GameObject[] locks;
+    //Setting State Enum
+    public enum MovementEnum
+    {
+        None,
+        Rotate,
+        Move
+    };
+    //Setting variables
+    public MovementEnum xAxisMovement = MovementEnum.None;  // this public var should appear as a drop down
+    public MovementEnum yAxisMovement = MovementEnum.None;  // this public var should appear as a drop down
+    public MovementEnum zAxisMovement = MovementEnum.None;  // this public var should appear as a drop down
+    public float maxSlideDistance;//How far it can move
+    public float startingSlidePosition;// The current position in that track
+    public bool locked;//If its locked
+    public int unlockCost = 1;//how much it costs to unlock
+    public GameObject[] locks;//Just gameobjects that represent the locks. Will need to change eventually
 
 
-    //public for debugging
-    public bool isSelected = false;
-
-    //position calculation
-    private Quaternion startingRotation;
-    private Vector3 initialPosition;
-    private Vector3 startingSlideLocation;
-    private float addedXRotation;
-    private float addedYRotation;
-    private float addedZRotation;
-    private float addedXLocation;
-    private float addedYLocation;
-    private float addedZLocation;
-    public Vector3 delta = Vector3.zero;
-    private Vector3 lastPos = Vector3.zero;
-
-    //movement clamps
-    private float slideClampXMin;
-    private float slideClampYMin;
-    private float slideClampZMin;
+    //Movement states
+    [HideInInspector] public bool isSelected = false;
+    bool addRotation = false;
+    bool addMovement = false;
+    [HideInInspector] public bool isMoving = false;
 
 
-    //current total rotation and movement from its starting location
-    Vector3 movedRotation;
-    Vector3 movedLocation;
-
-    Camera mainCamera;
-
-    //Variables for reseting position on overlaps
-    private Vector3 lastWorldPositon;
-    private Quaternion lastWorldRotation;
-    private Vector3 lastMovedRotation;
-    private Vector3 lastMovedLocation;
-    
-
-    LayerMask mask;
-
-    // Start is called before the first frame update
     void Start()
     {
-        mask = LayerMask.GetMask("Water");
-        initialPosition = transform.position;
-        slideClampXMin = initialPosition.x - startingSlidePosition;
-        slideClampYMin = initialPosition.y - startingSlidePosition;
-        slideClampZMin = initialPosition.z - startingSlidePosition;
-    }
 
+
+
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (isSelected)//Rotates and moves if you have this supercube selected. Code for selection is at time of writing in camera controls
+
+        if (addRotation)
         {
-            //Saves current setup if the new position is invalid.
-            lastWorldPositon = this.transform.position;
-            lastWorldRotation = this.transform.rotation;
-            lastMovedLocation = movedLocation;
-            lastMovedRotation = movedRotation;
-
-            //gets the change in the mouses location
-            delta = Input.mousePosition - lastPos;
-            
-
-            //Resets the added location just rotation axis changes.
-            addedXRotation = 0;
-            addedYRotation = 0;
-            addedZRotation = 0;
-            addedXLocation = 0;
-            addedYLocation = 0;
-            addedZLocation = 0;
-
-            //Converts mouse movement into movement rotation based on camera orientation
-            
-            Vector3 newV = (delta.y * mainCamera.transform.right);
-            newV += delta.x * mainCamera.transform.up;
-            
-            //Swaps the X and Y of newV. Clamps magnitude to cap max rotation speed.
-            movedRotation += Vector3.ClampMagnitude( new Vector3(newV.y, newV.x, 0),10);
-            //converts mouse movements into new position location. Clamps magnitude to cap max movement speed.
-            movedLocation += Vector3.ClampMagnitude(delta.y * mainCamera.transform.up/10,2);
-            movedLocation += Vector3.ClampMagnitude(delta.x * mainCamera.transform.right/20,2);
-
-            //Determins what part of the last calculated variables should actually be applyed to the supercube based on its settings
-            if (rotateXAxis)
-            {
-                addedXRotation = -movedRotation.x;
-            }
-            if (rotateYAxis)
-            {
-                addedYRotation = movedRotation.y;
-            }
-            if (rotateZAxis)
-            {
-                addedZRotation = -movedRotation.x;
-            }
-            if (slideXAxis)
-            {
-                addedXLocation =movedLocation.x;
-                
-            }
-            if (slideYAxis)
-            {
-                addedYLocation = movedLocation.y;
-            }
-            if (slideZAxis)
-            {
-                addedZLocation = movedLocation.z;
-            }
-
-            
-            // Find Desired Supercube Location and applys it to the cube
-            Vector3 moveLocation = startingSlideLocation + new Vector3(addedXLocation, addedYLocation, addedZLocation);
-            transform.position = moveLocation;
-            //checks if the current position is within its bounds and clamps if not
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, slideClampXMin, slideClampXMin + maxSlideDistance), Mathf.Clamp(transform.position.y, slideClampYMin, slideClampYMin + maxSlideDistance), Mathf.Clamp(transform.position.z, slideClampZMin, slideClampZMin + maxSlideDistance));
-            //sets supercubes disired rotation
-            transform.rotation = startingRotation * Quaternion.Euler(new Vector3(addedYRotation, addedXRotation, addedZRotation));
-
-
-            //makes a boxs to find overlapping supercubes. 
-            Collider[] hitColliders = Physics.OverlapBox(transform.position, transform.localScale*0.65f, transform.rotation,mask,QueryTriggerInteraction.Collide);
-            //if supercubes are found(not including self) resets the position to last frames
-            if (hitColliders.Length > 1)
-            {
-                transform.position = lastWorldPositon;
-                transform.rotation = lastWorldRotation;
-                movedRotation = lastMovedRotation;
-                movedLocation = lastMovedLocation;
-            }
+            HandleCubeRotation();
+        }else if (addMovement)
+        {
+            HandleCubeMove();
         }
-        else//If not selected, snaps the supercube to the closesed 90 degree angle
+
+        else if (isMoving)
         {//TODO: Change to Invoke for performance
             var vec = transform.eulerAngles;
             vec.x = Mathf.Round(vec.x / 90) * 90;
@@ -157,17 +59,228 @@ public class LevelBlockManipulation : MonoBehaviour
             vec.z = Mathf.Round(vec.z / 90) * 90;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(vec), 0.2f);//Do this but better
+            if (Mathf.Approximately(Mathf.Abs(Quaternion.Dot(transform.rotation, Quaternion.Euler(vec))), 1.0f))
+            {
+                isMoving = false;
+            }
         }
-        
-        lastPos = Input.mousePosition;
+
     }
 
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireCube(transform.position, transform.localScale*1.30f);
-        
-    //}
+
+    Vector3 selectorTransformDirection;
+    Vector3 selectorMoveDirection;
+
+    float moveDirection;
+    float totalMoved;
+    bool queuedMove = false;
+    float queuedDir;
+    Vector3 queuedTransformDir;
+    Vector3 queuedUpDirection;
+
+    /// <summary>
+    /// Gives a cube a direction to move/rotate in
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <param name="transformDirection"></param>
+    public void SnapMoveCube(float direction, Vector3 transformDirection,Vector3 upDirection)
+    {
+        if (!isMoving)
+        {
+
+            selectorTransformDirection = DirectionToClosestCardinal(transformDirection);
+            if (CanRotateOnCardinalAxis(selectorTransformDirection))//Stops if its not supose to rotate in that direction
+            {
+                moveDirection = direction * 10;//Sets forward or backwards movement multiplied by a factor of 90 for speed
+                totalMoved = 0;//reset amount to move
+
+                addRotation = true;//starts HandleCubeMove
+                isMoving = true;
+            }else if (CanMoveOnCardinalAxis(selectorTransformDirection))// For movement
+            {
+                moveDirection =direction;
+                totalMoved = 0;//reset amount to move
+                
+                selectorMoveDirection =Quaternion.AngleAxis(90,upDirection)*selectorTransformDirection;
+                addMovement = true;//starts HandleCubeMove
+                isMoving = true;
+                isSelected = false;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        else
+        {//This takes an input if the cube is already moving to be performed next
+            queuedMove = true;
+            queuedDir = direction;
+            queuedTransformDir = transformDirection;
+            queuedUpDirection = upDirection;
+        }
+
+
+
+    }
+
+
+    /// <summary>
+    /// Checks if the vector is a valid rotation axis. Only returns true for cardinal directions nomalized to 1.
+    /// </summary>
+    /// <param name="cardinalAxis"></param>
+    /// <returns></returns>
+    public bool CanRotateOnCardinalAxis(Vector3 cardinalAxis)
+    {
+
+
+        if (Mathf.Abs(Mathf.Abs(cardinalAxis.x)) == 1)
+        {
+            if (xAxisMovement == MovementEnum.Rotate)
+            {
+                return true;
+            }
+
+        }
+        else if (Mathf.Abs(Mathf.Abs(cardinalAxis.y)) == 1)
+        {
+
+            if (yAxisMovement == MovementEnum.Rotate)
+            {
+                return true;
+            }
+
+        }
+        else
+        {
+            if (Mathf.Abs(Mathf.Abs(cardinalAxis.z)) == 1)
+            {
+
+                if (zAxisMovement == MovementEnum.Rotate)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CanMoveOnCardinalAxis(Vector3 cardinalAxis)
+    {
+
+
+        if (Mathf.Abs(Mathf.Abs(cardinalAxis.x)) == 1)
+        {
+            if (xAxisMovement == MovementEnum.Move)
+            {
+                return true;
+            }
+
+        }
+        else if (Mathf.Abs(Mathf.Abs(cardinalAxis.y)) == 1)
+        {
+
+            if (yAxisMovement == MovementEnum.Move)
+            {
+                return true;
+            }
+
+        }
+        else
+        {
+            if (Mathf.Abs(Mathf.Abs(cardinalAxis.z)) == 1)
+            {
+                if (zAxisMovement == MovementEnum.Move)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Converts a normal vector into its closest axis(x y or Z) negitive or positve.
+    /// </summary>
+    /// <param name="direction">The direction to convert</param>
+    /// <returns></returns>
+    public Vector3 DirectionToClosestCardinal(Vector3 direction)
+    {
+        float max3 = Mathf.Max(Mathf.Abs(direction.x), Mathf.Max(Mathf.Abs(direction.y), Mathf.Abs(direction.z)));
+        if (Mathf.Abs(direction.x) == max3)
+        {
+
+            if (direction.x > 0)
+            {
+                return new Vector3(1, 0, 0);
+            }
+            else
+            {
+                return new Vector3(-1, 0, 0);
+            }
+
+        }
+        else if (Mathf.Abs(direction.y) == max3)
+        {
+
+
+            if (direction.y > 0)
+            {
+                return new Vector3(0, 1, 0);
+            }
+            else
+            {
+                return new Vector3(0, -1, 0);
+            }
+
+
+        }
+        else
+        {
+
+            if (direction.z > 0)
+            {
+                return new Vector3(0, 0, 1);
+            }
+            else
+            {
+                return new Vector3(0, 0, -1);
+            }
+
+
+        }
+    }
+
+
+    void HandleCubeRotation()
+    {
+        transform.RotateAround(transform.position, selectorTransformDirection, moveDirection);
+        totalMoved += Mathf.Abs(moveDirection);
+        if (totalMoved >= 90)
+        {
+            addRotation = false;
+            if (queuedMove)
+            {
+                queuedMove = false;
+                SnapMoveCube(queuedDir, queuedTransformDir,queuedUpDirection);
+            }
+        }
+    }
+    void HandleCubeMove()
+    {
+        transform.position += ( selectorMoveDirection) *-moveDirection;
+        totalMoved += Mathf.Abs(moveDirection);
+        if (totalMoved >= 6)
+        {
+            addMovement = false;
+            if (queuedMove)
+            {
+                queuedMove = false;
+                SnapMoveCube(queuedDir, queuedTransformDir, queuedUpDirection);
+            }
+        }
+    }
 
 
     /// <summary>
@@ -175,16 +288,17 @@ public class LevelBlockManipulation : MonoBehaviour
     /// </summary>
     /// <param name="selected"></param>
     /// <param name="hitPosition"></param>
-    public void Selected(bool selected,Vector3 hitPosition = new Vector3())
+    public void Selected(bool selected, Vector3 hitPosition = new Vector3())
     {
         if (selected)
         {
+            //Trys to unlock if locked
             if (locked)
             {
                 if (DimensionManager.dimensionDaddy.player.GetComponent<PlayerManager>().PayKeys(unlockCost))
                 {
                     locked = false;
-                    foreach(GameObject l in locks)
+                    foreach (GameObject l in locks)
                     {
                         l.SetActive(false);
                     }
@@ -193,25 +307,20 @@ public class LevelBlockManipulation : MonoBehaviour
                 {
                     foreach (GameObject l in locks)
                     {
-                        l.transform.localScale = l.transform.localScale * Random.Range(0.95f,1.05f);
+                        l.transform.localScale = l.transform.localScale * UnityEngine.Random.Range(0.95f, 1.05f);
                     }
                 }
             }
             else
             {
-                startingRotation = transform.rotation;
-                startingSlideLocation = transform.position;
-                movedRotation = Vector3.zero;
-                movedLocation = Vector3.zero;
-                mainCamera = Camera.main;
             }
         }
         else
         {
 
-           
+
         }
-        
+
         isSelected = selected;
     }
 
