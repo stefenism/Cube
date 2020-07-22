@@ -19,12 +19,7 @@ public class Dimension : MonoBehaviour
     float lastDiff = 100;
     MeshRenderer[] childMeshes;
     float lagUpdateChance = 0f;
-    //pinecone physics variables
-    public int pineconeUp;
-    public int pineconeForward;
-    int pineconeLastUp = -1;
-    int pineconeLastForward = -1;
-    public int currentLayer;
+
 
     public Collider[] colliders;
 
@@ -45,6 +40,7 @@ public class Dimension : MonoBehaviour
     void Start()
     {
         initialize();
+        sideDirectionAngle = (180 - mainDirectionAngle * 2) / 2;
     }
 
     void initialize()
@@ -78,34 +74,75 @@ public class Dimension : MonoBehaviour
         HandelPineconeCollision();
     }
 
+    //pinecone physics variables
+    public float pineconeUp;
+    public float pineconeForward;
+    int pineconeLastUp = -1;
+    int pineconeLastForward = -1;
+    public int currentLayer;
+    int pineconePositionUp;
+    int pineconePositionForward;
+    float mainDirectionAngle= 0.5f;//The angle that allows for collision to start with faces in the main direction
+    float sideDirectionAngle;
+
     void HandelPineconeCollision()
     {
-        pineconeUp = Mathf.RoundToInt(Vector3.Angle(gravity, Vector3.up) / 45);
-        pineconeForward = Mathf.RoundToInt(Vector3.Angle(gravity, Vector3.forward) / 45);
-
-        if (Mathf.RoundToInt(Vector3.Angle(gravity, Vector3.right) / 45)<2)//flips if over 180 degree rotation
-        {
-            pineconeForward += 4;
+        pineconeUp = Vector3.Angle(gravity, Vector3.up);//0 to 180
+        pineconeForward = Vector3.SignedAngle(gravity, Vector3.forward,Vector3.up); //-180 to 180
+        
+        //Converts angle of the dimention on the up axis to a position to determin layer - Hard to read to avoid hard code as much as posible  
+        if(pineconeUp <= mainDirectionAngle-mainDirectionAngle/2){
+            pineconePositionUp = 4;
+        }else if(pineconeUp <= sideDirectionAngle+ mainDirectionAngle-mainDirectionAngle/2){
+            pineconePositionUp = 3;
+        }else if(pineconeUp <= sideDirectionAngle+ mainDirectionAngle*2-mainDirectionAngle/2){
+            pineconePositionUp = 2;
+        }else if(pineconeUp <= sideDirectionAngle*2+ mainDirectionAngle*2-mainDirectionAngle/2){
+            pineconePositionUp = 1;
+        }else{
+            pineconePositionUp = 0;
         }
 
-        if (pineconeUp != pineconeLastUp || pineconeForward != pineconeLastForward)
+        //Converts angle of the dimention on the forward axis to a position to determin layer
+        if(pineconeForward <= -180+mainDirectionAngle){
+            pineconePositionForward = 0;
+        }else if(pineconeForward <= -180+mainDirectionAngle+sideDirectionAngle){
+            pineconePositionForward = 1;
+        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle){
+            pineconePositionForward = 2;
+        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle*2){
+            pineconePositionForward = 3;
+        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*2){
+            pineconePositionForward = 4;
+        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*3){
+            pineconePositionForward = 5;
+        }else if(pineconeForward <= -180+mainDirectionAngle*4+sideDirectionAngle*3){
+            pineconePositionForward = 6;
+        }else{
+            pineconePositionForward = 7;
+        }
+
+
+
+        //use calculated positions to find layer
+        if (pineconePositionUp != pineconeLastUp || pineconePositionForward != pineconeLastForward)//Checks if it changed 
         {
-            if (pineconeUp == 4)
+            if (pineconePositionUp == 4)
             {
                 SetDimensionLayer(31);
             }
-            else if (pineconeUp == 0)
+            else if (pineconePositionUp == 0)
             {
                 SetDimensionLayer(6);
             }
             else
             {
-                SetDimensionLayer(31 - (pineconeForward + 1) - (pineconeUp-1)*8); 
+                SetDimensionLayer(31 - (pineconePositionForward + 1) - (pineconePositionUp-1)*8); 
             }
 
         }
-        pineconeLastUp = pineconeUp;
-        pineconeLastForward = pineconeForward;
+        pineconeLastUp = pineconePositionUp;
+        pineconeLastForward = pineconePositionForward;
 
     }
 

@@ -8,7 +8,7 @@ public class Actor : MonoBehaviour {
     private Collider actorCollider;
 
     [SerializeField]
-    private Dimension dimension;
+    protected Dimension dimension;
 
     void Awake() {
         initialize();
