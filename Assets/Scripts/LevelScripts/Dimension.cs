@@ -88,10 +88,14 @@ public class Dimension : MonoBehaviour
     void HandelPineconeCollision()
     {
         pineconeUp = Vector3.Angle(gravity, Vector3.up);//0 to 180
-        pineconeForward = Vector3.SignedAngle(gravity, Vector3.forward,Vector3.up); //-180 to 180
-        
-        //Converts angle of the dimention on the up axis to a position to determin layer - Hard to read to avoid hard code as much as posible  
-        if(pineconeUp <= mainDirectionAngle-mainDirectionAngle/2){
+        pineconeForward = Vector3.Angle(gravity, Vector3.forward); //-180 to 180
+        if (Mathf.RoundToInt(Vector3.Angle(gravity, Vector3.right) / 45) < 2)//flips if over 180 degree rotation
+        {
+            pineconeForward -= 180;
+        }
+
+            //Converts angle of the dimention on the up axis to a position to determin layer - Hard to read to avoid hard code as much as posible  
+            if (pineconeUp <= mainDirectionAngle-mainDirectionAngle/2){
             pineconePositionUp = 4;
         }else if(pineconeUp <= sideDirectionAngle+ mainDirectionAngle-mainDirectionAngle/2){
             pineconePositionUp = 3;
@@ -104,22 +108,33 @@ public class Dimension : MonoBehaviour
         }
 
         //Converts angle of the dimention on the forward axis to a position to determin layer
-        if(pineconeForward <= -180+mainDirectionAngle){
+        if(pineconeForward <= -180+mainDirectionAngle- mainDirectionAngle/2)
+        {
             pineconePositionForward = 0;
-        }else if(pineconeForward <= -180+mainDirectionAngle+sideDirectionAngle){
+        }else if(pineconeForward <= -180+mainDirectionAngle+sideDirectionAngle - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 1;
-        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle){
+        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 2;
-        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle*2){
+        }else if(pineconeForward <= -180+mainDirectionAngle*2+sideDirectionAngle*2 - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 3;
-        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*2){
+        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*2 - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 4;
-        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*3){
+        }else if(pineconeForward <= -180+mainDirectionAngle*3+sideDirectionAngle*3 - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 5;
-        }else if(pineconeForward <= -180+mainDirectionAngle*4+sideDirectionAngle*3){
+        }else if(pineconeForward <= -180+mainDirectionAngle*4+sideDirectionAngle*3 - mainDirectionAngle / 2)
+        {
             pineconePositionForward = 6;
-        }else{
+        }else if(pineconeForward <= -180+mainDirectionAngle*4+sideDirectionAngle*4 - mainDirectionAngle / 2){
             pineconePositionForward = 7;
+        }
+        else
+        {
+            pineconePositionForward = 0;
         }
 
 
