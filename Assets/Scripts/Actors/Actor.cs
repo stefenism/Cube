@@ -7,6 +7,9 @@ public class Actor : MonoBehaviour {
     private Rigidbody rb;
     private Collider actorCollider;
 
+    public bool isGrounded = false;
+    public float halfHeight = 0.69f;
+
     [SerializeField]
     protected Dimension dimension;
 
@@ -47,7 +50,20 @@ public class Actor : MonoBehaviour {
                     currentObject = currentObject.parent;
                 }
             }
+            if (hit.distance <= halfHeight + 0.01)
+            {
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
         }
+        else
+        {
+            isGrounded = false;
+        }
+
     }
 
     void checkSetDimension(Dimension newDimension){

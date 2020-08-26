@@ -6,12 +6,16 @@ public class PlayerControls : MonoBehaviour
     public PlayerManager playerManager;
     private EdgeDetect edgeDetect;
 
-    public float speed = 5f;
+    public float speed = 25f;
     public float climbSpeed = 2f;
+    public float dashMultiplier = 3f;
+    float currentDashMultipier = 1;
     private bool touchingPickupableObject;
     private Pickup itemToPickUp;
     private bool holdingItem = false;
     private bool onLadder = false;
+
+    bool isDashing = false;
 
     private float horMov;
     private float vertMov;
@@ -34,6 +38,8 @@ public class PlayerControls : MonoBehaviour
 
     CameraController cameraController;
 
+    Actor actor;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,6 +48,8 @@ public class PlayerControls : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
         edgeDetect = GetComponentInChildren(typeof(EdgeDetect)) as EdgeDetect;
         cameraController = Camera.main.GetComponent<CameraController>();
+
+        actor = this.gameObject.GetComponent<Actor>();
     }
 
     void Update()
@@ -65,6 +73,16 @@ public class PlayerControls : MonoBehaviour
             vertMov = 0;
         }
 
+        if(!isDashing && Input.GetKeyDown(KeyCode.T)){
+            isDashing = true;
+            Invoke("StopDash", 0.2f);
+        }
+
+    }
+
+    void StopDash()
+    {
+        isDashing = false;
     }
 
     void FixedUpdate()
@@ -99,22 +117,33 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    Vector3 verticalSpeed;
+    Vector3 horizontalSpeed;
     void checkMovement(){
 
         if (player.getDimension() != null){
 
             runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
-            float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
+            //float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
 
-            Vector3 verticalSpeed = vertMov * transform.forward * speed * modifier;
-            Vector3 horizontalSpeed = horMov * transform.right * speed * modifier;
+            currentDashMultipier = 1;
+
+            verticalSpeed = vertMov * transform.forward;
+            horizontalSpeed = horMov * transform.right;
+
+
             Vector3 gravitySpeed = player.getDimension().gravity;
-            
+
+            if (isDashing)
+            {
+                currentDashMultipier = dashMultiplier;
+            }
+
             if (vertMov != 0 || horMov != 0){
-                runForce += (verticalSpeed + horizontalSpeed) * modifier;
+                runForce = (verticalSpeed + horizontalSpeed) * speed * currentDashMultipier;
             }
             else{
-                runForce -= rb.velocity * modifier;
+                runForce -= runForce * decelFactor;
             }
 
             if (onLadder){
@@ -122,10 +151,20 @@ public class PlayerControls : MonoBehaviour
                 gravitySpeed = -player.getDimension().gravity;
             }
 
+           
+
             if(!playerManager.isPlayerEdging()){
-                rb.velocity += runForce + gravitySpeed;
+                rb.velocity = runForce;
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
             }
 
+            if (!actor.isGrounded)
+            {
+                rb.velocity +=  gravitySpeed*0.4f;
+            }
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
         }
     }
