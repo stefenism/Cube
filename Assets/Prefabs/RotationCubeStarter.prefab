@@ -12981,7 +12981,7 @@ GameObject:
   - component: {fileID: 4528842141552674508}
   - component: {fileID: 4528842141552674509}
   - component: {fileID: 4528842141552674506}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: RotationCubeStarter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
