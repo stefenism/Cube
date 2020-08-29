@@ -15,10 +15,9 @@ public class PlayerControls : MonoBehaviour
     private bool holdingItem = false;
     private bool onLadder = false;
 
-    bool isDashing = false;
-
     private float horMov;
     private float vertMov;
+    private Vector3 dashDir;
 
     public GameObject playerModel;
     Animator playerAnimator;
@@ -28,6 +27,7 @@ public class PlayerControls : MonoBehaviour
     [Range(0, 1)]
     public float decelFactor;
     public float maxSpeed = 10;
+    public float dashSpeed = 25;
 
     private PlayerActor player;
 
@@ -73,8 +73,11 @@ public class PlayerControls : MonoBehaviour
             vertMov = 0;
         }
 
-        if(!isDashing && Input.GetKeyDown(KeyCode.T)){
-            isDashing = true;
+        if(!playerManager.isPlayerDashing() && Input.GetButtonDown(ProjectConstants.DASH_BUTTON)){
+            playerManager.setPlayerDashing();
+            dashDir.x = horMov;
+            dashDir.z = vertMov;
+            dashDir.Normalize();
             Invoke("StopDash", 0.2f);
         }
 
@@ -82,7 +85,7 @@ public class PlayerControls : MonoBehaviour
 
     void StopDash()
     {
-        isDashing = false;
+        playerManager.setPlayerWalking();
     }
 
     void FixedUpdate()
@@ -123,7 +126,7 @@ public class PlayerControls : MonoBehaviour
 
         if (player.getDimension() != null){
 
-            runForce = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            runForce = rb.velocity;
             //float modifier = ((Mathf.Abs(horMov % 1) != 0) && (Mathf.Abs(vertMov % 1) != 0)) ? decelFactor : accelerationFactor;
 
             currentDashMultipier = 1;
@@ -134,17 +137,19 @@ public class PlayerControls : MonoBehaviour
 
             Vector3 gravitySpeed = player.getDimension().gravity;
 
-            if (isDashing)
-            {
-                currentDashMultipier = dashMultiplier;
+            if(playerManager.isPlayerWalking()){
+                runForce = getPlayerWalkSpeed(verticalSpeed, horizontalSpeed);
+            }
+            else if(playerManager.isPlayerDashing()){
+                runForce = getPlayerDashSpeed();
             }
 
-            if (vertMov != 0 || horMov != 0){
-                runForce = (verticalSpeed + horizontalSpeed) * speed * currentDashMultipier;
-            }
-            else{
-                runForce -= runForce * decelFactor;
-            }
+            // if (vertMov != 0 || horMov != 0){
+            //     runForce = (verticalSpeed + horizontalSpeed) * speed;
+            // }
+            // else{
+            //     runForce -= runForce * decelFactor;
+            // }
 
             if (onLadder){
                 //gravitySpeed = Vector3.zero;
@@ -165,8 +170,18 @@ public class PlayerControls : MonoBehaviour
             {
                 rb.velocity +=  gravitySpeed*0.4f;
             }
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+
+            float clampSpeed = playerManager.isPlayerWalking() ? maxSpeed : dashSpeed;
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampSpeed);
         }
+    }
+
+    Vector3 getPlayerWalkSpeed(Vector3 verticalSpeed, Vector3 horizontalSpeed){
+        return (verticalSpeed + horizontalSpeed) * speed;
+    }
+
+    Vector3 getPlayerDashSpeed(){
+        return dashDir * speed * dashMultiplier;
     }
 
     public void fullStop(){
