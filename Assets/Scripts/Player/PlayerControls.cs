@@ -73,6 +73,10 @@ public class PlayerControls : MonoBehaviour
             vertMov = 0;
         }
 
+        checkDash();
+    }
+
+    void checkDash() {
         if(!playerManager.isPlayerDashing() && Input.GetButtonDown(ProjectConstants.DASH_BUTTON)){
             playerManager.setPlayerDashing();
             dashDir.x = horMov;
@@ -80,7 +84,6 @@ public class PlayerControls : MonoBehaviour
             dashDir.Normalize();
             Invoke("StopDash", 0.2f);
         }
-
     }
 
     void StopDash()

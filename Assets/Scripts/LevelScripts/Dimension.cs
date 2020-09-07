@@ -166,7 +166,9 @@ public class Dimension : MonoBehaviour
         Transform[] allChildren = transform.GetComponentsInChildren<Transform>();
         foreach (Transform t in allChildren )
         {
-            t.gameObject.layer = layerNumber;
+            if(t != transform.GetChild(0).transform){
+                t.gameObject.layer = layerNumber;
+            }
         }
         transform.gameObject.layer = layerNumber;
         currentLayer = layerNumber;
