@@ -13,12 +13,18 @@ public class PlayerManager : MonoBehaviour {
     private enum PlayerState{
         LIVING,
         DEAD,
-        CLIMBING,
-        PHASING,
         EDGING
     }
 
+    private enum PlayerMovementState{
+        WALKING,
+        DASHING,
+        PHASING,
+        CLIMBING
+    }
+
     private PlayerState playerState = PlayerState.LIVING;
+    private PlayerMovementState playerMovementState = PlayerMovementState.WALKING;
 
     void Awake(){
     }
@@ -47,13 +53,19 @@ public class PlayerManager : MonoBehaviour {
 
     public void setPlayerLiving(){playerState = PlayerState.LIVING;}
     public void setPlayerDead(){playerState = PlayerState.DEAD;}
-    public void setPlayerClimbing(){playerState = PlayerState.CLIMBING;}
-    public void setPlayerPhasing(){playerState = PlayerState.PHASING;}
     public void setPlayerEdging(){playerState = PlayerState.EDGING;} //I intended to name in that
+
+    public void setPlayerWalking(){playerMovementState = PlayerMovementState.WALKING;}
+    public void setPlayerClimbing(){playerMovementState = PlayerMovementState.CLIMBING;}
+    public void setPlayerPhasing(){playerMovementState = PlayerMovementState.PHASING;}
+    public void setPlayerDashing(){playerMovementState = PlayerMovementState.DASHING;}
 
     public bool isPlayerLiving(){return playerState == PlayerState.LIVING;}
     public bool isPlayerDead(){return playerState == PlayerState.DEAD;}
-    public bool isPlayerClimbing(){return playerState == PlayerState.CLIMBING;}
-    public bool isPlayerPhasing(){return playerState == PlayerState.PHASING;}
     public bool isPlayerEdging(){return playerState == PlayerState.EDGING;} //hopefully
+
+    public bool isPlayerWalking(){return playerMovementState == PlayerMovementState.WALKING;}
+    public bool isPlayerClimbing(){return playerMovementState == PlayerMovementState.CLIMBING;}
+    public bool isPlayerPhasing(){return playerMovementState == PlayerMovementState.PHASING;}
+    public bool isPlayerDashing(){return playerMovementState == PlayerMovementState.DASHING;}
 }

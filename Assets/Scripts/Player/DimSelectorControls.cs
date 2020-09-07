@@ -111,6 +111,8 @@ public class DimSelectorControls : MonoBehaviour
                 directionIndicatorCurrent.GreySprites(true);
             }
 
+            Invoke("doSetBoundaries", 1f);
+
         } else if(Mathf.Abs(horiz) + Mathf.Abs(vert) < 0.5f && !selectorReset)
         {
             selectorReset = true;
@@ -120,6 +122,10 @@ public class DimSelectorControls : MonoBehaviour
             }
         }
        
+    }
+
+    public void doSetBoundaries(){
+        DimensionManager.dimensionDaddy.setNewBoundaries();
     }
 
     void SelectDimension()

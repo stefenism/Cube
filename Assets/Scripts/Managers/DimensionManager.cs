@@ -12,6 +12,7 @@ public class DimensionManager : MonoBehaviour {
     public GameObject player;
     public Vector3 visableDimensionVector  = Vector3.zero;//The direction that is visable in the planer view
     public Vector3 currentDimesionPosition = Vector3.zero;
+    private float adjacentDimensionCheckDistance = 8f;
 
     [SerializeField]
     private List<Dimension> dimensionList = new List<Dimension>();
@@ -86,6 +87,12 @@ public class DimensionManager : MonoBehaviour {
                 // print("dimension position:" + dimension.transform.GetChild(dimension.transform.childCount -1).transform.position);
                 // print("dimension daddy is:" + dimension.transform.parent.gameObject.name);
                 foreach(Dimension printDimension in touchingList){
+                    if(printDimension.transform.parent.gameObject.name == "testes"){
+                        print("touching list length: " + touchingList.Count);
+                        foreach(Dimension test in touchingList){
+                            print("test.gameobjectparent.name is: " + test.transform.parent.gameObject.name);
+                        }
+                    }
                     // print("prinet demension is:" + printDimension.gameObject.name);
                     // print("print dimension parent:" + printDimension.transform.parent.gameObject.name);
                     // print("print dimension layer:" + printDimension.getCurrentLayer());
@@ -117,7 +124,7 @@ public class DimensionManager : MonoBehaviour {
             dimension.disableAllColliders();
         }
 
-        return (dimensionDistance < 7.5f && !anythingInBetween && !insideCollider);
+        return (dimensionDistance < adjacentDimensionCheckDistance && !anythingInBetween && !insideCollider);
     }
 
     private void disableCollidersBetween(Dimension dimension, Dimension adjacentDimension){
