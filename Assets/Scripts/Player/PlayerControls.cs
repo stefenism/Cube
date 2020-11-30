@@ -38,18 +38,17 @@ public class PlayerControls : MonoBehaviour
 
     CameraController cameraController;
 
-    Actor actor;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerActor>();
         playerAnimator = playerModel.GetComponent<Animator>();
-        playerManager = GetComponent<PlayerManager>();
         edgeDetect = GetComponentInChildren(typeof(EdgeDetect)) as EdgeDetect;
         cameraController = Camera.main.GetComponent<CameraController>();
 
-        actor = this.gameObject.GetComponent<Actor>();
+
     }
 
     void Update()
@@ -65,7 +64,7 @@ public class PlayerControls : MonoBehaviour
             horMov = Input.GetAxisRaw("Horizontal");
             vertMov = Input.GetAxisRaw("Vertical");
 
-            checkPickup();
+            CheckPickup();
         }
         else
         {
@@ -73,10 +72,11 @@ public class PlayerControls : MonoBehaviour
             vertMov = 0;
         }
 
-        checkDash();
+        CheckDash();
+        HandleStickPush();
     }
 
-    void checkDash() {
+    void CheckDash() {
         if(!playerManager.isPlayerDashing() && Input.GetButtonDown(ProjectConstants.DASH_BUTTON)){
             playerManager.setPlayerDashing();
             dashDir.x = horMov;
@@ -105,7 +105,7 @@ public class PlayerControls : MonoBehaviour
         checkMovement();
     }
 
-    void checkPickup()
+    void CheckPickup()
     {
         if (Input.GetButtonDown("PickupDrop"))
         {
@@ -123,8 +123,38 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public bool pushingStick = false;
+    void HandleStickPush()
+    {
+        
+        if (Input.GetButtonDown("UseStick"))
+        {
+            
+            pushingStick = true;
+
+
+            RaycastHit hit;
+            
+
+            if (Physics.Raycast(transform.position, direction, out hit, 1.5f))
+            {
+                Actor actor;
+                if (actor = hit.transform.gameObject.GetComponent<Actor>())
+                {
+                    actor.Push(direction);
+                }
+            }
+        }
+
+        if (pushingStick)
+        {
+
+        }
+    }
+
     Vector3 verticalSpeed;
     Vector3 horizontalSpeed;
+    Vector3 direction;
     void checkMovement(){
 
         if (player.getDimension() != null){
@@ -169,13 +199,18 @@ public class PlayerControls : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
 
-            if (!actor.isGrounded)
+            if (!player.isGrounded)
             {
                 rb.velocity +=  gravitySpeed*0.4f;
             }
 
-            float clampSpeed = playerManager.isPlayerWalking() ? maxSpeed : dashSpeed;
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampSpeed);
+            if (runForce.magnitude > 0.1)
+            {
+                direction = verticalSpeed + horizontalSpeed;
+            }
+
+                float clampSpeed = playerManager.isPlayerWalking() ? maxSpeed : dashSpeed;
+            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, clampSpeed);
         }
     }
 
@@ -236,7 +271,7 @@ public class PlayerControls : MonoBehaviour
             //Determins how it should be rotated based on the player rotation and force direction -- does not work with x rotation. must fix
             if(vertMov != 0 || horMov != 0)
                 characterRotation = Mathf.Atan2( horMov,vertMov) * Mathf.Rad2Deg;
-            Quaternion target =  Quaternion.Euler(0,characterRotation,0);
+            Quaternion target =  Quaternion.Euler(0,characterRotation-90,0);
 
             playerModel.transform.localRotation = Quaternion.Lerp(playerModel.transform.localRotation, target, 0.2f);
 

@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         PlayerManager pm = FindObjectOfType<PlayerManager>();
-        player = pm.gameObject;
+        //player = pm.gameObject;
         playerCameraLocation = pm.playerCameraLocation.transform;
         sParticles = pm.playerStarParticles;
     }

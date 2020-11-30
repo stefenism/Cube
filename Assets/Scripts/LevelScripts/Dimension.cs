@@ -18,7 +18,7 @@ public class Dimension : MonoBehaviour
     public Vector3 gravity = Vector3.zero;
     float lastDiff = 100;
     MeshRenderer[] childMeshes;
-    float lagUpdateChance = 0f;
+    float lagUpdateChance = 0.1f;
 
 
     public Collider[] colliders;
@@ -195,7 +195,8 @@ public class Dimension : MonoBehaviour
     {
         foreach (Actor a in containedActors)
         {
-            a.getRigidbody().AddForce(gravity);
+            if(a.applyGravity)
+                a.getRigidbody().AddForce(gravity);
         }
     }
 
