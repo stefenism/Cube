@@ -20,7 +20,7 @@ public class PlayerControls : MonoBehaviour
     private Vector3 dashDir;
 
     public GameObject playerModel;
-    Animator playerAnimator;
+    public CapeScript capeScript;
 
     [Range(0, 1)]
     public float accelerationFactor;
@@ -44,7 +44,6 @@ public class PlayerControls : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerActor>();
-        playerAnimator = playerModel.GetComponent<Animator>();
         edgeDetect = GetComponentInChildren(typeof(EdgeDetect)) as EdgeDetect;
         cameraController = Camera.main.GetComponent<CameraController>();
 
@@ -73,7 +72,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         CheckDash();
-        HandleStickPush();
+        HandleAirPush();
     }
 
     void CheckDash() {
@@ -123,33 +122,39 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    public bool pushingStick = false;
-    void HandleStickPush()
+    public bool airPushing = false;
+    void HandleAirPush()
     {
         
-        if (Input.GetButtonDown("UseStick"))
+        if (Input.GetButtonDown("UseStick") && !airPushing)
         {
-            
-            pushingStick = true;
+            airPushing = true;
+            capeScript.CapePushAnimation(0.5f);
+            Invoke("PushAir", 0.5f);
 
 
-            RaycastHit hit;
-            
+        }
 
-            if (Physics.Raycast(transform.position, direction, out hit, 1.5f))
+
+    }
+
+    void PushAir()
+    {
+        
+
+
+        RaycastHit hit;
+
+
+        if (Physics.Raycast(transform.position, direction, out hit, 1.5f))
+        {
+            Actor actor;
+            if (actor = hit.transform.gameObject.GetComponent<Actor>())
             {
-                Actor actor;
-                if (actor = hit.transform.gameObject.GetComponent<Actor>())
-                {
-                    actor.Push(direction);
-                }
+                actor.Push(direction);
             }
         }
-
-        if (pushingStick)
-        {
-
-        }
+        airPushing = false;
     }
 
     Vector3 verticalSpeed;
@@ -260,10 +265,10 @@ public class PlayerControls : MonoBehaviour
 
     void AnimatePlayerModel(){
         if (horMov + vertMov != 0){ //set run speed for animation
-            playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 7);
+            //playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 7);
         }
         else{
-            playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 10);
+            //playerAnimator.SetFloat("Speed", (rb.velocity).magnitude / 10);
         }
 
         if (runForce.magnitude > 0.1){ //rotate player model
@@ -279,18 +284,18 @@ public class PlayerControls : MonoBehaviour
             float turnForce = Quaternion.Angle(playerModel.transform.localRotation, target) / 40;
 
             if (oldEulerRotation - playerModel.transform.eulerAngles.y > 2){
-                playerAnimator.SetFloat("Rotation", -turnForce);
+                //playerAnimator.SetFloat("Rotation", -turnForce);
             }
             else if (oldEulerRotation - playerModel.transform.eulerAngles.y < -2){
-                playerAnimator.SetFloat("Rotation", turnForce);
+                //playerAnimator.SetFloat("Rotation", turnForce);
             }
             else{
-                playerAnimator.SetFloat("Rotation", 0);
+                //playerAnimator.SetFloat("Rotation", 0);
             }
             oldEulerRotation = playerModel.transform.eulerAngles.y;
         }
         else{
-            playerAnimator.SetFloat("Rotation", 0);
+            //playerAnimator.SetFloat("Rotation", 0);
         }
 
     }

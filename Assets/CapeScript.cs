@@ -11,6 +11,8 @@ public class CapeScript : MonoBehaviour
     public Animation capeAnimation;
 
     public GameObject player;
+
+    public GameObject capePushWindPar;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,18 +24,25 @@ public class CapeScript : MonoBehaviour
 
     }
 
-    float ti=0;
+
     // Update is called once per frame
     void Update()
     {
         transform.position = player.transform.position + new Vector3(0, Mathf.Sin(Time.time*2.5f)/10, 0);
-      
-        
-        //ti += 1;
-        //if (ti>100)
-        //{
-        //    capeAnimation.Play();
-        //    ti = 0;
-        //}
+
+
+
+    }
+
+    public void CapePushAnimation(float delay)
+    {
+        capeAnimation.Play();
+
+        Invoke("CapePushParticle", delay);
+    }
+
+    void CapePushParticle()
+    {
+        Instantiate(capePushWindPar, transform.position, transform.rotation * Quaternion.Euler(0, 90, 0));
     }
 }

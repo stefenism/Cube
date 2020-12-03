@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     public GameObject player;
     public Transform playerCameraLocation;
 
+    public Vector3 cameraLerpLocation;
+
     public float distance = 5.0f;
     public float xSpeed = 120.0f;
     public float ySpeed = 120.0f;
@@ -173,9 +175,11 @@ public class CameraController : MonoBehaviour
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + player.transform.position;
+
+            //cameraLerpLocation = Vector3.Lerp(cameraLerpLocation, playerCameraLocation.position, 0.5f);
             
             transform.rotation = Quaternion.Lerp(rotation,playerCameraLocation.rotation,cameraState);
-            transform.position = Vector3.Lerp(position,playerCameraLocation.position,cameraState);
+            transform.position = Vector3.Lerp(position, playerCameraLocation.position, cameraState);
         }
 
     }

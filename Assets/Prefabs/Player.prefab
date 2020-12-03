@@ -585,6 +585,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5379,6 +5380,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5928,6 +5930,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6076,6 +6079,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6133,11 +6137,12 @@ MonoBehaviour:
   climbSpeed: 2
   dashMultiplier: 4
   playerModel: {fileID: 3483288252367185843}
+  capeScript: {fileID: 3483288252367185840}
   accelerationFactor: 0.69
   decelFactor: 0.42
   maxSpeed: 100
   dashSpeed: 25
-  pushingStick: 0
+  airPushing: 0
 --- !u!136 &3483288251889373399
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6700,6 +6705,8 @@ MonoBehaviour:
   - {fileID: 3483288251692738172}
   capeAnimation: {fileID: 0}
   player: {fileID: 3483288251889373420}
+  capePushWindPar: {fileID: 3184048808762199631, guid: f88b13c6f46ab874e81df36e0e09b52e,
+    type: 3}
 --- !u!111 &7373304888655086604
 Animation:
   m_ObjectHideFlags: 0
@@ -6714,7 +6721,7 @@ Animation:
   m_Animations:
   - {fileID: -5361922285233063970, guid: 063056faf75a28f4888f3563cb80dd86, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 1
   m_CullingType: 0
 --- !u!1 &3483288252431291717
@@ -6786,8 +6793,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483288252487925915}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
