@@ -14,11 +14,15 @@ public class FireballProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity += transform.forward*0.25f;
+        rb.velocity = transform.forward*1f;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(this);
+        if (collision.collider.transform != transform)
+        {
+            Destroy(this.gameObject);
+        }
+            
     }
 }
