@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class DimSelectorControls : MonoBehaviour
 {
-
-    float horiz;
-    float vert;
+    //controller Specific Vars
+    float controllerHoriz;
+    float controllerVert;
+    //Mouse Vars
+    Vector3 deltaMouse = Vector3.zero;
+    Vector3 lastPosMouse  = Vector3.zero;
+    Vector3 mouseMovedFromCenter = Vector3.zero;
 
     bool selectorReset = false;
-
+    bool mouseControl = true;
     LevelBlockManipulation selectedManipulationScript;
     bool hasSelectedDimension = false;
 
@@ -22,8 +26,10 @@ public class DimSelectorControls : MonoBehaviour
     void Update()
     {
         
-        horiz = Input.GetAxis("Aim Horizontal");
-        vert = Input.GetAxis("Aim Vertical");
+        controllerHoriz = Input.GetAxis("Aim Horizontal");
+        controllerVert = Input.GetAxis("Aim Vertical");
+
+
 
         if (!hasSelectedDimension)
         {
@@ -65,63 +71,103 @@ public class DimSelectorControls : MonoBehaviour
             }
         }
 
-
+        lastPosMouse = Input.mousePosition;
     }
 
     float absHoriz;
     float absVert;
 
+   
+
     void GetMoveDirection()
     {
-        absHoriz = Mathf.Abs(horiz);
-        absVert = Mathf.Abs(vert);
-        if ((absHoriz > 0.8f|| absVert > 0.8f) &&selectorReset)
+        if (mouseControl)
         {
+            deltaMouse = Input.mousePosition - lastPosMouse;
+            mouseMovedFromCenter += deltaMouse;
 
-            if (absHoriz >= absVert)
+            if(Mathf.Abs(mouseMovedFromCenter.x)>15 || Mathf.Abs(mouseMovedFromCenter.y) > 15)
             {
-                if (horiz > 0)
+                if(Mathf.Abs(mouseMovedFromCenter.x)> Mathf.Abs(mouseMovedFromCenter.y))
                 {
-                    selectedManipulationScript.SnapMoveCube(-1, transform.forward, transform.up);
+                    if (mouseMovedFromCenter.x > 0)
+                    {
+                        selectedManipulationScript.SnapMoveCube(-1, transform.forward, transform.up);
+                        
+                    }
+                    else
+                    {
+                        selectedManipulationScript.SnapMoveCube(1, transform.forward, transform.up);
+                    }
                 }
                 else
                 {
-                    selectedManipulationScript.SnapMoveCube(1, transform.forward, transform.up);
+                    if (mouseMovedFromCenter.y> 0)
+                    {
+                        selectedManipulationScript.SnapMoveCube(1, transform.right, transform.up);
+                    }
+                    else
+                    {
+                        selectedManipulationScript.SnapMoveCube(-1, transform.right, transform.up);
+
+                    }
                 }
+                mouseMovedFromCenter = Vector3.zero;
             }
-            else
+
+        }
+        else
+        {
+            absHoriz = Mathf.Abs(controllerHoriz);
+            absVert = Mathf.Abs(controllerVert);
+            if ((absHoriz > 0.8f || absVert > 0.8f) && selectorReset)
             {
-                if (vert > 0)
+
+                if (absHoriz >= absVert)
                 {
-                    selectedManipulationScript.SnapMoveCube(1, transform.right, transform.up);
+                    if (controllerHoriz > 0)
+                    {
+                        selectedManipulationScript.SnapMoveCube(-1, transform.forward, transform.up);
+                    }
+                    else
+                    {
+                        selectedManipulationScript.SnapMoveCube(1, transform.forward, transform.up);
+                    }
                 }
                 else
                 {
-                    selectedManipulationScript.SnapMoveCube(-1, transform.right, transform.up);
+                    if (controllerVert > 0)
+                    {
+                        selectedManipulationScript.SnapMoveCube(1, transform.right, transform.up);
+                    }
+                    else
+                    {
+                        selectedManipulationScript.SnapMoveCube(-1, transform.right, transform.up);
+                    }
                 }
+                DestroyDirectionIndicator();
+                DestroySelectorSquare();
+
+
+
+                selectorReset = false;
+                if (directionIndicatorCurrent != null)
+                {
+                    directionIndicatorCurrent.GreySprites(true);
+                }
+
+                Invoke("doSetBoundaries", 1f);
+
             }
-            DestroyDirectionIndicator();
-            DestroySelectorSquare();
-
-
-
-            selectorReset = false;
-            if (directionIndicatorCurrent != null)
+            else if (Mathf.Abs(controllerHoriz) + Mathf.Abs(controllerVert) < 0.5f && !selectorReset)
             {
-                directionIndicatorCurrent.GreySprites(true);
-            }
-
-            Invoke("doSetBoundaries", 1f);
-
-        } else if(Mathf.Abs(horiz) + Mathf.Abs(vert) < 0.5f && !selectorReset)
-        {
-            selectorReset = true;
-            if (directionIndicatorCurrent != null)
-            {
-                directionIndicatorCurrent.GreySprites(false);
+                selectorReset = true;
+                if (directionIndicatorCurrent != null)
+                {
+                    directionIndicatorCurrent.GreySprites(false);
+                }
             }
         }
-       
     }
 
     public void doSetBoundaries(){
@@ -130,7 +176,7 @@ public class DimSelectorControls : MonoBehaviour
 
     void SelectDimension()
     {
-        
+        Vector3 mouseMovedFromCenter = Vector3.zero;
         int layerMask = LayerMask.GetMask("Water");
         RaycastHit hit;
         Ray ray = new Ray(transform.position, -transform.up);
@@ -242,10 +288,10 @@ public class DimSelectorControls : MonoBehaviour
     void MoveSelector()
     {
         
-        if (Mathf.Abs(horiz) + Mathf.Abs(vert) > 0)
+        if (Mathf.Abs(controllerHoriz) + Mathf.Abs(controllerVert) > 0)
         {
             HandleSelectorSquare();
-            transform.localPosition = new Vector3(horiz * 6, 0, vert * 6);
+            transform.localPosition = new Vector3(controllerHoriz * 6, 0, controllerVert * 6);
         }
         else
         {

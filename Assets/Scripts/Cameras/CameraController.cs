@@ -27,9 +27,11 @@ public class CameraController : MonoBehaviour
     float xAdded = 0.0f;
     float yAdded = 0.0f;
    
-    public float cameraState;
+    public float cameraState=0;
 
     public StarParticles sParticles;
+
+    public GameObject insideCamera;
 
     private void Awake()
     {
@@ -177,10 +179,46 @@ public class CameraController : MonoBehaviour
             Vector3 position = rotation * negDistance + player.transform.position;
 
             //cameraLerpLocation = Vector3.Lerp(cameraLerpLocation, playerCameraLocation.position, 0.5f);
-            
-            transform.rotation = Quaternion.Lerp(rotation,playerCameraLocation.rotation,cameraState);
-            transform.position = Vector3.Lerp(position, playerCameraLocation.position, cameraState);
+            if (offsetOn)
+            {
+                //transform.rotation = playerCameraLocation.rotation;
+                transform.position = locationOffset + (RotatePointAroundPivot(playerCameraLocation.transform.position, initialPivotPoint, rotationOffset) - rotatedStartPoint);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Lerp(rotation, playerCameraLocation.rotation, cameraState);
+                transform.position = Vector3.Lerp(position, playerCameraLocation.position, cameraState);
+            }
+
         }
+
+    }
+    Vector3 locationOffset= Vector3.zero;
+    public bool offsetOn = false;
+    public void SetOffset(bool on)
+    {
+        if (on)
+        {
+            locationOffset = transform.position - playerCameraLocation.position ;
+            offsetOn = true;
+        }
+        else
+        {
+            locationOffset = Vector3.zero;
+            offsetOn = false;
+        }
+    }
+
+    Quaternion rotationOffset;
+    Vector3 initialPivotPoint;
+    Vector3 rotatedStartPoint;
+    public void CalculateOffset(Vector3 newPlayerPosition, Quaternion exitRotation)
+    {
+        Vector3 rotatedPlayerToCameraPoint = RotatePointAroundPivot(playerCameraLocation.transform.position, player.transform.position, exitRotation) - player.transform.position;//Gets the distance the camera is supose to be away from the player at the correct rotation
+        locationOffset = newPlayerPosition + rotatedPlayerToCameraPoint; //Finds the location the new camera needs to start at
+        rotationOffset = exitRotation; // The change in rotation between the portals
+        initialPivotPoint = newPlayerPosition; //The point to rotate the world around to calculate the camera synced movements
+        rotatedStartPoint = RotatePointAroundPivot(playerCameraLocation.transform.position, initialPivotPoint, rotationOffset); //the first camera location used to subtract from the new camera movements to get a change(delta moved
 
     }
 
@@ -232,5 +270,13 @@ public class CameraController : MonoBehaviour
             angle -= 360F;
         }
         return Mathf.Clamp(angle, min, max);
+    }
+
+    public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion rot) //rotates a vector around a pivot
+    {
+        Vector3 dir = point - pivot; // get point direction relative to pivot
+        dir = rot * dir; // rotate it
+        point = dir + pivot; // calculate rotated point
+        return point; // return it
     }
 }
