@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class DimensionEditor : EditorWindow
 {
+
     bool dimEditorOn = false;
     bool dimSelected = false;
     Dimension[] allDimensions;

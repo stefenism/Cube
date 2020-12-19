@@ -36,7 +36,7 @@ TagManager:
   - 28
   - 29
   - 30
-  - Up
+  - Down
   m_SortingLayers:
   - name: Default
     uniqueID: 0

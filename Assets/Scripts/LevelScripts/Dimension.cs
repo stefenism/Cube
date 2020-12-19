@@ -21,6 +21,7 @@ public class Dimension : MonoBehaviour
     float lagUpdateChance = 0.1f;
 
 
+
     public Collider[] colliders;
 
     CameraController cameraController;

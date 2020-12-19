@@ -115,9 +115,12 @@ public class DimensionManager : MonoBehaviour {
 
         RaycastHit hit;
 
+        //boundaryCheckLayer =  1 << dimension.gameObject.layer;
+
         float dimensionDistance = Vector3.Distance(samePlaneAnchorPosition, dimensionAnchoPosition);
         bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
         Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
+
         bool insideCollider = linecastOriginColliders.Length > 0;
 
         if(insideCollider){

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Actor : MonoBehaviour {
+public class Actor : MonoBehaviour
+{
 
     private Rigidbody rb;
     private Collider actorCollider;
@@ -16,15 +17,31 @@ public class Actor : MonoBehaviour {
     [SerializeField]
     protected Dimension dimension;
 
-    void Awake() {
+    void Awake()
+    {
         initialize();
     }
-
-    void Update() {
-        checkForParent();
+    bool startDelay = true;
+    float timeForDelay;
+    void Update()
+    {
+        if (startDelay)
+        {
+            timeForDelay += Time.deltaTime;
+            if (timeForDelay > 0.01)
+            {
+                startDelay = false;
+            }
+        }
+        else
+        {
+            checkForParent();
+        }
+        
     }
 
-    void initialize(){
+    void initialize()
+    {
         //figure out which dimension you're in...on...?
         rb = GetComponent<Rigidbody>();
         actorCollider = GetComponent<BoxCollider>();
@@ -32,46 +49,56 @@ public class Actor : MonoBehaviour {
 
     void checkForParent()
     {
-        RaycastHit hit;
-        LayerMask mask = 1 << gameObject.layer;
-
-        // the player needs to be on the "Up" layer for this to work
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 10,mask, QueryTriggerInteraction.Ignore))
+        LevelBlockManipulation lb = null;
+        if(dimension != null)
+            dimension.transform.parent.TryGetComponent<LevelBlockManipulation>(out lb);
+        
+        if (lb == null || lb.isMoving == false)
         {
-            Transform currentObject = hit.transform;
-            bool notFound = true;
-            while(currentObject!=null && notFound)
+
+            RaycastHit hit;
+            LayerMask mask = 1 << gameObject.layer;
+
+            // the player needs to be on the "Up" layer for this to work
+            if (Physics.Raycast(transform.position, -transform.up, out hit, 10, mask, QueryTriggerInteraction.Ignore))
             {
-                if (currentObject.TryGetComponent<Dimension>(out Dimension dim))
+                Transform currentObject = hit.transform;
+                bool notFound = true;
+                while (currentObject != null && notFound)
                 {
-                    transform.SetParent(dim.transform);
-                    checkSetDimension(dim);
-                    notFound = false;
+                    if (currentObject.TryGetComponent<Dimension>(out Dimension dim))
+                    {
+                        transform.SetParent(dim.transform);
+                        checkSetDimension(dim);
+                        notFound = false;
+                    }
+                    else
+                    {
+                        currentObject = currentObject.parent;
+                    }
+                }
+                if (hit.distance <= halfHeight + 0.01)
+                {
+                    isGrounded = true;
                 }
                 else
                 {
-                    currentObject = currentObject.parent;
+                    isGrounded = false;
                 }
-            }
-            if (hit.distance <= halfHeight + 0.01)
-            {
-                isGrounded = true;
             }
             else
             {
                 isGrounded = false;
             }
         }
-        else
-        {
-            isGrounded = false;
-        }
-
     }
 
-    void checkSetDimension(Dimension newDimension){
-        if(dimension != newDimension){
-            if(dimension != null){
+    void checkSetDimension(Dimension newDimension)
+    {
+        if (dimension != newDimension)
+        {
+            if (dimension != null)
+            {
                 dimension.tryRemoveActor(this);
             }
             setDimension(newDimension);
@@ -79,15 +106,17 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    public Rigidbody getRigidbody(){
+    public Rigidbody getRigidbody()
+    {
         return rb;
     }
 
-    public void setDimension(Dimension newDimension) {
+    public void setDimension(Dimension newDimension)
+    {
         dimension = newDimension;
     }
 
-    public Dimension getDimension(){return dimension;}
+    public Dimension getDimension() { return dimension; }
 
 
     RaycastHit[] hits;
@@ -105,16 +134,17 @@ public class Actor : MonoBehaviour {
             if (forcePushToGrid && !beingPushed)
 
             {
-                if (Mathf.Abs( directionVector.normalized.x )>= 0.5f)
+                if (Mathf.Abs(directionVector.normalized.x) >= 0.5f)
                 {
                     modifiedDirection = new Vector3(Mathf.Round(directionVector.normalized.x), 0, 0);
-                }else if (Mathf.Abs(directionVector.normalized.y) >= 0.5f)
+                }
+                else if (Mathf.Abs(directionVector.normalized.y) >= 0.5f)
                 {
-                    modifiedDirection = new Vector3(0,Mathf.Round(directionVector.normalized.y), 0);
+                    modifiedDirection = new Vector3(0, Mathf.Round(directionVector.normalized.y), 0);
                 }
                 else if (Mathf.Abs(directionVector.normalized.z) >= 0.5f)
                 {
-                    modifiedDirection = new Vector3(0,0,Mathf.Round(directionVector.normalized.z));
+                    modifiedDirection = new Vector3(0, 0, Mathf.Round(directionVector.normalized.z));
                 }
                 else
                 {
@@ -122,18 +152,18 @@ public class Actor : MonoBehaviour {
                 }
 
                 startingPosition = transform.position;
-                newFinalLocation= transform.position + modifiedDirection;
-                hits = Physics.BoxCastAll(newFinalLocation, new Vector3(0.48f, 0.48f, 0.48f), transform.forward, transform.rotation,0);
-                if (hits.Length==0)
+                newFinalLocation = transform.position + modifiedDirection;
+                hits = Physics.BoxCastAll(newFinalLocation, new Vector3(0.48f, 0.48f, 0.48f), transform.forward, transform.rotation, 0);
+                if (hits.Length == 0)
                 {
                     beingPushed = true;
                     positionAlpha = 0;
-                    InvokeRepeating("HandleGridPushing",0.01f,0.01f);
+                    InvokeRepeating("HandleGridPushing", 0.01f, 0.01f);
                     return true;
                 }
                 else
                 {
-                    foreach(RaycastHit h in hits)
+                    foreach (RaycastHit h in hits)
                     {
                         print(h.transform.gameObject.name);
 
@@ -154,7 +184,7 @@ public class Actor : MonoBehaviour {
     void HandleGridPushing()
     {
         positionAlpha += 0.1f;//Speed the actor moves at
-        transform.position = Vector3.Lerp(startingPosition, newFinalLocation, Mathf.Clamp( positionAlpha,0,1));
+        transform.position = Vector3.Lerp(startingPosition, newFinalLocation, Mathf.Clamp(positionAlpha, 0, 1));
         if (positionAlpha >= 1)
         {
             beingPushed = false;

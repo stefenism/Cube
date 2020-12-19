@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerActor : Actor {
 
     void Start() {
-        
+        gameObject.layer = 6;
     }
 
     //private void FixedUpdate()
