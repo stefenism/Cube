@@ -66,8 +66,8 @@ public class DimensionManager : MonoBehaviour {
     public void addDimension(Dimension newDimension){dimensionList.Add(newDimension);}
 
     public void setNewBoundaries(){
-        turnOnAllBoundaries();
-        setBoundaries();
+        //turnOnAllBoundaries();
+        //setBoundaries();
     }
 
     public void turnOnAllBoundaries(){
@@ -76,59 +76,61 @@ public class DimensionManager : MonoBehaviour {
         }
     }
 
-    public void setBoundaries(){
-        // print("first...the dimensionList length:" +  dimensionList.Count);
-        foreach(Dimension dimension in dimensionList){
-            List<Dimension> samePlaneList = dimensionList.Where(loopDimension => loopDimension.getCurrentLayer() == dimension.getCurrentLayer() && loopDimension != dimension).ToList();
-            List<Dimension> touchingList = samePlaneList.Where(samePlaneDimension => isAdjacentDimension(samePlaneDimension, dimension)).ToList();
-            if(touchingList.Count > 0){
-                // print("***********************before looping touchinglist");
-                // print("dimension that's being tested is:" + dimension.gameObject.name);
-                // print("dimension position:" + dimension.transform.GetChild(dimension.transform.childCount -1).transform.position);
-                // print("dimension daddy is:" + dimension.transform.parent.gameObject.name);
-                foreach(Dimension printDimension in touchingList){
-                    if(printDimension.transform.parent.gameObject.name == "testes"){
-                        print("touching list length: " + touchingList.Count);
-                        foreach(Dimension test in touchingList){
-                            print("test.gameobjectparent.name is: " + test.transform.parent.gameObject.name);
-                        }
-                    }
-                    // print("prinet demension is:" + printDimension.gameObject.name);
-                    // print("print dimension parent:" + printDimension.transform.parent.gameObject.name);
-                    // print("print dimension layer:" + printDimension.getCurrentLayer());
-                    // print("touching list length:" + touchingList.Count);
-                    // print("transform.position of adjacent dimension:" + printDimension.transform.GetChild(printDimension.transform.childCount -1).transform.position);
-                    // print("distance between this and testing dimension: " + Vector3.Distance(dimension.transform.rotation * dimension.transform.position, printDimension.transform.rotation * printDimension.transform.position));
-                    // print("-----------------------");
-                    // print("starting disabling");
-                    disableCollidersBetween(dimension, printDimension);
-                }
-                // print("*********************after looping touchinglist");
-            }
-        }
-    }
+    //Stuffs code, not going to delete but wanted to try something different. - Love, Zack
 
-    private bool isAdjacentDimension(Dimension samePlaneDimension, Dimension dimension){
+    //public void setBoundaries(){
+    //    // print("first...the dimensionList length:" +  dimensionList.Count);
+    //    foreach(Dimension dimension in dimensionList){
+    //        List<Dimension> samePlaneList = dimensionList.Where(loopDimension => loopDimension.getCurrentLayer() == dimension.getCurrentLayer() && loopDimension != dimension).ToList();
+    //        List<Dimension> touchingList = samePlaneList.Where(samePlaneDimension => isAdjacentDimension(samePlaneDimension, dimension)).ToList();
+    //        if(touchingList.Count > 0){
+    //            // print("***********************before looping touchinglist");
+    //            // print("dimension that's being tested is:" + dimension.gameObject.name);
+    //            // print("dimension position:" + dimension.transform.GetChild(dimension.transform.childCount -1).transform.position);
+    //            // print("dimension daddy is:" + dimension.transform.parent.gameObject.name);
+    //            foreach(Dimension printDimension in touchingList){
+    //                if(printDimension.transform.parent.gameObject.name == "testes"){
+    //                    print("touching list length: " + touchingList.Count);
+    //                    foreach(Dimension test in touchingList){
+    //                        print("test.gameobjectparent.name is: " + test.transform.parent.gameObject.name);
+    //                    }
+    //                }
+    //                // print("prinet demension is:" + printDimension.gameObject.name);
+    //                // print("print dimension parent:" + printDimension.transform.parent.gameObject.name);
+    //                // print("print dimension layer:" + printDimension.getCurrentLayer());
+    //                // print("touching list length:" + touchingList.Count);
+    //                // print("transform.position of adjacent dimension:" + printDimension.transform.GetChild(printDimension.transform.childCount -1).transform.position);
+    //                // print("distance between this and testing dimension: " + Vector3.Distance(dimension.transform.rotation * dimension.transform.position, printDimension.transform.rotation * printDimension.transform.position));
+    //                // print("-----------------------");
+    //                // print("starting disabling");
+    //                disableCollidersBetween(dimension, printDimension);
+    //            }
+    //            // print("*********************after looping touchinglist");
+    //        }
+    //    }
+    //}
 
-        Vector3 samePlaneAnchorPosition = samePlaneDimension.transform.GetChild(0).transform.position;
-        Vector3 dimensionAnchoPosition = dimension.transform.GetChild(0).transform.position;
+    //private bool isAdjacentDimension(Dimension samePlaneDimension, Dimension dimension){
 
-        RaycastHit hit;
+    //    Vector3 samePlaneAnchorPosition = samePlaneDimension.transform.GetChild(0).transform.position;
+    //    Vector3 dimensionAnchoPosition = dimension.transform.GetChild(0).transform.position;
 
-        //boundaryCheckLayer =  1 << dimension.gameObject.layer;
+    //    RaycastHit hit;
 
-        float dimensionDistance = Vector3.Distance(samePlaneAnchorPosition, dimensionAnchoPosition);
-        bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
-        Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
+    //    //boundaryCheckLayer =  1 << dimension.gameObject.layer;
 
-        bool insideCollider = linecastOriginColliders.Length > 0;
+    //    float dimensionDistance = Vector3.Distance(samePlaneAnchorPosition, dimensionAnchoPosition);
+    //    bool anythingInBetween = Physics.Linecast(dimensionAnchoPosition, samePlaneAnchorPosition, out hit, boundaryCheckLayer);
+    //    Collider[] linecastOriginColliders = Physics.OverlapSphere(dimensionAnchoPosition, .2f, boundaryCheckLayer);
 
-        if(insideCollider){
-            dimension.disableAllColliders();
-        }
+    //    bool insideCollider = linecastOriginColliders.Length > 0;
 
-        return (dimensionDistance < adjacentDimensionCheckDistance && !anythingInBetween && !insideCollider);
-    }
+    //    if(insideCollider){
+    //        dimension.disableAllColliders();
+    //    }
+
+    //    return (dimensionDistance < adjacentDimensionCheckDistance && !anythingInBetween && !insideCollider);
+    //}
 
     private void disableCollidersBetween(Dimension dimension, Dimension adjacentDimension){
         Vector3 startPoint = dimension.transform.GetChild(0).transform.position;
