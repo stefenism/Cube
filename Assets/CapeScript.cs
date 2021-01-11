@@ -28,7 +28,7 @@ public class CapeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + new Vector3(0, Mathf.Sin(Time.time*2.5f)/10, 0);
+        transform.localPosition = new Vector3(0, Mathf.Sin(Time.time * 2.5f) / 10, 0);
 
 
 

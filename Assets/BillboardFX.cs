@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class BillboardFX : MonoBehaviour
 {
-    public Transform camTransform;
+    Transform camTransform;
 
     Quaternion originalRotation;
 
     void Start()
     {
         originalRotation = transform.rotation;
+
+        camTransform = PlayerManager.playerDaddy.playerCameraLocation.transform;
     }
 
     void Update()

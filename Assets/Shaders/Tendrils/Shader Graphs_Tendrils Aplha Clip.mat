@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_Tendrils Aplha Clip
+  m_Shader: {fileID: -6465566751694194690, guid: 5c77ecccfb1585f45bc81b4a9971f447,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_E904E633:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_268C3108_Texture_1:
+        m_Texture: {fileID: 2800000, guid: f276d8b83ee75ea46a89201dd4f40f68, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_350B67F2_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 3a8ee5565876a7b4496b496ee402e13e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_3B4C3E33_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 84c747f71c049c3409adcb74bbdc7898, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4B9D10FC_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 074575bcf0cd7944992ba0257f439c44, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_836F2809_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 9d4fb5a6039c71d42862bdeafb6881b6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaClipValue: 0
+    m_Colors:
+    - _ColorGrade: {r: 0, g: 0, b: 0, a: 0}

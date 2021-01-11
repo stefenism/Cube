@@ -1,0 +1,134 @@
+Edit the dialogue on the go.
+You can edit and add comments, edit the tags, and set node type.
+Do not attempt to add more nodes: the number of nodes must match when importing the text file.
+Do not modify the IDs.
+Do not add or remove empty lines.
+Do not restructure the data.
+
+Dialogue name: NavySealCopypasta
+---------------------------------
+#NODEID#
+0
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Hey, w..
+---------------------------------
+#NODEID#
+1
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>What the f@#k did you just f@#king say about me, you little b@$ch? 
+---------------------------------
+#NODEID#
+2
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+What?
+---------------------------------
+#NODEID#
+3
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. 
+---------------------------------
+#NODEID#
+4
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+I d...
+---------------------------------
+#NODEID#
+5
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the f@#k out with precision the likes of which has never been seen before on this Earth, mark my f@#king words. 
+---------------------------------
+#NODEID#
+6
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Dude I...
+---------------------------------
+#NODEID#
+7
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>You think you can get away with saying that shit to me over the Internet? Think again, f@#ker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. 
+---------------------------------
+#NODEID#
+8
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Calm d...
+---------------------------------
+#NODEID#
+9
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>The storm that wipes out the pathetic little thing you call your life. You're f@#king dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. 
+#COMMENT#
+<b>Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. 
+#COMMENT#
+<b>If only you could have known what unholy retribution your little "clever" comment was about to bring down upon you, maybe you would have held your f@#king tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. 
+---------------------------------
+#NODEID#
+10
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+I dont even know...
+---------------------------------
+#NODEID#
+11
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+<b>I will s**t fury all over you and you will drown in it. You're f@#king dead, kiddo.
+---------------------------------
+#END#

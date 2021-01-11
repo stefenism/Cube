@@ -26,17 +26,7 @@ public class Dimension : MonoBehaviour
 
     CameraController cameraController;
 
-    public enum BoundaryDirection
-    {
-        North,
-        South,
-        East,
-        West
-    }
-    public GameObject boundaryColliderNorth;
-    public GameObject boundaryColliderSouth;
-    public GameObject boundaryColliderEast;
-    public GameObject boundaryColliderWest;
+
 
     void Start()
     {
@@ -317,31 +307,6 @@ public class Dimension : MonoBehaviour
         childMeshes = transform.GetComponentsInChildren<MeshRenderer>();
     }
 
-    public void SetBoundaryDirectionActive(Dimension.BoundaryDirection direction, bool active)
-    {
-        switch (direction)
-        {
-            case BoundaryDirection.North:
-                boundaryColliderNorth.SetActive(active);
-                break;
-            case BoundaryDirection.South:
-                boundaryColliderSouth.SetActive(active);
-                break;
-            case BoundaryDirection.East:
-                boundaryColliderEast.SetActive(active);
-                break;
-            case BoundaryDirection.West:
-                boundaryColliderWest.SetActive(active);
-                break;
-        }
-    }
 
-    public void SetAllBoundaryDirectionsActive(bool active)
-    {
-        boundaryColliderNorth.SetActive(active);
-        boundaryColliderSouth.SetActive(active);
-        boundaryColliderEast.SetActive(active);
-        boundaryColliderWest.SetActive(active);
-    }
 
 }

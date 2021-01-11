@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
 
+    public static PlayerManager playerDaddy = null;
+
     public PlayerControls player;
     public GameObject playerCameraLocation;
     public StarParticles playerStarParticles;
@@ -26,7 +28,17 @@ public class PlayerManager : MonoBehaviour {
     private PlayerState playerState = PlayerState.LIVING;
     private PlayerMovementState playerMovementState = PlayerMovementState.WALKING;
 
-    void Awake(){
+    void Awake()
+    {
+        if (playerDaddy == null)
+        {
+            playerDaddy = this;
+        }
+        else if (playerDaddy != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // public void setPlayer(PlayerControls player){

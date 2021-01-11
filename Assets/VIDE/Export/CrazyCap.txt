@@ -1,0 +1,334 @@
+Edit the dialogue on the go.
+You can edit and add comments, edit the tags, and set node type.
+Do not attempt to add more nodes: the number of nodes must match when importing the text file.
+Do not modify the IDs.
+Do not add or remove empty lines.
+Do not restructure the data.
+
+Dialogue name: CrazyCap
+---------------------------------
+#NODEID#
+1
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Huh?
+---------------------------------
+#NODEID#
+3
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Yeah, my heart skipped a beat when stepping out of the platform.
+#COMMENT#
+We are AWESOME!
+#COMMENT#
+No, dude. The programmer just didn't add gravity to us.
+---------------------------------
+#NODEID#
+7
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+As far as I know...
+#COMMENT#
+How else would we be alive, then?
+---------------------------------
+#NODEID#
+10
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+No...
+---------------------------------
+#NODEID#
+12
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Uhh... I don't even know.
+#COMMENT#
+Uhh... Someone pro at grammar?
+---------------------------------
+#NODEID#
+14
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+Thanks, dude!
+#COMMENT#
+What do I even do with this?
+---------------------------------
+#NODEID#
+18
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+...
+---------------------------------
+#NODEID#
+24
+#TAG#
+
+#ISPLAYER#
+True
+---
+#COMMENT#
+I want a new weapon
+#COMMENT#
+How's your day?
+#COMMENT#
+Nevermind... 
+---------------------------------
+#NODEID#
+0
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+You there!
+---------------------------------
+#NODEID#
+2
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Don't you see?
+#COMMENT#
+We have the same ability!
+#COMMENT#
+We can
+#COMMENT#
+freaking..
+#COMMENT#
+FLOAT!
+---------------------------------
+#NODEID#
+4
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Programmer?
+#COMMENT#
+...
+#COMMENT#
+What's that?
+---------------------------------
+#NODEID#
+5
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+You know what? You're a friend!
+#COMMENT#
+Here, take this!
+#COMMENT#
+I don't  really need it anymore.
+---------------------------------
+#NODEID#
+6
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+We have hearts?
+---------------------------------
+#NODEID#
+8
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+No. We are heartless ALIENS. Literally.
+#COMMENT#
+Gotta continue floating now. Bye!
+---------------------------------
+#NODEID#
+9
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Have you ever considered the possibility of us being robots?
+---------------------------------
+#NODEID#
+11
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Anyway, gotta get to work. Bye!
+---------------------------------
+#NODEID#
+13
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Did you just...
+#COMMENT#
+...
+---------------------------------
+#NODEID#
+15
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+Dunno... Do something about Charlie.
+#COMMENT#
+Charlie drives me-
+#COMMENT#
+CRAZY.
+---------------------------------
+#NODEID#
+16
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+No prob, champ!
+---------------------------------
+#NODEID#
+17
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+What do you want, now?
+---------------------------------
+#NODEID#
+19
+#TAG#
+Crazy Cap
+#ISPLAYER#
+False
+---
+#COMMENT#
+You better go...
+---------------------------------
+#NODEID#
+21
+#TAG#
+Optional
+#ISPLAYER#
+False
+---
+#COMMENT#
+You know what? You're a friend!
+#COMMENT#
+Here, take this!
+---------------------------------
+#NODEID#
+23
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+I don't  really need it anymore.
+---------------------------------
+#NODEID#
+25
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+Oh...
+#COMMENT#
+DO YOU?
+---------------------------------
+#NODEID#
+26
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+AMAZING.
+---------------------------------
+#NODEID#
+27
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+Alright, bye! 
+---------------------------------
+#NODEID#
+28
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+I'm out of stock!
+#COMMENT#
+YOU STOLE EVERYTHING FROM ME
+---------------------------------
+#NODEID#
+30
+#TAG#
+
+#ISPLAYER#
+False
+---
+#COMMENT#
+*sobbing*
+---------------------------------
+#END#

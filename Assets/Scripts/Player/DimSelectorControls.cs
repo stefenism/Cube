@@ -34,8 +34,15 @@ public class DimSelectorControls : MonoBehaviour
         if (!hasSelectedDimension)
         {
             
-            if (Input.GetButtonDown("GrabDimension"))
+            if (Input.GetButtonDown("GrabDimensionController"))
             {
+                mouseControl = false;
+                SelectDimension();
+
+            }
+            else if (Input.GetButtonDown("GrabDimensionMouse"))
+            {
+                mouseControl = true;
                 SelectDimension();
 
             }
@@ -48,17 +55,20 @@ public class DimSelectorControls : MonoBehaviour
         }
         else
         {
-            if (!selectedManipulationScript.isSelected)
+            if (Input.GetButton("GrabDimensionController"))
             {
-                UnselectDimension();
+
+                GetMoveDirection();
             }
-            if (!Input.GetButton("GrabDimension"))
+            else if (Input.GetButton("GrabDimensionMouse"))
             {
-                UnselectDimension();
+
+                GetMoveDirection();
             }
             else
             {
-                GetMoveDirection();
+                UnselectDimension();
+
             }
             if (directionIndicatorCurrent == null && selectedManipulationScript!=null)
             {
@@ -72,6 +82,11 @@ public class DimSelectorControls : MonoBehaviour
         }
 
         lastPosMouse = Input.mousePosition;
+    }
+
+    void CheckGrabInput()
+    {
+
     }
 
     float absHoriz;

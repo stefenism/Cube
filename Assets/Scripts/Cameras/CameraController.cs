@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
    
     public float cameraState=0;
 
-    public StarParticles sParticles;
+
 
     public GameObject insideCamera;
 
@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
         PlayerManager pm = FindObjectOfType<PlayerManager>();
         //player = pm.gameObject;
         playerCameraLocation = pm.playerCameraLocation.transform;
-        sParticles = pm.playerStarParticles;
+
     }
 
     void Start()
@@ -55,6 +55,7 @@ public class CameraController : MonoBehaviour
             rigidbody.freezeRotation = true;
         }
         MoveCamera();
+
 
     }
 
@@ -120,15 +121,15 @@ public class CameraController : MonoBehaviour
 
 
 
-    public void ChangeView()//changes between camera views
+    void ChangeView()//changes between camera views
     {
         if (playerMode)
         {
-            sParticles.Fade(true);
+
         }
         else
         {
-            sParticles.Fade(false);
+
             Invoke("doSetBoundaries", 1f);
             //if (selectedManipulationScript != null)
             //{

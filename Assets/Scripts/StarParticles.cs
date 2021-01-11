@@ -20,6 +20,7 @@ public class StarParticles : MonoBehaviour
 
         ps = GetComponent<ParticleSystem>();
         psR = GetComponent<ParticleSystemRenderer>();
+        Fade(true);
 
     }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
@@ -38,6 +39,8 @@ public class PlayerControls : MonoBehaviour
 
     CameraController cameraController;
 
+    public SpeechBubbleScript playerSpeechBubble;
+
 
 
     void Start()
@@ -72,6 +75,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         CheckDash();
+        CheckInteract();
         HandleAirPush();
     }
 
@@ -102,6 +106,18 @@ public class PlayerControls : MonoBehaviour
         //    checkMovement();
         //}
         checkMovement();
+        
+    }
+
+    void CheckInteract()
+    {
+        if (Input.GetButtonDown("Interact"))
+        {
+            if (overlapingInteracts.Count > 0)
+            {
+                overlapingInteracts[0].Interact();
+            }
+        }
     }
 
     void CheckPickup()
@@ -143,10 +159,11 @@ public class PlayerControls : MonoBehaviour
         
 
 
-        RaycastHit hit;
+        RaycastHit[] hits;
+        LayerMask mask = 1 << gameObject.layer;
+        hits = Physics.SphereCastAll(transform.position, 0.1f, direction, 0.9f, mask);
 
-
-        if (Physics.Raycast(transform.position, direction, out hit, 1.5f))
+        foreach(RaycastHit hit in hits)
         {
             Actor actor;
             if (actor = hit.transform.gameObject.GetComponent<Actor>())
@@ -154,6 +171,8 @@ public class PlayerControls : MonoBehaviour
                 actor.Push(direction);
             }
         }
+            
+        
         airPushing = false;
     }
 
@@ -300,18 +319,33 @@ public class PlayerControls : MonoBehaviour
 
     }
 
+    List<InteractableObject> overlapingInteracts = new List<InteractableObject>();
     void OnTriggerEnter(Collider other){
 
         if (other.GetComponent<Pickup>() != null){ //checks if entered range of pickup
             touchingPickupableObject = true;
             itemToPickUp = other.GetComponent<Pickup>();
         }
+        var inter = other.GetComponent<InteractableObject>();
+        if (inter != null)
+        {
+            if(!overlapingInteracts.Contains(inter))
+                overlapingInteracts.Add(inter);
+        }
+
     }
 
     void OnTriggerExit(Collider other){
         if (other.GetComponent<Pickup>() == itemToPickUp){ //Checks if out of range of pickup
             touchingPickupableObject = false;
         }
+        var inter = other.GetComponent<InteractableObject>();
+        if (inter != null)
+        {
+            if (overlapingInteracts.Contains(inter))
+                overlapingInteracts.Remove(inter);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision){

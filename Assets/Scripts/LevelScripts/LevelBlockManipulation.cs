@@ -92,7 +92,7 @@ public class LevelBlockManipulation : MonoBehaviour
             selectorTransformDirection = DirectionToClosestCardinal(transformDirection);
             if (CanRotateOnCardinalAxis(selectorTransformDirection))//Stops if its not supose to rotate in that direction
             {
-                moveDirection = direction * 10;//Sets forward or backwards movement multiplied by a factor of 90 for speed
+                moveDirection = direction * 3;//Sets forward or backwards movement multiplied by a factor of 90 for speed
                 totalMoved = 0;//reset amount to move
 
                 addRotation = true;//starts HandleCubeMove

@@ -114,12 +114,14 @@ public class Actor : MonoBehaviour
     public void setDimension(Dimension newDimension)
     {
         dimension = newDimension;
+        print("Dim set: " + newDimension + " " + gameObject);
     }
 
     public Dimension getDimension() { return dimension; }
 
 
-    RaycastHit[] hits;
+    RaycastHit[] boxHits;
+    RaycastHit[] lineHits;
     Vector3 newFinalLocation;
     Vector3 modifiedDirection;
     bool beingPushed = false;
@@ -134,27 +136,40 @@ public class Actor : MonoBehaviour
             if (forcePushToGrid && !beingPushed)
 
             {
-                if (Mathf.Abs(directionVector.normalized.x) >= 0.5f)
-                {
-                    modifiedDirection = new Vector3(Mathf.Round(directionVector.normalized.x), 0, 0);
-                }
-                else if (Mathf.Abs(directionVector.normalized.y) >= 0.5f)
-                {
-                    modifiedDirection = new Vector3(0, Mathf.Round(directionVector.normalized.y), 0);
-                }
-                else if (Mathf.Abs(directionVector.normalized.z) >= 0.5f)
-                {
-                    modifiedDirection = new Vector3(0, 0, Mathf.Round(directionVector.normalized.z));
-                }
-                else
-                {
-                    return false;
-                }
+                //4 degrees
+                //if (Mathf.Abs(directionVector.normalized.x) >= 0.5f)
+                //{
+                //    modifiedDirection = new Vector3(Mathf.Round(directionVector.normalized.x), 0, 0);
+                //}
+                //else if (Mathf.Abs(directionVector.normalized.y) >= 0.5f)
+                //{
+                //    modifiedDirection = new Vector3(0, Mathf.Round(directionVector.normalized.y), 0);
+                //}
+                //else if (Mathf.Abs(directionVector.normalized.z) >= 0.5f)
+                //{
+                //    modifiedDirection = new Vector3(0, 0, Mathf.Round(directionVector.normalized.z));
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+                modifiedDirection = new Vector3(Mathf.Round(directionVector.normalized.x), Mathf.Round(directionVector.normalized.y), Mathf.Round(directionVector.normalized.z));
 
                 startingPosition = transform.position;
                 newFinalLocation = transform.position + modifiedDirection;
-                hits = Physics.BoxCastAll(newFinalLocation, new Vector3(0.48f, 0.48f, 0.48f), transform.forward, transform.rotation, 0);
-                if (hits.Length == 0)
+                LayerMask mask = 1 << gameObject.layer;
+                boxHits = Physics.BoxCastAll(newFinalLocation, new Vector3(0.45f, 0.45f, 0.45f), transform.forward, transform.rotation, 0,mask);
+                lineHits = Physics.SphereCastAll(transform.position, 0.1f, Vector3.Normalize(newFinalLocation- transform.position ),1f, mask);
+                bool lineHitValid = true;
+                foreach(RaycastHit h in lineHits)//Checks if line hit is ok
+                {
+                    if(h.collider.gameObject != gameObject)
+                    {
+                        lineHitValid = false;
+                    }
+                }
+
+                if (boxHits.Length == 0 && lineHitValid)
                 {
                     beingPushed = true;
                     positionAlpha = 0;
@@ -163,9 +178,14 @@ public class Actor : MonoBehaviour
                 }
                 else
                 {
-                    foreach (RaycastHit h in hits)
+                    foreach (RaycastHit h in boxHits)
                     {
-                        print(h.transform.gameObject.name);
+                        print("box hit " + h.transform.gameObject.name);
+
+                    }
+                    foreach (RaycastHit h in lineHits)
+                    {
+                        print("line hit " + h.transform.gameObject.name);
 
                     }
                     return false;
