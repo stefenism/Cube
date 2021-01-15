@@ -64,13 +64,25 @@ public class Actor : MonoBehaviour
             {
                 Transform currentObject = hit.transform;
                 bool notFound = true;
+                Transform g = currentObject;
                 while (currentObject != null && notFound)
                 {
+                    if (currentObject.tag == "WallHolder" || currentObject == gameObject)
+                        break;
                     if (currentObject.TryGetComponent<Dimension>(out Dimension dim))
                     {
-                        transform.SetParent(dim.transform);
-                        checkSetDimension(dim);
-                        notFound = false;
+                        if (dim.GetComponentInParent<LevelBlockManipulation>().isMoving == false && (dimension == null || dimension.transform.parent != dim.transform.parent))
+                        {
+                            transform.SetParent(dim.transform);
+                            checkSetDimension(dim);
+                            notFound = false;
+                            print(g.gameObject);
+                        }
+                        else
+                        {
+                            break;
+                        }
+
                     }
                     else
                     {

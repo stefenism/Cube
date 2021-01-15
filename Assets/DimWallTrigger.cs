@@ -22,7 +22,7 @@ public class DimWallTrigger : MonoBehaviour
             if (!validWalls.Contains(trigger) && trigger.gameObject.layer == gameObject.layer)
             {
                 validWalls.Add(trigger);
-                SetWalls();
+                WaitToSetWalls();
             }
             
         }
@@ -52,5 +52,10 @@ public class DimWallTrigger : MonoBehaviour
         {
             parentCollider.enabled = true;
         }
+    }
+
+    void WaitToSetWalls()
+    {
+        Invoke("SetWalls", 0.1f);
     }
 }

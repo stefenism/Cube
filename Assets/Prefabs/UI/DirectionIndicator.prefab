@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631944384513516362}
   - component: {fileID: 5631944384513516361}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ArrowLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -90,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631944384922043359}
   - component: {fileID: 5631944384922043358}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ArrowBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,6 +126,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -170,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631944385135031836}
   - component: {fileID: 5631944385135031835}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ArrowForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +207,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -250,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631944385199729032}
   - component: {fileID: 5631944385199729047}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ArrowRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,6 +288,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -330,7 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631944385216882362}
   - component: {fileID: 5631944385216882361}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

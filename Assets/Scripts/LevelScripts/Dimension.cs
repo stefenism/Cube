@@ -18,7 +18,8 @@ public class Dimension : MonoBehaviour
     public Vector3 gravity = Vector3.zero;
     float lastDiff = 100;
     MeshRenderer[] childMeshes;
-    float lagUpdateChance = 0.1f;
+    SkinnedMeshRenderer[] childSkinnedMeshes;
+    float lagUpdateChance = 0f;
 
 
 
@@ -259,19 +260,64 @@ public class Dimension : MonoBehaviour
         // checkIfActor(collider, TriggerAction.EXIT);
     }
 
+    ///////////////////////////Trying something different, might want to keep this arround
     /// <summary>
     /// Calculates how visable objects in this dimension sould be
     /// </summary>
+    //void SetDimentionDither()
+    //{
+    //    float cameraState = Camera.main.GetComponent<CameraController>().cameraState;
+    //    Vector3 visableDimensionVector = DimensionManager.dimensionDaddy.visableDimensionVector;
+    //    float gravityDiff = Vector3.Distance(gravityDown, visableDimensionVector);
+    //    float distanceDiff = Vector3.SignedAngle(transform.position, DimensionManager.dimensionDaddy.currentDimesionPosition, visableDimensionVector);
+
+    //    Vector3 difference = DimensionManager.dimensionDaddy.currentDimesionPosition - transform.position;
+    //    float distance = Mathf.Abs(difference.x * visableDimensionVector.x) + Mathf.Abs(difference.y * visableDimensionVector.y) + Mathf.Abs(difference.z * visableDimensionVector.z);
+    //    gravityDiff += distance / 6;
+    //    //gravityDiff = (gravityDiff - 0.5f) * 1.25f;
+    //    gravityDiff = Mathf.Clamp(gravityDiff, 0, 10);
+    //    gravityDiff = Mathf.Clamp(gravityDiff, 0, cameraState);
+
+    //    if (Mathf.Abs(lastDiff - gravityDiff) > 0.01 & !(gravityDiff > 1 & lastDiff > 1))//Dont run if it did not change much or it would still be completly invisable 
+    //    {
+
+    //        UpdateChildRenders();
+
+    //        foreach (MeshRenderer mesh in childMeshes)
+    //        {
+    //            if (0.9f > gravityDiff & gravityDiff > 0.1f)//If within this range have a random chance to not change for effect
+    //            {
+    //                if (Random.Range(0f, 1f) > lagUpdateChance)
+    //                {
+    //                    mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
+    //                }
+
+    //            }
+    //            else
+    //            {
+    //                mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
+    //            }
+
+    //        }
+    //        lastDiff = gravityDiff;
+    //    }
+
+    //}
+
+
     void SetDimentionDither()
     {
         float cameraState = Camera.main.GetComponent<CameraController>().cameraState;
         Vector3 visableDimensionVector = DimensionManager.dimensionDaddy.visableDimensionVector;
-        float gravityDiff = Vector3.Distance(gravityDown, visableDimensionVector);
+        float gravityDiff;// = Vector3.Distance(gravityDown, visableDimensionVector);
         float distanceDiff = Vector3.SignedAngle(transform.position, DimensionManager.dimensionDaddy.currentDimesionPosition, visableDimensionVector);
 
         Vector3 difference = DimensionManager.dimensionDaddy.currentDimesionPosition - transform.position;
-        float distance = Mathf.Abs(difference.x * visableDimensionVector.x) + Mathf.Abs(difference.y * visableDimensionVector.y) + Mathf.Abs(difference.z * visableDimensionVector.z);
-        gravityDiff += distance / 6;
+        float distance = difference.x * visableDimensionVector.x + difference.y * visableDimensionVector.y + difference.z * visableDimensionVector.z;
+        gravityDiff = -distance ;
+        //gravityDiff = (gravityDiff - 0.5f) * 1.25f;
+        //gravityDiff = Vector3.Dot(visableDimensionVector, transform.parent.position);
+        gravityDiff = Mathf.Clamp(gravityDiff, 0, 10);
         gravityDiff = Mathf.Clamp(gravityDiff, 0, cameraState);
 
         if (Mathf.Abs(lastDiff - gravityDiff) > 0.01 & !(gravityDiff > 1 & lastDiff > 1))//Dont run if it did not change much or it would still be completly invisable 
@@ -280,31 +326,26 @@ public class Dimension : MonoBehaviour
             UpdateChildRenders();
 
             foreach (MeshRenderer mesh in childMeshes)
-            {
-                if (0.9f > gravityDiff & gravityDiff > 0.1f)//If within this range have a random chance to not change for effect
-                {
-                    if (Random.Range(0f, 1f) > lagUpdateChance)
-                    {
-                        mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
-                    }
-
-                }
-                else
-                {
+            {   
                     mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
-                }
-
+            }
+            foreach (SkinnedMeshRenderer mesh in childSkinnedMeshes)
+            {
+                mesh.material.SetFloat("_AlphaClipValue", gravityDiff);
             }
             lastDiff = gravityDiff;
         }
 
     }
 
-   
+
+
 
     void UpdateChildRenders()
     {
         childMeshes = transform.GetComponentsInChildren<MeshRenderer>();
+        childSkinnedMeshes = transform.GetComponentsInChildren<SkinnedMeshRenderer>();
+
     }
 
 

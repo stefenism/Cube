@@ -19,13 +19,33 @@ public class DimensionEditor : EditorWindow
     public static void ShowWindow()
     {
         EditorWindow.GetWindow<DimensionEditor>("Dimension Editor");
-    }
 
+    }
+    
+    
 
     void OnGUI()
     {
         GUILayout.Label("Enables Editing Single Dimentions", EditorStyles.boldLabel);
 
+        if(GUILayout.Button("Hide Extras"))
+        {
+            GameObject[] effectObjects = GameObject.FindGameObjectsWithTag("EffectHolder");
+            GameObject[] wallObjects = GameObject.FindGameObjectsWithTag("WallHolder");
+            SceneVisibilityManager.instance.Hide(effectObjects, true);
+            SceneVisibilityManager.instance.Hide(wallObjects, true);
+            //SceneVisibilityManager.instance.ShowAll();
+            foreach (GameObject g in effectObjects)
+            {
+                
+            }
+
+        }
+        if (GUILayout.Button("Show All"))
+        {
+            SceneVisibilityManager.instance.ShowAll();
+
+        }
 
         if (GUILayout.Button(toggleButtonText))
         {
@@ -45,7 +65,7 @@ public class DimensionEditor : EditorWindow
                     allGameObjects.AddRange(FindObjectsOfType<GameObject>());//get all objects in scene
 
                     toggleButtonText = "Stop Dimension Editor";
-              
+                SubscribeToUpdate(true);
 
 
             }
@@ -70,6 +90,8 @@ public class DimensionEditor : EditorWindow
 
     }
 
+   
+
     void StopCleanup()//Stops the Script
     {
         EditorApplication.update -= OnEditorUpdate;
@@ -79,19 +101,31 @@ public class DimensionEditor : EditorWindow
         ResetEnabled();
         dimSelected = false;
         dimEditorOn = false;
+        SubscribeToUpdate(false);
 
     }
 
-    
+    void RotateSelection()
+    {
+        //if (DragAndDrop.objectReferences.Length > 0 && dimSelected)
+        //{
+        //    foreach (GameObject o in DragAndDrop.objectReferences)
+        //    {
+        //        o.transform.rotation = currentDim.transform.rotation;
+        //    }
+        //}
+    }
+
 
     void OnSelectionChange()
     {
         if (dimEditorOn && !dimSelected)
         {
 
-            if(Selection.activeGameObject!= null) { 
-            Transform currentObject = Selection.activeGameObject.transform;
-            bool notFound = true;
+            if (Selection.activeGameObject != null)
+            {
+                Transform currentObject = Selection.activeGameObject.transform;
+                bool notFound = true;
 
                 while (currentObject != null && notFound)
                 {
@@ -106,7 +140,29 @@ public class DimensionEditor : EditorWindow
                     }
 
                 }
+                
             }
+            else
+            {
+                
+            }
+        }
+    }
+
+    bool subbed = false;
+    void SubscribeToUpdate(bool sub)
+    {
+        if (sub)
+        {
+            if(!subbed)
+                EditorApplication.update += RotateSelection;
+            subbed = true;
+        }
+        else
+        {
+            if (subbed)
+                EditorApplication.update -= RotateSelection;
+            subbed = false;
         }
     }
 
@@ -146,6 +202,8 @@ public class DimensionEditor : EditorWindow
 
             }
         }
+
+
 
     }
     void HierarchyChanged()

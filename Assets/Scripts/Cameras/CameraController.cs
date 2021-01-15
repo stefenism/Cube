@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     float xAdded = 0.0f;
     float yAdded = 0.0f;
    
-    public float cameraState=0;
+    public float cameraState=1;
 
 
 
