@@ -41,6 +41,8 @@ public class PlayerControls : MonoBehaviour
 
     public SpeechBubbleScript playerSpeechBubble;
 
+    bool disableControls = false;
+
 
 
     void Start()
@@ -52,11 +54,17 @@ public class PlayerControls : MonoBehaviour
 
 
     }
-
+    
     void Update()
     {
-        CheckInput();
+        if(!disableControls)
+            CheckInput();
         AnimatePlayerModel();
+    }
+    void FixedUpdate()
+    {
+        checkMovement();
+
     }
 
     void CheckInput()
@@ -82,10 +90,24 @@ public class PlayerControls : MonoBehaviour
     void CheckDash() {
         if(!playerManager.isPlayerDashing() && Input.GetButtonDown(ProjectConstants.DASH_BUTTON)){
             playerManager.setPlayerDashing();
-            dashDir.x = horMov;
-            dashDir.z = vertMov;
+            dashDir = (horMov * transform.right)+(vertMov * transform.forward); 
+            
             dashDir.Normalize();
             Invoke("StopDash", 0.2f);
+        }
+    }
+
+    public void DisableControls(bool disable)
+    {
+        if (disable)
+        {
+            horMov = 0;
+            vertMov = 0;
+            disableControls = true;
+        }
+        else
+        {
+            disableControls = false;
         }
     }
 
@@ -94,20 +116,7 @@ public class PlayerControls : MonoBehaviour
         playerManager.setPlayerWalking();
     }
 
-    void FixedUpdate()
-    {
 
-        //if (onLadder)
-        //{
-        //    climbLadder();
-        //}
-        //else
-        //{
-        //    checkMovement();
-        //}
-        checkMovement();
-        
-    }
 
     void CheckInteract()
     {
