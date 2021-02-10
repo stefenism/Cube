@@ -174,10 +174,20 @@ public class PlayerControls : MonoBehaviour
 
         foreach(RaycastHit hit in hits)
         {
-            Actor actor;
+            Actor actor;//Blocks
             if (actor = hit.transform.gameObject.GetComponent<Actor>())
             {
                 actor.Push(direction);
+            }
+            Spinner spinner;
+            if (spinner = hit.transform.gameObject.GetComponent<Spinner>())
+            {
+                spinner.Push();
+            }
+            AirSwitch airSwitch;
+            if (airSwitch = hit.transform.gameObject.GetComponent<AirSwitch>())
+            {
+                airSwitch.Push(direction);
             }
         }
             
