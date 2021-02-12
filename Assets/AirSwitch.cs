@@ -7,7 +7,7 @@ public class AirSwitch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateWires();
     }
 
     // Update is called once per frame
@@ -23,6 +23,9 @@ public class AirSwitch : MonoBehaviour
     bool moving = false;
 
     public GameObject switchPivot;
+
+    public WireScript leftWire;
+    public WireScript rightWire;
 
     public void Push(Vector3 Direction)
     {
@@ -56,6 +59,9 @@ public class AirSwitch : MonoBehaviour
             if (Quaternion.Angle(switchPivot.transform.rotation, rightRot.transform.rotation)<1)
             {
                 moving = false;
+
+                UpdateWires();
+
             }
         }
         else
@@ -64,10 +70,23 @@ public class AirSwitch : MonoBehaviour
             if (Quaternion.Angle(switchPivot.transform.rotation, leftRot.transform.rotation) < 1)
             {
                 moving = false;
+                UpdateWires();
             }
         }
-        print(switchPivot.transform.localRotation.eulerAngles.x);
+
         
+    }
+
+    void UpdateWires()
+    {
+        if (rightWire != null)///swap power
+        {
+            rightWire.Power(right, 1);
+        }
+        if (leftWire != null)
+        {
+            leftWire.Power(!right, 1);
+        }
     }
 
 }

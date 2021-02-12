@@ -21,21 +21,33 @@ public class Spinner : MonoBehaviour
     public float spinLength = 10;
     float maxSpinSpeed = 15;
     float spinReductionMultiplier = 1;
+
+    public GameObject axis;
+
+    public WireScript wire;
+
+
+
     public void Push()
     {
         spinning = true;
         spinSpeed = maxSpinSpeed;
         spinReductionMultiplier = maxSpinSpeed / spinLength;
+        wire.Power(true, 1);
     }
 
     void HandleSpin()
     {
         spinSpeed -= Time.deltaTime * spinReductionMultiplier;
-        transform.RotateAroundLocal(transform.up, spinSpeed* Time.deltaTime);
+        axis.transform.localRotation = Quaternion.Euler(axis.transform.localRotation.eulerAngles.x , axis.transform.localRotation.eulerAngles.y + spinSpeed * 0.5f, axis.transform.localRotation.eulerAngles.z);
+        wire.ChangePowerLevel(spinSpeed / maxSpinSpeed);
+
         if (spinSpeed <= 0)
         {
             spinning = false;
+            wire.Power(false, 1);
         }
+        
     }
     
 }
