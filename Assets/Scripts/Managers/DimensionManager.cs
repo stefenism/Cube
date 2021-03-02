@@ -25,13 +25,14 @@ public class DimensionManager : MonoBehaviour {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        player = FindObjectOfType<PlayerControls>().gameObject;
+        
     }
 
     void Start()
     {
         SetPineconeLayers();
-        setNewBoundaries();
+        
+
     }
 
     void Update(){
@@ -65,10 +66,7 @@ public class DimensionManager : MonoBehaviour {
 
     public void addDimension(Dimension newDimension){dimensionList.Add(newDimension);}
 
-    public void setNewBoundaries(){
-        //turnOnAllBoundaries();
-        //setBoundaries();
-    }
+
 
     public void turnOnAllBoundaries(){
         foreach(Dimension dimension in dimensionList){

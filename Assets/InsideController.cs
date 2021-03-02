@@ -12,7 +12,7 @@ public class InsideController : MonoBehaviour
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
-        insideCamera = cameraController.insideCamera.GetComponent<InsideCameraScript>();
+
     }
 
     // Update is called once per frame
@@ -39,9 +39,9 @@ public class InsideController : MonoBehaviour
         player.transform.rotation = transform.rotation;
         player.layer = 31;
         player.GetComponent<PlayerActor>().setDimension(thisDimension);
-        cameraController.CalculateOffset(portal.transform.position + RotatePointAroundPivot((player.transform.position), transform.position, portal.transform.rotation * transform.rotation) - transform.position, portal.transform.rotation * transform.rotation);
+        //cameraController.CalculateOffset(portal.transform.position + RotatePointAroundPivot((player.transform.position), transform.position, portal.transform.rotation * transform.rotation) - transform.position, portal.transform.rotation * transform.rotation);
         //player.transform.SetParent(transform);
-        cameraController.offsetOn = true;
+        //cameraController.offsetOn = true;
         
         insideCamera.useOffset = false;
         insideCamera.followPlayer = true;
@@ -59,7 +59,7 @@ public class InsideController : MonoBehaviour
         player.transform.rotation = portal.transform.rotation;
         player.layer = portal.layer;
         player.transform.position = portal.transform.position+ RotatePointAroundPivot((player.transform.position ), transform.position, portal.transform.rotation * transform.rotation) - transform.position;//Gets the offset and rotation to teleport the player too.
-        cameraController.offsetOn = false;
+
         insideCamera.useOffset = true;
 
     }

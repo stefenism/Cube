@@ -7,31 +7,11 @@ public class CameraController : MonoBehaviour
     public bool playerMode = true;
     public GameObject player;
     public Transform playerCameraLocation;
-
-    public Vector3 cameraLerpLocation;
-
-    public float distance = 5.0f;
-    public float xSpeed = 120.0f;
-    public float ySpeed = 120.0f;
-
-    public float yMinLimit = -20f;
-    public float yMaxLimit = 80f;
-
-    public float distanceMin = .5f;
-    public float distanceMax = 15f;
-
     private Rigidbody rigidbody;
+    Transform cinCameraPoint;
 
-    float x = 0.0f;
-    float y = 0.0f;
-    float xAdded = 0.0f;
-    float yAdded = 0.0f;
-   
     public float cameraState=1;
 
-
-
-    public GameObject insideCamera;
 
     private void Awake()
     {
@@ -43,9 +23,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        Vector3 angles = transform.eulerAngles;
-        x = angles.y;
-        y = angles.x;
+
+        //cinCameraPoint = transform;
 
         rigidbody = GetComponent<Rigidbody>();
 
@@ -63,12 +42,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButtonDown("Shift View"))
-        {
-            ChangeView();
-        }
 
-        HandleCameraPositionEase();
+       
         //if(!playerMode)
             CheckBlockClick();
     }
@@ -109,55 +84,36 @@ public class CameraController : MonoBehaviour
                 selectedManipulationScript = null;
 
 
-                Invoke("doSetBoundaries", 1f);
+                
             }
         }
     }
 
-    public void doSetBoundaries(){
-        DimensionManager.dimensionDaddy.setNewBoundaries();
-    }
 
 
 
+    
 
-    void ChangeView()//changes between camera views
+    public void SetCameraView(Transform cameraPoint)//changes between camera views
     {
-        if (playerMode)
-        {
-
-        }
-        else
-        {
-
-            Invoke("doSetBoundaries", 1f);
-            //if (selectedManipulationScript != null)
-            //{
-            //    selectedManipulationScript.Selected(false);
-            //    selectedManipulationScript = null;
-            //}
-        }
-        playerMode = !playerMode;
+        InvokeRepeating("HandleCameraPositionEase", 0.01f, 0.01f);
+        cinCameraPoint = cameraPoint;
+        playerMode = false;
     }
+
+    public void SetPlayerView()
+    {
+        playerMode = true;
+        InvokeRepeating("HandleCameraPositionEase", 0.01f, 0.01f);
+    }
+
 
     void LateUpdate()
     {
-        if (Input.GetButton("Rotate Camera"))
-        {
-            getMouseInput();
-
-        }
         MoveCamera();
     }
 
-    /// <summary>
-    /// Gets mouse input for super camera movement
-    /// </summary>
-    void getMouseInput()
-    {
-        xAdded += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
-        yAdded -= Input.GetAxis("Mouse Y") * ySpeed * distance * 0.02f;
-    }
+
 
     /// <summary>
     /// Calculates where the camera should be and moves it there
@@ -166,80 +122,34 @@ public class CameraController : MonoBehaviour
     {
         if (player.transform)
         {
-            //for smoothing mouse input
-            x = Mathf.Lerp(xAdded, x, 0.7f);
-            y = Mathf.Lerp(yAdded, y, 0.7f);
 
-            y = ClampAngle(y, yMinLimit, yMaxLimit);
 
-            Quaternion rotation = player.transform.rotation * Quaternion.Euler(y, x, 0);
+            transform.rotation = Quaternion.Lerp(cinCameraPoint.rotation, playerCameraLocation.rotation, cameraState);
+            transform.position = Vector3.Lerp(cinCameraPoint.position, playerCameraLocation.position, cameraState);
 
-            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
 
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
-            Vector3 position = rotation * negDistance + player.transform.position;
-
-            //cameraLerpLocation = Vector3.Lerp(cameraLerpLocation, playerCameraLocation.position, 0.5f);
-            if (offsetOn)
-            {
-                //transform.rotation = playerCameraLocation.rotation;
-                transform.position = locationOffset + (RotatePointAroundPivot(playerCameraLocation.transform.position, initialPivotPoint, rotationOffset) - rotatedStartPoint);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Lerp(rotation, playerCameraLocation.rotation, cameraState);
-                transform.position = Vector3.Lerp(position, playerCameraLocation.position, cameraState);
-            }
 
         }
 
-    }
-    Vector3 locationOffset= Vector3.zero;
-    public bool offsetOn = false;
-    public void SetOffset(bool on)
-    {
-        if (on)
-        {
-            locationOffset = transform.position - playerCameraLocation.position ;
-            offsetOn = true;
-        }
-        else
-        {
-            locationOffset = Vector3.zero;
-            offsetOn = false;
-        }
-    }
-
-    Quaternion rotationOffset;
-    Vector3 initialPivotPoint;
-    Vector3 rotatedStartPoint;
-    public void CalculateOffset(Vector3 newPlayerPosition, Quaternion exitRotation)
-    {
-        Vector3 rotatedPlayerToCameraPoint = RotatePointAroundPivot(playerCameraLocation.transform.position, player.transform.position, exitRotation) - player.transform.position;//Gets the distance the camera is supose to be away from the player at the correct rotation
-        locationOffset = newPlayerPosition + rotatedPlayerToCameraPoint; //Finds the location the new camera needs to start at
-        rotationOffset = exitRotation; // The change in rotation between the portals
-        initialPivotPoint = newPlayerPosition; //The point to rotate the world around to calculate the camera synced movements
-        rotatedStartPoint = RotatePointAroundPivot(playerCameraLocation.transform.position, initialPivotPoint, rotationOffset); //the first camera location used to subtract from the new camera movements to get a change(delta moved
 
     }
 
-    void HandleCameraPositionEase()//eventually needs to be invoked 
+
+
+
+    void HandleCameraPositionEase()
     {
         if (playerMode)
         {
             if (cameraState <= 1)
             {
-                cameraState += 0.1f;
+                cameraState += 0.01f;
             }
             else
             {
-                //reset superview
-                x = -20;
-                y = 50;
-                xAdded = x;
-                yAdded = y;
 
-                //put cancel invoke here
+
+                CancelInvoke("HandleCameraPositionEase");
             }
         }
         else
@@ -248,12 +158,12 @@ public class CameraController : MonoBehaviour
             {
                 
 
-                cameraState -= 0.1f;
+                cameraState -= 0.01f;
             }
             else
             {
 
-                //put cancel invoke here
+                CancelInvoke("HandleCameraPositionEase");
             }
 
         }

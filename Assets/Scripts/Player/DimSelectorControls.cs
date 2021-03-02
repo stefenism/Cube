@@ -185,9 +185,7 @@ public class DimSelectorControls : MonoBehaviour
         }
     }
 
-    public void doSetBoundaries(){
-        DimensionManager.dimensionDaddy.setNewBoundaries();
-    }
+
 
     void SelectDimension()
     {
