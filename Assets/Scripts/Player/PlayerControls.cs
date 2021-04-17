@@ -59,6 +59,7 @@ public class PlayerControls : MonoBehaviour
     {
         if(!disableControls)
             CheckInput();
+        CheckInteract();
         AnimatePlayerModel();
     }
     void FixedUpdate()
@@ -83,7 +84,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         CheckDash();
-        CheckInteract();
+        
         HandleAirPush();
     }
 
@@ -287,18 +288,18 @@ public class PlayerControls : MonoBehaviour
 
     Pickup grabbedItem;
     void GrabItem(){
-        holdingItem = true;
-        itemToPickUp.transform.SetParent(transform);
-        itemToPickUp.transform.localPosition = new Vector3(0, 0.65f, 0);
-        grabbedItem = itemToPickUp;
+        //holdingItem = true;
+        //itemToPickUp.transform.SetParent(transform);
+        //itemToPickUp.transform.localPosition = new Vector3(0, 0.65f, 0);
+        //grabbedItem = itemToPickUp;
     }
 
     void DropItem(){
-        if (holdingItem){
-            holdingItem = false;
-            grabbedItem.transform.localPosition = Vector3.zero;
-            grabbedItem.transform.SetParent(transform.parent);
-        }
+        //if (holdingItem){
+        //    holdingItem = false;
+        //    grabbedItem.transform.localPosition = Vector3.zero;
+        //    grabbedItem.transform.SetParent(transform.parent);
+        //}
     }
 
     void AnimatePlayerModel(){

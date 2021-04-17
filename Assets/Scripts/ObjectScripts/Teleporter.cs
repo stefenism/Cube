@@ -82,8 +82,12 @@ public class Teleporter : MonoBehaviour
         beamTarget = 0;
         player.gameObject.SetActive(false);
         Invoke("TeleportPlayer", 0.6f);
+        Invoke("SetPlayerParent", 0.55f);
     }
-
+    void SetPlayerParent()
+    {
+        player.transform.SetParent(exitPortal.thisDimension.transform);
+    }
     public void TeleportPlayer()
     {
 
@@ -94,7 +98,7 @@ public class Teleporter : MonoBehaviour
         player.transform.rotation = exitPortal.thisDimension.transform.rotation; //Quaternion.Euler(exitPortal.transform.rotation.eulerAngles + new Vector3(90, 0, 0)) ;
         player.gameObject.layer = exitPortal.gameObject.layer;
         player.GetComponent<PlayerActor>().setDimension(exitPortal.thisDimension);
-
+        
         exitPortal.beamTarget = 1;//Drop Beam 
         Invoke("ClosePortal", 0.6f);//wait for animation
 

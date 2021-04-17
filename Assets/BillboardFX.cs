@@ -12,11 +12,11 @@ public class BillboardFX : MonoBehaviour
     {
         originalRotation = transform.rotation;
 
-        camTransform = PlayerManager.playerDaddy.playerCameraLocation.transform;
+        camTransform = Camera.main.transform;
     }
 
     void Update()
     {
-        transform.rotation = camTransform.rotation * originalRotation;
+        transform.rotation = camTransform.rotation;// * originalRotation;
     }
 }

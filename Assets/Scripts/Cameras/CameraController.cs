@@ -108,9 +108,12 @@ public class CameraController : MonoBehaviour
     }
 
 
+    bool camdelay = true;
     void LateUpdate()
     {
-        MoveCamera();
+
+            MoveCamera();
+
     }
 
 
@@ -120,11 +123,11 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void MoveCamera()
     {
-        if (player.transform)
+        if (player.transform && cinCameraPoint!=null)
         {
 
 
-            transform.rotation = Quaternion.Lerp(cinCameraPoint.rotation, playerCameraLocation.rotation, cameraState);
+            transform.rotation = Quaternion.Lerp(cinCameraPoint.rotation , playerCameraLocation.rotation, cameraState);
             transform.position = Vector3.Lerp(cinCameraPoint.position, playerCameraLocation.position, cameraState);
 
 

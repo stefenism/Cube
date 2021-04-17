@@ -544,3 +544,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typing: 0
   tmpText: {fileID: 0}
+  widthFull: 0
+  heightFull: 0

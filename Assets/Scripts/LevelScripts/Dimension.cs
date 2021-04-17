@@ -62,7 +62,7 @@ public class Dimension : MonoBehaviour
 
     void FixedUpdate()
     {
-        ApplyGravity();
+        //ApplyGravity();
         HandelPineconeCollision();
     }
 

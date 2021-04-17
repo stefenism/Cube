@@ -175,13 +175,21 @@ public class Actor : MonoBehaviour
                 bool lineHitValid = true;
                 foreach(RaycastHit h in lineHits)//Checks if line hit is ok
                 {
-                    if(h.collider.gameObject != gameObject)
+                    if(h.collider.gameObject != gameObject && !h.collider.isTrigger )
                     {
                         lineHitValid = false;
                     }
                 }
+                bool boxhitValid = true;
+                foreach (RaycastHit h in boxHits)//Checks if line hit is ok
+                {
+                    if (h.collider.gameObject != gameObject && !h.collider.isTrigger)
+                    {
+                        boxhitValid = false;
+                    }
+                }
 
-                if (boxHits.Length == 0 && lineHitValid)
+                if (boxhitValid && lineHitValid)
                 {
                     beingPushed = true;
                     positionAlpha = 0;
